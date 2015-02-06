@@ -2,7 +2,7 @@ class API::V1::MeasuresController < API::V1::DeviceSecuredController
   before_action :load_service
 
   def index
-    api_response @service.list(params[:metric_id])
+    api_response [true, @service.list(params[:metric_id])]
   end
 
   def create
