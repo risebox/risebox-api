@@ -17,6 +17,10 @@ private
     end
   end
 
+  def rescuer service
+    Risebox::Util::ServiceRescuer.new(service)
+  end
+
   def common_params
     common_params = {}
     common_params[:page]    = params[:page].to_i if params[:page].present?
