@@ -30,7 +30,7 @@ case $1 in
       heroku_app=$(safeMatchingEnvForBranch $(currentBranch))
       if [ "$heroku_app" = "none" ]; then
         echo "No matching env found"
-        echo "Choose 'rbdev-api' or 'risebox' !"
+        echo "Choose 'rbdev-api' or 'risebox-api' !"
         exit
       fi
       echo "No target env specified: safely deploying to $heroku_app";;
