@@ -1,4 +1,5 @@
 class API::V1::MeasuresController < API::V1::DeviceSecuredController
+  skip_before_filter :verify_authenticity_token, only: :create
   before_action :load_service
 
   def index
