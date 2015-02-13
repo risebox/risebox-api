@@ -40,3 +40,14 @@ group :development, :test do
   gem 'sqlite3'
 end
 
+group :test do
+  gem 'minitest'
+  gem 'rspec-rails'
+  gem 'factory_girl'
+  gem 'shoulda-matchers'
+  gem 'webmock'
+
+  gem 'guard-rspec', require: false
+  gem 'rspec-nc'
+end
+
