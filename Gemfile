@@ -47,6 +47,8 @@ group :test do
   gem 'shoulda-matchers'
   gem 'webmock'
 
+  gem 'terminal-notifier', '~> 1.6.2'
+
   gem 'guard-rspec', require: false
   gem 'rspec-nc'
 end
