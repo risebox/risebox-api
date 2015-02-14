@@ -6,13 +6,13 @@ describe Risebox::Api::SimpleResponse do
 
   describe '#response_headers' do
     it 'returns an empty hash' do
-      subject.response_headers.should eq({})
+      expect(subject.response_headers).to eq({})
     end
   end
 
   describe '#response_body' do
     it 'returns the result in a hash' do
-      subject.response_body.should eq({result: device})
+      expect(subject.response_body).to eq({result: device})
     end
   end
 end
