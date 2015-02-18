@@ -20,6 +20,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'responders', '~> 2.0'
 
+gem 'active_model_serializers'
+
 group :production do
   gem 'pg'
   gem 'newrelic_rpm'
