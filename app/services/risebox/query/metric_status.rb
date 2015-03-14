@@ -6,7 +6,7 @@ class Risebox::Query::MetricStatus
   end
 
   def list
-    [true, Risebox::Core::MetricStatus.for_device(device).with_metric(metric)]
+    [true, Risebox::Core::MetricStatus.for_device(device).with_metric]
   end
 
   def update metric_code, value

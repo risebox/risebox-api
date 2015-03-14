@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150314153934) do
+ActiveRecord::Schema.define(version: 20150314161039) do
 
   create_table "devices", force: :cascade do |t|
     t.string   "name"
@@ -54,9 +54,10 @@ ActiveRecord::Schema.define(version: 20150314153934) do
   create_table "metrics", force: :cascade do |t|
     t.string   "name"
     t.string   "code"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.string   "unit"
+    t.integer  "display_order"
   end
 
   add_index "metrics", ["code"], name: "index_metrics_on_code"

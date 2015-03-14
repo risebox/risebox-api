@@ -3,5 +3,5 @@ class Risebox::Core::MetricStatus < ActiveRecord::Base
   belongs_to :metric, class_name: 'Risebox::Core::Metric'
 
   scope :for_device,  -> (device) { where(device_id: device) }
-  scope :with_metric, -> (metric) { includes(:metric)        }
+  scope :with_metric, -> { joins(:metric).includes(:metric).order('metrics.display_order') }
 end
