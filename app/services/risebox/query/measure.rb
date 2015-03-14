@@ -14,9 +14,11 @@ class Risebox::Query::Measure
     device.measures.new(metric: metric, value: value, taken_at: Time.now)
   end
 
-  def create metric, value
-    measure = build_new(metric, value)
-    [measure.save, measure]
+  def create metric_code, value
+    measure              = build_new(metric_code, value)
+    measure_saved        = measure.save
+    status_saved, status = Risebox::Query::MetricStatus.new(device).update(metric_code, value)
+    [measure_saved && status_saved, measure]
   end
 
 end

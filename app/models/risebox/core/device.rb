@@ -1,7 +1,9 @@
 class Risebox::Core::Device < ActiveRecord::Base
   before_create :generate_token
 
-  has_many   :measures, class_name: 'Risebox::Core::Measure', dependent: :destroy
+  has_many   :measures,        class_name: 'Risebox::Core::Measure',      dependent: :destroy
+  has_many   :metric_statuses, class_name: 'Risebox::Core::MetricStatus', dependent: :destroy
+
   belongs_to :owner, class_name: 'Risebox::Core::User', foreign_key: :owner_id
 
   scope :for_credentials,  -> (key,secret) {where(key: key, token: secret)}
