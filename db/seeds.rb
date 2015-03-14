@@ -1,8 +1,8 @@
 adrien  = Risebox::Core::User.create first_name: 'Adrien', last_name: 'Thery', email: 'adrien@risebox.co'
 nicolas = Risebox::Core::User.create first_name: 'Nicolas', last_name: 'Nardone', email: 'nicolas@risebox.co'
 
-menucourt = adrien.devices.create(name: 'menucourt', key: 'menucourt', token: 'token1', model: 'Hapy', version: '1')
-lab1      = nicolas.devices.create(name: 'lab1', key: 'lab1', token: 'token2', model: 'Hapy', version: '2')
+menucourt = adrien.devices.create(name: 'menucourt', key: 'menucourt', model: 'Hapy', version: '1')
+lab1      = nicolas.devices.create(name: 'lab1', key: 'lab1', model: 'Hapy', version: '2')
 
 ph        = Risebox::Core::Metric.create name: "PH de l'eau",                   code: 'PH',    unit: nil,       display_order: 1
 w_temp    = Risebox::Core::Metric.create name: "Température de l'eau",          code: 'WTEMP', unit: '°C',      display_order: 2
