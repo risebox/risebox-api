@@ -16,6 +16,12 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :demo, path: "demo", constraints: https_constraint do
+    root 'devices#index', as: 'root'
+    get '/:device_key'       => 'devices#show', as: 'device'
+    get '/:devices_key/logs' => 'devices#logs', as: 'device_log'
+  end
+
   root 'home#index'
 
 end

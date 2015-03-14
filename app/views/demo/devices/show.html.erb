@@ -1,0 +1,27 @@
+<h1>Risebox <%=@device.name%></h1>
+<h3>Modèle <%= 'Hâpy' %> version <%= @device.version %>
+<h3>Utilisé par <%= @device.owner.first_name%> <%= @device.owner.last_name%>
+<h3>Statut <span style="background-color: <%=@global_light%>">&nbsp;&nbsp;</span></h3>
+<h3>Connecté : <span style="background-color: <%= (@last_connected && @last_connected < 5.minutes.ago) ? 'green' : 'red' %>">&nbsp;&nbsp;</span></h3>
+<table border="1">
+	<tr>
+		<th>&nbsp;</th>
+		<th>Indicateur</th>
+		<th>Valeur</th>
+		<th>Quand?</th>
+	</tr>
+	<% @statuses.each do |status| %>
+		<tr>
+			<td style="background-color: <%=status.light%>"><%= status.level %></td>
+			<td><%= status.metric.name %></td>
+			<td>
+				<% if status.value.present? %>
+					<%= status.value %> <%= status.metric.unit %>
+				<% else %>
+					N/A
+				<% end %>
+			</td>
+			<td><%= status.taken_at.present? ? time_ago_in_words(status.taken_at) : 'N/A' %></td>
+		</tr>
+	<% end %>
+</table>
