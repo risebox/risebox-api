@@ -9,7 +9,8 @@ class Risebox::Query::Measure
     [true, Risebox::Core::Measure.for_device(device).for_metric(metric).recent]
   end
 
-  def build_new metric, value
+  def build_new metric_code, value
+    metric = Risebox::Core::Metric.find_by_code metric_code
     device.measures.new(metric: metric, value: value, taken_at: Time.now)
   end
 

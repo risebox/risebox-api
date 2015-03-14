@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150206124426) do
+ActiveRecord::Schema.define(version: 20150314152925) do
 
   create_table "devices", force: :cascade do |t|
     t.string   "name"
@@ -28,16 +28,26 @@ ActiveRecord::Schema.define(version: 20150206124426) do
   add_index "devices", ["owner_id"], name: "index_devices_on_owner_id"
 
   create_table "measures", force: :cascade do |t|
-    t.string   "metric"
-    t.string   "value"
+    t.float    "value"
     t.datetime "taken_at"
     t.integer  "device_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "metric_id"
   end
 
   add_index "measures", ["device_id"], name: "index_measures_on_device_id"
-  add_index "measures", ["metric"], name: "index_measures_on_metric"
+  add_index "measures", ["metric_id"], name: "index_measures_on_metric_id"
+
+  create_table "metrics", force: :cascade do |t|
+    t.string   "name"
+    t.string   "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "unit"
+  end
+
+  add_index "metrics", ["code"], name: "index_metrics_on_code"
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
