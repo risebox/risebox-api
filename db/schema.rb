@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150314161039) do
+ActiveRecord::Schema.define(version: 20150314211117) do
 
   create_table "devices", force: :cascade do |t|
     t.string   "name"
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 20150314161039) do
     t.datetime "taken_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float    "limit_min"
+    t.float    "limit_max"
   end
 
   add_index "metric_statuses", ["device_id", "metric_id"], name: "index_metric_statuses_on_device_id_and_metric_id", unique: true
