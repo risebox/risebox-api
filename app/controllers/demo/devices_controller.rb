@@ -1,6 +1,6 @@
 class Demo::DevicesController < ApplicationController
   http_basic_authenticate_with name: 'dg', password: 'dg'
-  
+
   def index
     @devices = Risebox::Core::Device.all
   end
@@ -36,12 +36,12 @@ private
   end
 
   def device_global_light statuses
-    global_light = 'warning'
+    global_light = 'grey'
     statuses.each do |s|
-      if s.light == 'success'
-        global_light = 'success' if global_light == 'warning'
-      elsif s.light == 'danger'
-        global_light = 'danger' unless global_light == 'danger'
+      if s.light == 'green'
+        global_light = 'green' if global_light == 'grey'
+      elsif s.light == 'red'
+        global_light = 'red' unless global_light == 'red'
       end
     end
     global_light

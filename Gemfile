@@ -22,7 +22,13 @@ gem 'responders', '~> 2.0'
 
 gem 'active_model_serializers'
 
+gem 'sass-rails'
+gem 'coffee-rails'
 gem 'bootstrap-sass'
+
+gem 'uglifier'
+
+gem 'jquery-rails', '=2.0.2'
 
 group :production do
   gem 'pg'

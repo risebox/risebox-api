@@ -19,8 +19,8 @@ class Risebox::Core::MetricStatus < ActiveRecord::Base
 
   def light
     l = level
-    return 'success' if l == 'OK'
-    return 'warning'  if l == 'N/A'
-    return 'danger'
+    return 'green' if l == 'OK'
+    return 'grey'  if l == 'N/A'
+    return 'red'
   end
 end
