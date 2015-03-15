@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/heroku/heroku.rb.git
+  revision: 9144244b5deeb2127ebca88e51a052e1efec6681
+  branch: master
+  specs:
+    heroku-api (0.3.22)
+      excon (~> 0.38)
+      multi_json (~> 1.8)
+
+GIT
   remote: https://github.com/heroku/rails3_serve_static_assets.git
   revision: 84910ceb4ca2851d650e66d3b22f5008acf253f8
   branch: master
@@ -84,6 +93,7 @@ GEM
     debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
     erubis (2.7.0)
+    excon (0.44.4)
     execjs (2.2.2)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
@@ -256,6 +266,7 @@ DEPENDENCIES
   coffee-rails
   factory_girl
   guard-rspec
+  heroku-api!
   hiredis
   jbuilder (~> 2.0)
   jquery-rails (= 2.0.2)
