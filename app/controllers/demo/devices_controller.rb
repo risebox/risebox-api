@@ -1,6 +1,6 @@
 class Demo::DevicesController < ApplicationController
   http_basic_authenticate_with name: 'dg', password: 'dg'
-  
+
   def index
     @devices = Risebox::Core::Device.all
   end
