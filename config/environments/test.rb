@@ -1,5 +1,12 @@
 Rails.application.configure do
+
+  REDIS_PROVIDER_URL = 'redis://localhost:6379/'
+
   # Settings specified here will take precedence over those in config/application.rb.
+  WORKER_AUTOSCALE = false
+  SCALER_CONFIG = {
+                    default:    {min_workers: 0, max_workers: 1, job_threshold: 1, queues: 'send_emails' }
+                  }
 
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
@@ -29,7 +36,10 @@ Rails.application.configure do
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
-  config.action_mailer.delivery_method = :test
+  config.action_mailer.delivery_method     = :test
+  config.action_mailer.default_options     = { from:      'Risebox <contact@risebox.co>',
+                                               reply_to:  'no-reply@risebox.co' }
+  config.action_mailer.default_url_options = { host: 'www.risebox.co' }
 
   # Randomize the order test cases are executed.
   config.active_support.test_order = :random

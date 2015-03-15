@@ -1,3 +1,5 @@
+require 'resque/server'
+
 Rails.application.routes.draw do
 
   https_constraint = (Rails.env.production? ? {protocol: 'https://'} : {})
@@ -22,6 +24,8 @@ Rails.application.routes.draw do
     get '/:device_key'       => 'devices#show', as: 'device'
     get '/:devices_key/logs' => 'devices#logs', as: 'device_log'
   end
+
+  mount Resque::Server, at: '/jobs', as: 'jobs'
 
   root 'home#index'
 
