@@ -1,26 +1,55 @@
 class Risebox::Core::MetricStatus < ActiveRecord::Base
+  before_save :compute_level_and_light
+  after_save  :manage_alerts
+
   belongs_to :device, class_name: 'Risebox::Core::Device'
   belongs_to :metric, class_name: 'Risebox::Core::Metric'
+
 
   scope :for_device,  -> (device) { where(device_id: device) }
   scope :with_metric, -> { joins(:metric).includes(:metric).order('metrics.display_order') }
 
-  def level
-    return 'N/A' if value.nil?
-    if limit_min && value < limit_min
-      level = 'Trop bas'
+private
+
+  def compute_level_and_light
+    # return unless value_changed?
+
+    puts "value #{value}"
+
+    if value.nil?
+      future_level = 'N/A'
+    elsif limit_min && value < limit_min
+      future_level = 'Trop bas'
     elsif limit_max && value > limit_max
-      level = 'Trop haut'
+      future_level = 'Trop haut'
     else
-      level = 'OK'
+      future_level = 'OK'
     end
-    level
+
+    if future_level == 'OK'
+      future_light = 'green'
+    elsif future_level == 'N/A'
+      future_light = 'grey'
+    else
+      future_light = 'red'
+    end
+
+    if future_light == 'red' && light != 'red'
+      @begin_alert = true
+    end
+    if future_light == 'green' && light == 'red'
+      @end_alert = true
+    end
+
+    puts "future_level #{future_level}"
+    puts "future_light #{future_light}"
+
+    self.level = future_level
+    self.light = future_light
   end
 
-  def light
-    l = level
-    return 'green' if l == 'OK'
-    return 'grey'  if l == 'N/A'
-    return 'red'
+  def manage_alerts
+    # TODO: send email
+    # TODO: Mémoriser la durée de l'alerte
   end
 end
