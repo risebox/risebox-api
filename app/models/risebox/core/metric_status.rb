@@ -14,8 +14,6 @@ private
   def compute_level_and_light
     # return unless value_changed?
 
-    puts "value #{value}"
-
     if value.nil?
       future_level = 'N/A'
     elsif limit_min && value < limit_min
@@ -40,9 +38,6 @@ private
     if future_light == 'green' && light == 'red'
       @end_alert = true
     end
-
-    puts "future_level #{future_level}"
-    puts "future_light #{future_light}"
 
     self.level = future_level
     self.light = future_light
