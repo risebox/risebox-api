@@ -36,12 +36,12 @@ private
   end
 
   def device_global_light statuses
-    global_light = 'grey'
+    global_light = 'warning'
     statuses.each do |s|
-      if s.light == 'green'
-        global_light = 'green' if global_light == 'grey'
-      elsif s.light == 'red'
-        global_light = 'red' unless global_light == 'red'
+      if s.light == 'success'
+        global_light = 'success' if global_light == 'warning'
+      elsif s.light == 'danger'
+        global_light = 'danger' unless global_light == 'danger'
       end
     end
     global_light

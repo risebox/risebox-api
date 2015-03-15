@@ -14,7 +14,7 @@
 					<td><%= device.name %></td>
 					<td><%= device.owner.first_name %> <%= device.owner.last_name %></td>
 					<td>
-						<% if (last_call.present? && last_call < 5.minutes.ago) %>
+						<% if (last_call.present? && last_call > 5.minutes.ago) %>
 							<span class="label label-success">Connecté</span>
 						<% else %>
 						    <span class="label label-danger">Déconnecté</span>
