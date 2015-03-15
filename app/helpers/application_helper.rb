@@ -2,7 +2,7 @@ module ApplicationHelper
   def label_for_color color
     case color
     when 'grey'
-      'defauft'
+      'warning'
     when 'green'
       'success'
     when 'red'
