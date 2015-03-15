@@ -1,8 +1,8 @@
 <h1>Risebox <%=@device.name%></h1>
 <h3>Modèle <%= 'Hâpy' %> version <%= @device.version %>
 <h3>Utilisé par <%= @device.owner.first_name%> <%= @device.owner.last_name%>
-<h3>Statut <span style="background-color: <%=@global_light%>">&nbsp;&nbsp;</span></h3>
-<h3>Connecté : <span style="background-color: <%= (@last_connected && @last_connected > 5.minutes.ago) ? 'green' : 'red' %>">&nbsp;&nbsp;</span></h3>
+<h3>Statut <span style="background-color: <%=@global_light%>">&nbsp;&nbsp;&nbsp;</span></h3>
+<h3>Connecté : <span style="background-color: <%= (@last_connected && @last_connected > 5.minutes.ago) ? 'green' : 'red' %>">&nbsp;&nbsp;&nbsp;</span></h3>
 <table border="1">
 	<tr>
 		<th>&nbsp;</th>

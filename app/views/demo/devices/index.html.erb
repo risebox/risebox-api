@@ -11,7 +11,7 @@
 		<tr>
 			<td><%= device.name %></td>
 			<td><%= device.owner.first_name %> <%= device.owner.last_name %></td>
-			<td><%= (last_call.present? && last_call < 5.minutes.ago) ? 'Oui' : 'Non' %></td>
+			<td><span style="background-color: <%= (last_call && last_call > 5.minutes.ago) ? 'green' : 'red' %>">&nbsp;&nbsp;&nbsp;</span></td>
 			<td><%= link_to 'Voir', demo_device_path(device_key: device.key) %></td>
 		</tr>
 	<% end %>
