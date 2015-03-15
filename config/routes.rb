@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       resources :devices do
         resources :metrics do
           resources :measures
+          resources :alerts
         end
         resources :parameters
       end
