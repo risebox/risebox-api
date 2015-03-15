@@ -105,6 +105,9 @@ GEM
     jbuilder (2.2.6)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
+    jquery-rails (2.0.2)
+      railties (>= 3.2.0, < 5.0)
+      thor (~> 0.14)
     json (1.8.2)
     listen (2.4.0)
       celluloid (>= 0.15.2)
@@ -214,6 +217,9 @@ GEM
     timers (1.1.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    uglifier (2.7.1)
+      execjs (>= 0.3.0)
+      json (>= 1.8.0)
     web-console (2.0.0)
       activemodel (~> 4.0)
       binding_of_caller (>= 0.7.2)
@@ -234,6 +240,7 @@ DEPENDENCIES
   factory_girl
   guard-rspec
   jbuilder (~> 2.0)
+  jquery-rails (= 2.0.2)
   minitest
   newrelic_rpm
   pg
@@ -249,5 +256,6 @@ DEPENDENCIES
   spring
   sqlite3
   terminal-notifier (~> 1.6.2)
+  uglifier
   web-console (~> 2.0)
   webmock
