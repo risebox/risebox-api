@@ -1,51 +1,53 @@
-<h1>Risebox <%=@device.name%></h1>
-<h3>Modèle <%= 'Hâpy' %> version <%= @device.version %>
-<h3>Utilisé par <%= @device.owner.first_name%> <%= @device.owner.last_name%>
+<div class="container-fluid">
+	<h1>Risebox <%=@device.name%></h1>
+	<h3>Modèle <%= 'Hâpy' %> version <%= @device.version %></h3>
+	<h3>Utilisé par <%= @device.owner.first_name%> <%= @device.owner.last_name%></h3>
 
-<h3>
-	Connectivité :
-	<% if (@last_connected && @last_connected < 5.minutes.ago) %>
-		<span class="label label-success">Connecté</span>
-	<% else %>
-		<span class="label label-danger">Déconnecté</span>
-	<% end %>
-</h3>
-
-<h3>
-	Statut :
-	<% if @global_light == 'green' %>
-		<span class="label label-success">OK</span>
-	<% else %>
-		<span class="label label-danger">KO</span>
-	<% end %>
-</h3>
-
-
-<div class="table-responsive">
-	<table class="table table-hover">
-		<tr>
-			<th>&nbsp;</th>
-			<th>Indicateur</th>
-			<th>Valeur</th>
-			<th>Quand?</th>
-		</tr>
-		<% @statuses.each do |status| %>
-			<tr>
-				<td>
-					<span class="label label-<%= status.light == 'green' ? 'success' : 'danger' %>">
-						<%= status.level %>
-					</span>
-				</td>
-				<td><%= status.metric.name %></td>
-				<td>
-					<% if status.value.present? %>
-						<%= status.value %> <%= status.metric.unit %>
-					<% else %>
-						N/A
-					<% end %>
-				</td>
-				<td><%= status.taken_at.present? ? time_ago_in_words(status.taken_at) : 'N/A' %></td>
-			</tr>
+	<h3>
+		Connectivité :
+		<% if (@last_connected && @last_connected < 5.minutes.ago) %>
+			<span class="label label-success">Connecté</span>
+		<% else %>
+			<span class="label label-danger">Déconnecté</span>
 		<% end %>
-	</table>
+	</h3>
+
+	<h3>
+		Statut :
+		<% if @global_light == 'green' %>
+			<span class="label label-success">OK</span>
+		<% else %>
+			<span class="label label-danger">KO</span>
+		<% end %>
+	</h3>
+
+
+	<div class="table-responsive">
+		<table class="table table-hover">
+			<tr>
+				<th>&nbsp;</th>
+				<th>Indicateur</th>
+				<th>Valeur</th>
+				<th>Quand?</th>
+			</tr>
+			<% @statuses.each do |status| %>
+				<tr>
+					<td>
+						<span class="label label-<%= status.light == 'green' ? 'success' : 'danger' %>">
+							<%= status.level %>
+						</span>
+					</td>
+					<td><%= status.metric.name %></td>
+					<td>
+						<% if status.value.present? %>
+							<%= status.value %> <%= status.metric.unit %>
+						<% else %>
+							N/A
+						<% end %>
+					</td>
+					<td><%= status.taken_at.present? ? time_ago_in_words(status.taken_at) : 'N/A' %></td>
+				</tr>
+			<% end %>
+		</table>
+	</div>
 </div>
