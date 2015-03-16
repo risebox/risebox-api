@@ -9,4 +9,16 @@ module ApplicationHelper
       'danger'
     end
   end
+  def level_text level
+    case level
+    when 'none'
+      'N/A'
+    when 'ok'
+      'OK'
+    when 'low'
+      'Trop bas'
+    when 'high'
+      'Trop haut'
+    end
+  end
 end

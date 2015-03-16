@@ -15,18 +15,18 @@ private
     # return unless value_changed?
 
     if value.nil?
-      future_level = 'N/A'
+      future_level = 'none'
     elsif limit_min && value < limit_min
-      future_level = 'Trop bas'
+      future_level = 'low'
     elsif limit_max && value > limit_max
-      future_level = 'Trop haut'
+      future_level = 'high'
     else
-      future_level = 'OK'
+      future_level = 'ok'
     end
 
-    if future_level == 'OK'
+    if future_level == 'ok'
       future_light = 'green'
-    elsif future_level == 'N/A'
+    elsif future_level == 'none'
       future_light = 'grey'
     else
       future_light = 'red'
