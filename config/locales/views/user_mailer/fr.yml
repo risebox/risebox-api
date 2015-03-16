@@ -1,0 +1,31 @@
+fr:
+  user_mailer:
+    device_alert:
+      hint:
+        ph:
+          high: "Diluez un demi bouchon d'acide phosphorique dans 1 litre d'eau et versez le tout dans votre aquarium. Refaites un test d'eau sous 24h."
+          low: "Remplacez 30l de votre aquarium par 30l d'eau du robinet, que vous laissere préalablement reposer 24h à l'air libre."
+        wtemp:
+          high: "Coupez le chauffage de votre aquarium, ou baissez-le nettement. Si votre Risebox est dans votre habitat, il n'est probablement pas nécessaire de chauffer l'eau."
+          low: "Il est préférable de placer votre Risebox dans un environnement tempéré, comme une pièce habitée. A défaut, chauffez l'aquarium à 19 ou 20°"
+        atemp:
+          high: "Il est préférable de placer votre Risebox dans un environnement tempéré, comme une pièce habitée."
+          low: "Il est préférable de placer votre Risebox dans un environnement tempéré, comme une pièce habitée."
+        ahum:
+          high: ""
+          low: ""
+        ucyc:
+          high: "Ajustez le débit de votre pompe pour que les siphons s'enclenchent et s'arrêtent plus nettement."
+          low: "Réduisez le débit de votre pompe en utilisant son variateur, et affinez en ajustant les vannes."
+        lcyc:
+          high: "Ajustez le débit de votre pompe pour que les siphons s'enclenchent et s'arrêtent plus nettement."
+          low: "Réduisez le débit de votre pompe en utilisant son variateur, et affinez en ajustant les vannes."
+        n02:
+          high: "Arrêtez de nourrir les poissons pendant 48h, vérifier que la température de l'eau est conforme et refaites une mesure"
+          low: ""
+        nh4:
+          high: "Arrêtez de nourrir les poissons pendant 48h, vérifier que la température de l'eau est conforme et refaites une mesure"
+          low: ""
+        no3:
+          high: "Arrêtez de nourrir les poissons pendant 48h et refaites une mesure. Assurez-vous également que vos bacs comportent suffisament de plantes, et replantez si nécessaire." 
+          low: "Augmentez un peu les rations journalières de vos poissons, et envisage l'ajout de nouveau poissons, pour ajouter des nutriments."

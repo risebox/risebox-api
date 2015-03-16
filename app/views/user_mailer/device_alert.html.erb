@@ -2,5 +2,7 @@
 <p>Normalement sa valeur doit être comprise entre <%= @metric_status.limit_min %> et <%= @metric_status.limit_max%></p>
 
 <p>
-     <%= @metric_status.description %>
+	<strong>Notre conseil : </strong><br>
+    <%= t ".hint.#{@metric.code.downcase}.#{@metric_status.level}" %><br>
+    <%= @metric_status.description %>
 </p>
