@@ -1,5 +1,17 @@
 Rails.application.configure do
+
+  REDIS_PROVIDER_URL = 'redis://localhost:6379/'
+
   # Settings specified here will take precedence over those in config/application.rb.
+  WORKER_AUTOSCALE = false
+  SCALER_CONFIG = {
+                    default:    {min_workers: 0, max_workers: 1, job_threshold: 1, queues: 'send_emails' }
+                  }
+  JOBS_RUN         = true
+  JOBS_SYNCHRONOUS = true
+
+  TEST_EMAIL        = ''
+  MAILS_INTERCEPTED = false
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -15,6 +27,10 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.default_url_options   = { host: "localhost:#{ENV['PORT']}" }
+  config.action_mailer.delivery_method       = :test
+  config.action_mailer.default_options       = { from:      'Risebox <contact@risebox.co>',
+                                                 reply_to:  'no-reply@risebox.co' }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
