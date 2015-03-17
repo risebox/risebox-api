@@ -1,5 +1,6 @@
 class UserMailer < ActionMailer::Base
   require 'email_header.rb'
+  helper :application
 
   # default "notification@risebox.co"
   layout 'mailer'

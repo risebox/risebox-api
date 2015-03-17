@@ -44,7 +44,7 @@ private
   end
 
   def manage_alerts
-    JobRunner.run(SendEmail, 'device_alert', 'Risebox::Core::MetricStatus', self.id) if self.description.present?
+    JobRunner.run(SendEmail, 'device_alert', 'Risebox::Core::MetricStatus', self.id) if @begin_alert
     # TODO: Mémoriser la durée de l'alerte
   end
 end
