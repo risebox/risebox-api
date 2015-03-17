@@ -1,0 +1,19 @@
+<script>
+  $(document).ready(function() {
+    data        = <%= @result.html_safe %>;
+    dates       = [<%# (@begin_at..Time.now).map{ |d| d.strftime('%Q')}.join(", ") %>];  //Convert Dates in Unix time
+    reportTitle = "<%= j @report_title.html_safe %>";
+
+    displayMetricReport(data, dates, "#report", 900, reportTitle);
+  });
+</script>
+
+<h1><%= @report_title %></h1>
+
+<div class="row">
+    <div id="report" class="col-md-9"></div>
+    <div id="reportParams" class="col-md-3">
+        <%# render partial: 'form', locals: { path:       organization_player_stat_path(@organization, :progress),
+                                              criterias:  [:module, :player, :time_frame] } %>
+    </div>
+</div>

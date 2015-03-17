@@ -6,7 +6,7 @@ class Demo::DevicesController < ApplicationController
   end
 
   def show
-    @device = Risebox::Core::Device.find_by_key(params[:device_key])
+    @device = Risebox::Core::Device.find_by_key(params[:id])
     if @device
       success, @statuses       = Risebox::Query::MetricStatus.new(@device).list
       @global_light            = device_global_light @statuses

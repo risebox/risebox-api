@@ -10,7 +10,7 @@ Rails.application.configure do
   JOBS_RUN         = true
   JOBS_SYNCHRONOUS = false
 
-  TEST_EMAIL        = "test@contentbird.com"
+  TEST_EMAIL        = "test@risebox.co"
   MAILS_INTERCEPTED = ENV['MAILS_INTERCEPTED'] == 'true'
 
   # Code is not reloaded between requests.

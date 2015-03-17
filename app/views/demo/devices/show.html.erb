@@ -20,6 +20,7 @@
 				<th>Indicateur</th>
 				<th>Valeur</th>
 				<th>Quand?</th>
+				<th>&nbsp;</th>
 			</tr>
 			<% @statuses.each do |status| %>
 				<tr>
@@ -37,6 +38,11 @@
 						<% end %>
 					</td>
 					<td><%= status.taken_at.present? ? time_ago_in_words(status.taken_at) : 'N/A' %></td>
+					<td>
+						<%= link_to metric_demo_device_path(id: @device.key, metric: status.metric.code), class: 'btn btn-default' do %>
+	                        <i class="glyphicon glyphicon-signal icon-white"></i> Voir
+	                    <% end %>
+					</td>
 				</tr>
 			<% end %>
 		</table>
