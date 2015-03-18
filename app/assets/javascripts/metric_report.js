@@ -1,6 +1,9 @@
 displayMetricReport = function(bulkData, dates, reportDiv, maxWidth, reportTitle) {
-  console.log(bulkData);
-  console.log("dates "+dates);
+  var formatTimeToolTip = d3.time.format("%e %B %H:%M");
+
+  var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
 
   var margin = {top: 40, right: 0, bottom: 110, left: 50},
       width  = maxWidth - margin.left - margin.right,
@@ -53,6 +56,7 @@ displayMetricReport = function(bulkData, dates, reportDiv, maxWidth, reportTitle
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis)
+    // Rotate  Axis Ticks
     // .selectAll("text")
     //   .style("text-anchor", "end")
     //   .attr("dx", "-.8em")
@@ -81,6 +85,32 @@ displayMetricReport = function(bulkData, dates, reportDiv, maxWidth, reportTitle
       .datum(data)
       .attr("class", "line")
       .attr("d", line);
+
+  svg.selectAll("dot")
+    .data(data)
+    .enter().append("circle")
+    .attr("r", 5.5)
+    .style("fill", "blue")
+    .style("opacity", .8)      // set the element opacity
+    .style("stroke", "#f93")    // set the line colour
+    .style("stroke-width", 3.5)
+    .attr("cx", function(d) { return x(d.date); })
+    .attr("cy", function(d) { return y(d.result); })
+    .on("mouseover", function(d) {
+      d3.select(this).attr("r", 7);
+      div.transition()
+        .duration(200)
+        .style("opacity", .9);
+      div.html(formatTimeToolTip(new Date(d.date)) + "<br/>"  + d.result)
+        .style("left", d3.event.pageX + "px")
+        .style("top", (d3.event.pageY + 18) + "px");
+    })
+    .on("mouseout", function(d) {
+      d3.select(this).attr("r", 5.5);
+        div.transition()
+          .duration(500)
+          .style("opacity", 0);
+    });
 
   //Title
   svg.append("foreignObject")

@@ -6,7 +6,6 @@ class Demo::MetricsController < ApplicationController
     @metric = Risebox::Core::Metric.find_by_code params[:metric]
     @report_title = "Evolution de #{@metric.name}"
     @result = format_result @device.measures.for_metric(@metric.code).select([:taken_at, :value])
-    puts "@result #{@result}"
     @begin_at = 1.week.ago
   end
 private
