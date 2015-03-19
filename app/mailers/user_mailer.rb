@@ -10,7 +10,7 @@ class UserMailer < ActionMailer::Base
     @metric_status = metric_status
     @metric        = metric_status.metric
     @user          = metric_status.device.owner
-    mail(to: @user.email, subject: "Risebox - Alerte sur votre device")
+    mail(to: @user.email, subject: "Votre Risebox demande votre attention")
   end
 
 private
