@@ -5,7 +5,7 @@ class Demo::MetricsController < ApplicationController
     @device = Risebox::Core::Device.find_by_key(params[:id])
     @metric = Risebox::Core::Metric.find_by_code params[:metric]
     @report_title = "Evolution de #{@metric.name}"
-    @begin_at = params[:begin_at].present? ? Date.parse(params[:begin_at]) : 1.hour.ago
+    @begin_at = params[:begin_at].present? ? params[:begin_at] : 1.hour.ago.beginning_of_hour
     @result = format_result @device.measures.for_metric(@metric.code).select([:taken_at, :value]).since(@begin_at)
     @time_frames = time_frames
   end
@@ -24,9 +24,9 @@ private
 
   def time_frames
     [
-      ['1 heure',   1.hour.ago.to_date],
-      ['1 jour',    1.day.ago.to_date],
-      ['1 semaine', 1.week.ago.to_date]
+      ['1 heure',   1.hour.ago.beginning_of_hour],
+      ['1 jour',    1.day.ago.beginning_of_hour],
+      ['1 semaine', 1.week.ago.beginning_of_hour]
     ]
   end
 end
