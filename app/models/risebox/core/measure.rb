@@ -4,5 +4,6 @@ class Risebox::Core::Measure < ActiveRecord::Base
 
   scope :for_device, -> (device) { where(device_id: device) }
   scope :for_metric, -> (metric) { joins(:metric).where("metrics.code = ?", metric) }
+  scope :since,      -> (date)   { where('taken_at >= ?', date) }
   scope :recent,     ->          { order(taken_at: :desc) }
 end

@@ -1,0 +1,10 @@
+<%= form_tag(path, method: :get, class: 'form-horizontal') do %>
+    <% if criterias.include?(:time_frame) %>
+        <%= label_tag "Sélectionner la période:", nil, class: 'control-label' %>
+        <%= select_tag(:begin_at, options_for_select(@time_frames, @begin_at), class: 'form-control') %>
+    <% end %>
+
+    &nbsp;&nbsp;
+
+    <%= submit_tag 'Actualiser', class: 'btn btn-success btn-block refreshBtn' %>
+<% end %>
