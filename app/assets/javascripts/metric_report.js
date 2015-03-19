@@ -21,6 +21,7 @@ displayMetricReport = function(bulkData, dates, reportDiv, maxWidth, reportTitle
   var xAxis = d3.svg.axis()
       .scale(x)
       .orient("bottom")
+      .ticks(5)
       .tickFormat(d3.time.format("%d/%m %H:%M"));
 
   //Y Axis
