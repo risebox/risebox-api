@@ -47,8 +47,8 @@ displayMetricReport = function(bulkData, dates, reportDiv, maxWidth, reportTitle
     d.result = +d.value;
   });
 
-  x.domain(dates);
-  // x.domain([d3.min(data, function (d) { return d.date; })-1, d3.max(data, function (d) { return d.date; })]);
+  // x.domain(dates);
+  x.domain([d3.min(data, function (d) { return d.date; })-1, d3.max(data, function (d) { return d.date; })]);
   y.domain([d3.min(data, function (d) { return d.result; })-1, d3.max(data, function (d) { return d.result; })]);
 
   //Draw Axis

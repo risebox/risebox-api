@@ -1,10 +1,7 @@
 <script>
   $(document).ready(function() {
     data        = <%= @result.html_safe %>;
-    ts       = [<%= (@begin_at.to_date..Date.today).map{ |d| d.strftime('%Q')}.join(", ") %>];  //Convert Dates in Unix time
-    dates = ts.map(function(d) {
-      return new Date(d);
-    });
+    dates       = [<%# (@begin_at..Time.now).map{ |d| d.strftime('%Q')}.join(", ") %>];  //Convert Dates in Unix time
     reportTitle = "<%= j @report_title.html_safe %>";
 
     displayMetricReport(data, dates, "#report", 800, reportTitle);
