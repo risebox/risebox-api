@@ -1,6 +1,8 @@
 Rails.application.configure do
   REDIS_PROVIDER_URL = ENV['REDISTOGO_URL']
 
+  NEWRELIC_API_URL = "https://api.newrelic.com/api/v1/accounts/#{ENV['NEW_RELIC_ID']}/applications/#{ENV['NEW_RELIC_APP_ID']}"
+
   # Settings specified here will take precedence over those in config/application.rb.
   WORKER_AUTOSCALE = ENV['WORKER_AUTOSCALE'] == 'true'
   SCALER_CONFIG = {

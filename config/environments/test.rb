@@ -2,6 +2,8 @@ Rails.application.configure do
 
   REDIS_PROVIDER_URL = 'redis://localhost:6379/'
 
+  NEWRELIC_API_URL = 'https://api.newrelic.com/api/v1/accounts/123/applications/234'
+
   # Settings specified here will take precedence over those in config/application.rb.
   WORKER_AUTOSCALE = false
   SCALER_CONFIG = {
