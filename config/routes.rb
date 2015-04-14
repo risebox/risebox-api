@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     # get '/:devices_key/logs'  => 'devices#logs',  as: 'device_log'
     resources :devices, path: '/' do
       member do
-        get ':metric', to: 'metrics#show', metric: /(PH|WTEMP|ATEMP|AHUM|LCYC|UCYC|NO2|NO3|NH4)/, as: 'metric'
+        get ':metric', to: 'metrics#show', metric: /(PH|WTEMP|ATEMP|AHUM|LCYC|UCYC|NO2|NO3|NH4|GH|KH)/, as: 'metric'
       end
       get :log, on: :member
     end
