@@ -9,7 +9,7 @@
 			<span class="label label-danger">Déconnecté</span>
 		<% end %>
 		<span class="label label-<%=label_for_color(@global_light)%>">
-			<%=@global_light == 'success' ? 'En bonne santé' : 'A surveiller'%>
+			<%=@global_light == 'green' ? 'En bonne santé' : 'A surveiller'%>
 		</span>
 	</h3>
     <br>
