@@ -8,6 +8,7 @@ currentBranch() {
 
 safeMatchingEnvForBranch() {
   case $1 in
+    "nna") env="rbnna-api";;
     "dev") env="rbdev-api";;
     #"master") env="heroku";;
     *) echo "none"
@@ -22,6 +23,8 @@ chez_local() {
 
 
 case $1 in
+  "rbnna-api") branch="nna"
+           heroku_app="$1";;
   "rbdev-api") branch="dev"
            heroku_app="$1";;
   "risebox-api") branch="master"
@@ -30,11 +33,11 @@ case $1 in
       heroku_app=$(safeMatchingEnvForBranch $(currentBranch))
       if [ "$heroku_app" = "none" ]; then
         echo "No matching env found"
-        echo "Choose 'rbdev-api' or 'risebox-api' !"
+        echo "Choose 'rbnna-api', 'rbdev-api' or 'risebox-api' !"
         exit
       fi
       echo "No target env specified: safely deploying to $heroku_app";;
-  *) echo "Choose 'rbdev-api' or 'risebox-api' !"
+  *) echo "Choose 'rbnna-api', 'rbdev-api' or 'risebox-api' !"
      exit ;;
 esac
 
