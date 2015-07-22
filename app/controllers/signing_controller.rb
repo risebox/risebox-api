@@ -24,6 +24,7 @@ class SigningController < ApplicationController
       format.all {
         render json: {
           url:        @storage.url,
+          bucket:     @storage.bucket,
           access_key: @storage.access_key,
           policy:     upload_policy(),
           signature:  upload_signature(),
