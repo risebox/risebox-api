@@ -23,10 +23,11 @@ class SigningController < ApplicationController
     respond_to do |format|
       format.all {
         render json: {
-          url:       @storage.url,
-          policy:    upload_policy(),
-          signature: upload_signature(),
-          key:       upload_key(@image_name, Time.now, extension)
+          url:        @storage.url,
+          access_key: @storage.access_key,
+          policy:     upload_policy(),
+          signature:  upload_signature(),
+          key:        upload_key(@image_name, Time.now, extension)
         }
       }
     end
