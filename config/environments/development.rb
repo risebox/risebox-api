@@ -1,4 +1,7 @@
 Rails.application.configure do
+  #Load .env content as ENV variables used for ENV['PORT']
+  Hash[File.read('.env').scan(/(.+?)=(.+)/)].each {|k,v| ENV[k.to_s] = v} if File.exist?('.env')
+  ENV['PORT'] ||= '3000'
 
   REDIS_PROVIDER_URL = 'redis://localhost:6379/'
 
