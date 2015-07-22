@@ -31,6 +31,8 @@ Rails.application.routes.draw do
     end
   end
 
+  post :sign, to: "signing#sign"
+  # get :sign, to: "signing#hello"
   mount Resque::Server, at: '/jobs', as: 'jobs'
 
   root 'home#index'
