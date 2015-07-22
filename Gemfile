@@ -27,6 +27,8 @@ gem 'uglifier'
 
 gem 'jquery-rails', '=2.0.2'
 
+gem 'fog'
+
 group :production do
   gem 'pg'
   gem 'newrelic_rpm'

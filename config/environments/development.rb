@@ -7,6 +7,19 @@ Rails.application.configure do
 
   NEWRELIC_API_URL = 'https://api.newrelic.com/api/v1/accounts/123/applications/234'
 
+  STORAGE = {
+    strip_photos: {
+          provider:   'AWS',
+          url:        "//#{ENV['S3_STRIP_BUCKET']}.s3-external-3.amazonaws.com",
+          access_key: ENV['S3_KEY'],
+          secret_key: ENV['S3_SECRET'],
+          bucket:     ENV['S3_STRIP_BUCKET'],
+          conditions: { size: 5242880 },
+          post_process: :resize_image,
+          region:     'eu-west-1'
+                  }
+  }
+
   # Settings specified here will take precedence over those in config/application.rb.
   WORKER_AUTOSCALE = false
   SCALER_CONFIG = {
