@@ -8,8 +8,8 @@ class SigningController < ApplicationController
   #   @path_prefix = path_prefix_for_media_type(params[:media_type], params[:sub_folder])
   # end
 
-  def hello
-    render plain: "OK"
+  def form
+    @storage          = Storage.new(storage_name_from_upload_type("strip_photos"))
   end
 
   def sign
@@ -63,13 +63,14 @@ private
           {"bucket" => @storage.bucket },
           ["starts-with", "$key", @image_name],
           {"acl" => "public-read"},
-          ['starts-with','$Content-Type','image/'],
+          {"success_action_redirect" => "http://localhost:3004/form"},
+          ['starts-with','$Content-Type',''],
           ["content-length-range", 0, @storage.max_size]
         ]
       }
     end
 
-    ret['conditions'] << {"success_action_redirect" => upload_upload_done_url} if @transport == 'iframe'
+    # ret['conditions'] << {"success_action_redirect" => upload_upload_done_url} if @transport == 'iframe'
 
     @policy = Base64.encode64(ret.to_json).gsub(/\n/,'')
   end

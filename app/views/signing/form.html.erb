@@ -1,0 +1,53 @@
+<form id="myForm" action="https:<%=@storage.url%>" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="key" >
+    <input type="hidden" name="<%= @storage.provider == 'AWS' ? 'AWSAccessKeyId' : 'GoogleAccessId'%>" value="<%=@storage.access_key%>">
+    <input type="hidden" name="acl" value="public-read">
+    <input type="hidden" name="success_action_redirect" value="http://localhost:3004/form">
+    <input type="hidden" name="policy" value="policy">
+    <input type="hidden" name="signature" value="signature">
+    <input type="hidden" name="Content-Type" value="image/jpeg">
+    <div class="photosUpload">
+        <div class="fileUpload">
+            <div class="butn action fileinput-button">
+                <span>Select a file</span>
+                <input id="myPhoto" class="fileinput" name="file" type="file">
+            </div>
+        </div>
+    </div>
+    <button id="goForm">
+        OK
+    </button>
+</form>
+
+<script>
+    var submitForm = function(){
+      var myForm = $("#myForm");
+        // the file is the first element in the files property
+      // var file = myForm.files[0];
+
+      var fileExt = 'jpg';//file.name.split('.').pop();
+      var ajaxParams = {
+        url: '<%= sign_url %>',
+        type: 'POST',
+        dataType: 'json',
+        data: {upload_type: "strip_photos", file_name: "image.jpeg"},
+        async: false,
+        success: function(retdata) {
+          $("#myForm").find('input[name=key]').val(retdata.key);
+          $("#myForm").find('input[name=policy]').val(retdata.policy);
+          $("#myForm").find('input[name=signature]').val(retdata.signature);
+          $("#myForm").find('input[name=Content-Type]').val("image/jpeg");
+        }
+      };
+
+      $.ajax(ajaxParams);
+
+      myForm.submit();
+    };
+
+    $('#goForm').on('click', function(e){
+        submitForm();
+        e.preventDefault();
+    });
+
+</script>

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
           resources :alerts
         end
         resources :parameters
+        resources :strip_photos
       end
     end
   end
