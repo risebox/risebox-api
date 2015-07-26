@@ -63,8 +63,7 @@ private
           {"bucket" => @storage.bucket },
           ["starts-with", "$key", @image_name],
           {"acl" => "public-read"},
-          {"success_action_redirect" => "http://localhost:3004/form"},
-          ['starts-with','$Content-Type',''],
+          ['starts-with','$Content-Type','image/'],
           ["content-length-range", 0, @storage.max_size]
         ]
       }
