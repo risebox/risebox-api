@@ -27,7 +27,7 @@ gem 'uglifier'
 
 gem 'jquery-rails', '=2.0.2'
 
-gem 'fog-aws'
+gem 'fog'
 gem 'carrierwave'
 
 group :production do
