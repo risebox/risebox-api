@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150401215112) do
+ActiveRecord::Schema.define(version: 20150727131006) do
 
   create_table "app_settings", force: :cascade do |t|
     t.string   "key",        limit: 50
@@ -75,6 +75,23 @@ ActiveRecord::Schema.define(version: 20150401215112) do
   end
 
   add_index "metrics", ["code"], name: "index_metrics_on_code"
+
+  create_table "strips", force: :cascade do |t|
+    t.integer  "device_id"
+    t.datetime "tested_at"
+    t.datetime "computed_at"
+    t.string   "model"
+    t.string   "photo"
+    t.string   "NO2"
+    t.string   "NO3"
+    t.string   "GH"
+    t.string   "PH"
+    t.string   "KH"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "strips", ["device_id"], name: "index_strips_on_device_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"

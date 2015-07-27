@@ -7,6 +7,16 @@ Rails.application.configure do
 
   NEWRELIC_API_URL = 'https://api.newrelic.com/api/v1/accounts/123/applications/234'
 
+  # STORAGE = {
+  #   strip_photos: {
+  #         provider: 'Local',
+  #         url: "/app/storage_mock",
+  #         local_root: "public/system/#{Rails.env}/tmp",
+  #         folder: "strip_photos",
+  #         conditions: { size: 5242880 }
+  #   }
+  # }
+
   STORAGE = {
     strip_photos: {
           provider:   'AWS',
@@ -15,7 +25,6 @@ Rails.application.configure do
           secret_key: ENV['S3_SECRET'],
           bucket:     ENV['S3_STRIP_BUCKET'],
           conditions: { size: 5242880 },
-          post_process: :resize_image,
           region:     'eu-west-1'
                   }
   }

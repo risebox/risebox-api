@@ -15,7 +15,7 @@ Rails.application.routes.draw do
           resources :alerts
         end
         resources :parameters
-        resources :strip_photos
+        resources :strips, only: :create
       end
     end
   end
@@ -33,7 +33,8 @@ Rails.application.routes.draw do
   end
 
   post :sign, to: "signing#sign"
-  # get :sign, to: "signing#hello"
+  get :form, to: "signing#form"
+
   mount Resque::Server, at: '/jobs', as: 'jobs'
 
   root 'home#index'

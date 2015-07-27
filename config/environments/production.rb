@@ -11,7 +11,6 @@ Rails.application.configure do
           secret_key: ENV['S3_SECRET'],
           bucket:     ENV['S3_STRIP_BUCKET'],
           conditions: { size: 5242880 },
-          post_process: :resize_image,
           region:     'eu-west-1'
                   }
   }

@@ -1,0 +1,5 @@
+<%= form_tag(api_device_strip_photos_path(device_id: 'lab1'), class: 'form-horizontal', enctype: "multipart/form-data") do %>
+    <input id="photo" class="fileinput" name="file" type="file">
+
+    <%= submit_tag 'Actualiser', class: 'btn btn-success btn-block refreshBtn' %>
+<% end %>

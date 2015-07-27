@@ -3,6 +3,7 @@ class Risebox::Core::Device < ActiveRecord::Base
 
   has_many   :measures,        class_name: 'Risebox::Core::Measure',      dependent: :destroy
   has_many   :metric_statuses, class_name: 'Risebox::Core::MetricStatus', dependent: :destroy
+  has_many   :strips,          class_name: 'Risebox::Core::Strip',        dependent: :destroy
 
   belongs_to :owner, class_name: 'Risebox::Core::User', foreign_key: :owner_id
 
