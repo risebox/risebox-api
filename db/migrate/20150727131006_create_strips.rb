@@ -5,7 +5,8 @@ class CreateStrips < ActiveRecord::Migration
       t.datetime :tested_at
       t.datetime :computed_at
       t.string :model
-      t.string :photo
+      t.string :raw_photo_path
+      t.string :wb_photo_path
       t.string :NO2
       t.string :NO3
       t.string :GH

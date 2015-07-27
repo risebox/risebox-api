@@ -21,13 +21,18 @@ class Risebox::Compute::StripPhoto
   def attach_photo key, photo_key
     strip = find(key)
     return [false, nil] unless strip
-    storage = Storage.new(:strip_photos)
-    strip.photo = storage.get_attachable(photo_key)
+    strip.raw_photo_path = photo_key
     [strip.save, strip]
   end
 
   def compute_photo key
-    puts "computing photo #{key}"
+    strip = find(key)
+    return [false, nil] unless strip
+
+    storage = Storage.new(:strip_photos)
+    puts "computing raw image with key #{strip.raw_photo_path}"
+    storage.download strip.raw_photo_path, "#{Rails.root}/tmp/raw_strip.jpg"
+    `#{Rails.root}/lib/modules/whitebalance.sh -c "rgb(185,178,162)" ./tmp/raw_strip.jpg ./tmp/white_strip.jpg`
   end
 
 end
