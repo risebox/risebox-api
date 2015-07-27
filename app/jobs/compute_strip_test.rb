@@ -8,7 +8,7 @@ class ComputeStripTest < JobBase
 
     # Create photo
     service = Risebox::Compute::StripPhoto.new(device)
-    strip_created, strip = service.create(model, DataTime.parse(tested_at))
+    strip_created, strip = service.create(model, DateTime.parse(tested_at))
 
     #Attach Photo
     service.attach_photo strip.id, photo_key
