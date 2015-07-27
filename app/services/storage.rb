@@ -22,7 +22,7 @@ class Storage
     if local?
       File.open("#{local_root}/#{directory}/#{key}")
     else
-      open(url(key))
+      open ensure_protocol(url(key))
     end
   end
 
@@ -88,6 +88,10 @@ class Storage
     else
       @storage_config[:url]
     end
+  end
+
+  def ensure_protocol url
+    url[0..1] == '//' ? 'https:' + url : url
   end
 
   def access_key
