@@ -15,7 +15,7 @@ Rails.application.routes.draw do
           resources :alerts
         end
         resources :parameters
-        resources :strips, only: :create
+        resources :strips, only: :create, defaults: { format: 'json' }
       end
     end
   end
