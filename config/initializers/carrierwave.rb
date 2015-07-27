@@ -1,3 +1,5 @@
+require 'fog-aws'
+
 CarrierWave.configure do |config|
   if STORAGE[:strip_photos][:provider] == 'Local'
     config.fog_credentials = {
