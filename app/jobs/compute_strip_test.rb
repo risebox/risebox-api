@@ -1,5 +1,3 @@
-require 'fog'
-
 class ComputeStripTest < JobBase
   acts_as_scalable
 
