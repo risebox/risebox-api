@@ -1,5 +1,5 @@
 class Risebox::Compute::StripPhoto
-  attr_reader :device, :strip
+  attr_reader :device
 
   def initialize device
     @device = device
@@ -31,11 +31,21 @@ class Risebox::Compute::StripPhoto
 
     storage = Storage.new(:strip_photos)
     puts "START computing raw image with key #{strip.raw_photo_path}"
-    storage.download strip.raw_photo_path, "#{Rails.root}/tmp/raw_strip.jpg"
-    wb = `#{Rails.root}/lib/modules/whitebalance.sh -c "rgb(185,178,162)" ./tmp/raw_strip.jpg ./tmp/white_strip.jpg`
-    puts "after wb"
-    puts wb
-    puts `ls -al ./tmp`
+
+    FileUtils::mkdir_p(strip.local_path) unless FileTest::directory?(strip.local_path)
+
+    # local_raw_path = local_path + "/raw_strip.jpg"
+    # local_wb_path  = local_path + "/white_strip.jpg"
+
+    storage.download strip.raw_photo_path, strip.local_raw_path
+    wb = `#{Rails.root}/lib/modules/whitebalance.sh -c "rgb(185,178,162)" #{strip.local_raw_path} #{strip.local_wb_path}`
+
+    # storage.write_multipart('1/raw_strip1438041631065.jpg', File.open(local_wb_path, 'rb'))
+    storage.write_multipart(strip.remote_wb_path, File.open(strip.local_wb_path, 'rb'))
+    strip.wb_photo_path = strip.remote_wb_path
+    strip.save!
+
+    puts `ls -al #{strip.local_path}`
     puts "DONE compute photo"
   end
 
