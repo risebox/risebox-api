@@ -213,22 +213,24 @@ if [ $ured -eq 0 ]
 else
     # NNA: Use ruby instead of bc for basic calculation because bc not available on Heroku
     # redfrac=`echo "scale=3; $rred / $ured" | bc`
-    redfrac=`ruby -e "puts ($rred/$ured).round(3)"`
+    redfrac=`ruby -e "puts (ARGV[0].to_f / ARGV[1].to_f).round(3)" $rred $ured`
 fi
 if [ $ugreen -eq 0 ]
     then
     greenfrac=255
 else
     # greenfrac=`echo "scale=3; $rgreen / $ugreen" | bc`
-    greenfrac=`ruby -e "puts ($rgreen/$ugreen).round(3)"`
+    greenfrac=`ruby -e "puts (ARGV[0].to_f / ARGV[1].to_f).round(3)" $rgreen $ugreen`
 fi
 if [ $ublue -eq 0 ]
     then
     bluefrac=255
 else
     # bluefrac=`echo "scale=3; $rblue / $ublue" | bc`
-    bluefrac=`ruby -e "puts ($rblue/$ublue).round(3)"`
+    bluefrac=`ruby -e "puts (ARGV[0].to_f / ARGV[1].to_f).round(3)" $rblue $ublue`
 fi
+
+echo "frac $redfrac,$greenfrac,$bluefrac"
 
 # get im version
 im_version=`convert -list configure | \
