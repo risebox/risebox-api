@@ -30,9 +30,13 @@ class Risebox::Compute::StripPhoto
     return [false, nil] unless strip
 
     storage = Storage.new(:strip_photos)
-    puts "computing raw image with key #{strip.raw_photo_path}"
+    puts "START computing raw image with key #{strip.raw_photo_path}"
     storage.download strip.raw_photo_path, "#{Rails.root}/tmp/raw_strip.jpg"
-    `#{Rails.root}/lib/modules/whitebalance.sh -c "rgb(185,178,162)" ./tmp/raw_strip.jpg ./tmp/white_strip.jpg`
+    wb = `#{Rails.root}/lib/modules/whitebalance.sh -c "rgb(185,178,162)" ./tmp/raw_strip.jpg ./tmp/white_strip.jpg`
+    puts "after wb"
+    puts wb
+    puts `ls -al ./tmp`
+    puts "DONE compute photo"
   end
 
 end
