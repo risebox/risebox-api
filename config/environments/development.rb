@@ -18,6 +18,15 @@ Rails.application.configure do
   # }
 
   STORAGE = {
+    upload: {
+          provider:   'AWS',
+          url:        "//#{ENV['S3_UPLOAD_BUCKET']}.s3-external-3.amazonaws.com",
+          access_key: ENV['S3_KEY'],
+          secret_key: ENV['S3_SECRET'],
+          bucket:     ENV['S3_STRIP_BUCKET'],
+          conditions: { size: 5242880 },
+          region:     'eu-west-1'
+                  },
     strip_photos: {
           provider:   'AWS',
           url:        "//#{ENV['S3_STRIP_BUCKET']}.s3-external-3.amazonaws.com",

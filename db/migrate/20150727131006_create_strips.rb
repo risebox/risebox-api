@@ -5,13 +5,12 @@ class CreateStrips < ActiveRecord::Migration
       t.datetime :tested_at
       t.datetime :computed_at
       t.string :model
-      t.string :raw_photo_path
-      t.string :wb_photo_path
-      t.string :NO2
-      t.string :NO3
-      t.string :GH
-      t.string :PH
-      t.string :KH
+      t.string :upload_key
+      t.string :no2
+      t.string :no3
+      t.string :gh
+      t.string :ph
+      t.string :kh
 
       t.timestamps
     end

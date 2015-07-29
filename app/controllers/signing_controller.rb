@@ -1,7 +1,6 @@
 class SigningController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
-
   # def new
   #   @field_name = params[:field]
   #   @storage = storage_for_media_type(params[:media_type])
@@ -15,7 +14,6 @@ class SigningController < ApplicationController
   def sign
     # @transport        = params[:transport] || (request.env['HTTP_USER_AGENT'].match(/MSIE/) ? 'iframe' : 'xhr')
     puts "params  #{params}"
-    puts "ENV['S3_KEY'] #{ENV['S3_KEY']}"
     @storage          = Storage.new(storage_name_from_upload_type(params[:upload_type]))
     @image_name       = params[:file_name]
     extension         = 'jpg'

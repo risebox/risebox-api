@@ -3,18 +3,17 @@ class ComputeStripTest < JobBase
 
   @queue  = :strips
 
-  def self.perform locale, model, device_id, photo_key, tested_at
+  def self.perform locale, model, device_id, upload_key, tested_at
+    #TODO: Replace by a service ?
     return unless device = Risebox::Core::Device.find_by_key(device_id)
 
     # Create photo
-    service = Risebox::Compute::StripPhoto.new(device)
-    strip_created, strip = service.create(model, DateTime.parse(tested_at))
-
-    #Attach Photo
-    service.attach_photo strip.id, photo_key
+    manager = Risebox::Manage::Strip.new(device)
+    strip_created, strip = manager.create(model, upload_key, DateTime.parse(tested_at))
 
     # Compute Photo to determine concentrations
-    service.compute_photo strip.id
+    computer = Risebox::Compute::StripPhoto.new(device)
+    computer.compute strip.id
 
     # Push notification
     # service.notify_owner
