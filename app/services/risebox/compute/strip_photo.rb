@@ -101,7 +101,7 @@ private
   end
 
   def upload_files_to_storage store, strip
-    puts "before upload"
+    puts "before uploade"
     puts `pwd`
     puts `ls -al #{strip.local_path}`
     upload_keys = strip.photos.reject{|k| k == :orig}
