@@ -29,6 +29,8 @@ class Risebox::Compute::StripPhoto
 
     # Proceed with white balance
     white_balance upload_store, strip
+    puts `pwd`
+    puts `ls -al #{strip.local_path}`
 
     #crop and compute concentrations
     crop_and_compute_metrics strip
@@ -50,7 +52,6 @@ private
     FileUtils::mkdir_p(strip.local_path) unless FileTest::directory?(strip.local_path)
     upload_store.download strip.remote_orig_path, strip.local_raw_path
     `#{Rails.root}/lib/modules/whitebalance.sh -c "rgb(185,178,162)" #{strip.local_raw_path} #{strip.local_wb_path}`
-    puts `ls -al #{strip.local_path}`
   end
 
   def crop_and_compute_metrics strip
@@ -74,6 +75,7 @@ private
     end
     puts "before regexp"
     /rgb\((?<red>.[^,]*),(?<green>.[^,]*),(?<blue>.[^\)]*)\)/ =~ output[1]
+    puts "after regexp"
     return [red.to_i, green.to_i, blue.to_i]
   end
 
@@ -99,6 +101,8 @@ private
   end
 
   def upload_files_to_storage store, strip
+    puts "before upload"
+    puts `ls -al #{strip.local_path}`
     upload_keys = strip.photos.reject{|k| k == :orig}
     upload_keys.each do |image_key|
       store.write_multipart(strip.send("remote_#{image_key}_path"), File.open(strip.send("local_#{image_key}_path"), 'rb'))
