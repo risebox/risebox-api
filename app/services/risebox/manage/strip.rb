@@ -17,3 +17,4 @@ class Risebox::Manage::Strip
   def find key
     device.strips.find key
   end
+end
