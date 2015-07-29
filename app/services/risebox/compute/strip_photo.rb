@@ -23,7 +23,7 @@ class Risebox::Compute::StripPhoto
     white_balance upload_store, strip
 
     #crop and compute concentrations
-    crop_and_compute_metrics
+    crop_and_compute_metrics strip
 
     #TODO Store Measure
 
@@ -42,10 +42,11 @@ private
     FileUtils::mkdir_p(strip.local_path) unless FileTest::directory?(strip.local_path)
     upload_store.download strip.remote_orig_path, strip.local_raw_path
     `#{Rails.root}/lib/modules/whitebalance.sh -c "rgb(185,178,162)" #{strip.local_raw_path} #{strip.local_wb_path}`
-    # puts `ls -al #{strip.local_path}`
+    puts `ls -al #{strip.local_path}`
   end
 
-  def crop_and_compute_metrics
+  def crop_and_compute_metrics strip
+    puts `ls -al #{strip.local_path}`
     strip.metrics.each do |metric|
       key_file = strip.send("local_#{metric}_path")
       puts "#{metric}: #{number_from_color(strip.local_wb_path, key_file)}"
