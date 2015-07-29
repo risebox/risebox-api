@@ -1,8 +1,24 @@
 class Risebox::Core::Strip < ActiveRecord::Base
   belongs_to :device, class_name: 'Risebox::Core::Device'
 
-  locations.each do |location|
-    files.each do |kind|
+  def metrics
+    [:ph, :no2, :no3, :gh]
+  end
+
+  def photos
+    [:orig, :raw, :wb]
+  end
+
+  def locations
+    [:local, :remote]
+  end
+
+  def files
+    metrics + photos
+  end
+
+  [:local, :remote].each do |location|
+    [:ph, :no2, :no3, :gh, :orig, :raw, :wb].each do |kind|
       define_method("#{location}_#{kind}_path") do
         if kind == :orig
           upload_key
@@ -27,22 +43,6 @@ class Risebox::Core::Strip < ActiveRecord::Base
 
   def remote_path
     @remote_path ||= "device_#{device.key}/#{path}"
-  end
-
-  def metrics
-    [:ph, :no2, :no3, :gh]
-  end
-
-  def photos
-    [:orig, :raw, :wb]
-  end
-
-  def locations
-    [:local, :remote]
-  end
-
-  def files
-    metrics + photos
   end
 
 
