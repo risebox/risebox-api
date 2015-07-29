@@ -40,7 +40,7 @@ private
 
   def white_balance upload_store, strip
     FileUtils::mkdir_p(strip.local_path) unless FileTest::directory?(strip.local_path)
-    upload_store.download strip.raw_photo_path, strip.local_raw_path
+    upload_store.download strip.remote_raw_path, strip.local_raw_path
     `#{Rails.root}/lib/modules/whitebalance.sh -c "rgb(185,178,162)" #{strip.local_raw_path} #{strip.local_wb_path}`
     # puts `ls -al #{strip.local_path}`
   end
