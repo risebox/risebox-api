@@ -56,18 +56,18 @@ private
   def crop_and_compute_metrics strip
     puts `ls -al #{strip.local_path}`
     strip.metrics.each do |metric|
-      key_file = strip.send("local_#{metric}_path")
-      puts "#{metric}: #{number_from_color(strip.local_wb_path, key_file)}"
+      concentration = number_from_color(strip.local_wb_path, metric, strip.send("local_#{metric}_path"))
+      puts "#{metric}: #{concentration}"
     end
   end
 
-  def crop_cmd image, cropped_file
-    `convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{COORD[key][:x]}+#{COORD[key][:y]} #{cropped_file}`
+  def crop_cmd image, key, crop
+    `convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{COORD[key][:x]}+#{COORD[key][:y]} #{crop}`
   end
 
-  def extract_strip_color wb_image, key
+  def extract_strip_color wb_image, key, crop_image
     output = []
-    IO.popen(crop_cmd(wb_image, key)).each do |line|
+    IO.popen(crop_cmd(wb_image, key, crop_image)).each do |line|
       output << line
     end
     /rgb\((?<red>.[^,]*),(?<green>.[^,]*),(?<blue>.[^\)]*)\)/ =~ output[1]
@@ -79,8 +79,8 @@ private
     #distance = ((color2[0]-color1[0]))**2 + ((color2[1]-color1[1]))**2 + ((color2[2]-color1[2]))**2
   end
 
-  def number_from_color wb_image, key
-    strip_color = extract_strip_color(wb_image, key)
+  def number_from_color wb_image, key, crop_image
+    strip_color = extract_strip_color(wb_image, key, crop_image)
     closest_distance = nil
     closest_number = nil
 
