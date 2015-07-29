@@ -64,7 +64,7 @@ private
 
   def crop_cmd image, key
     puts "before convert"
-    `convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{COORD[key][:x]}+#{COORD[key][:y]} -resize 1x1 txt:`
+    "convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{COORD[key][:x]}+#{COORD[key][:y]} -resize 1x1 txt:"
   end
 
   def extract_strip_color wb_image, key
@@ -102,12 +102,14 @@ private
 
   def upload_files_to_storage store, strip
     puts "before uploade"
-    puts `pwd`
     puts `ls -al #{strip.local_path}`
+    puts `pwd`
     upload_keys = strip.photos.reject{|k| k == :orig}
     upload_keys.each do |image_key|
+      puts "uploading #{image_key}"
       store.write_multipart(strip.send("remote_#{image_key}_path"), File.open(strip.send("local_#{image_key}_path"), 'rb'))
     end
+    puts "done uploading"
     # strip_store.write_multipart(strip.remote_raw_path, File.open(strip.local_raw_path, 'rb'))
     # strip_store.write_multipart(strip.remote_wb_path,  File.open(strip.local_wb_path, 'rb'))
   end
