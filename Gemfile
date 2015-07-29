@@ -29,6 +29,7 @@ gem 'jquery-rails', '=2.0.2'
 
 gem 'fog'
 gem 'carrierwave'
+gem 'rmagick'
 
 group :production do
   gem 'pg'
