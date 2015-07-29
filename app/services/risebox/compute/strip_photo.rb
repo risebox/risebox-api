@@ -62,14 +62,17 @@ private
   end
 
   def crop_cmd image, key
+    puts "before convert"
     `convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{COORD[key][:x]}+#{COORD[key][:y]} -resize 1x1 txt:`
   end
 
   def extract_strip_color wb_image, key
     output = []
+    puts "before IO.popen"
     IO.popen(crop_cmd(wb_image, key)).each do |line|
       output << line
     end
+    puts "before regexp"
     /rgb\((?<red>.[^,]*),(?<green>.[^,]*),(?<blue>.[^\)]*)\)/ =~ output[1]
     return [red.to_i, green.to_i, blue.to_i]
   end
