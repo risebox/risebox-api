@@ -88,7 +88,7 @@ private
   end
 
   def upload_files_to_storage store, strip
-    upload_keys = [:raw, :wb].merge(strip.metrics)
+    upload_keys = strip.files.reject{|k| k == :orig}
     upload_keys.each do |image_key|
       store.write_multipart(strip.send("remote_#{image_key}_path"), File.open(strip.send("local_#{image_key}_path"), 'rb'))
     end

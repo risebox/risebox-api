@@ -1,17 +1,17 @@
 class Risebox::Core::Strip < ActiveRecord::Base
   belongs_to :device, class_name: 'Risebox::Core::Device'
 
-  ['local', 'remote'].each do |location|
-    ['orig', 'raw', 'wb'].each do |kind|
+  locations.each do |location|
+    files.each do |kind|
       define_method("#{location}_#{kind}_path") do
-        if kind == 'orig'
+        if kind == :orig
           upload_key
         else
           self.send("#{location}_path") + "/#{kind}.jpg"
         end
       end
       define_method("#{location}_#{kind}_url") do
-        return "" if location == "local"
+        return "" if location == :local
         new_storage(kind).url self.send("#{location}_#{kind}_path")
       end
     end
@@ -33,10 +33,23 @@ class Risebox::Core::Strip < ActiveRecord::Base
     [:ph, :no2, :no3, :gh]
   end
 
+  def photos
+    [:orig, :raw, :wb]
+  end
+
+  def locations
+    [:local, :remote]
+  end
+
+  def files
+    metrics + photos
+  end
+
+
 private
 
   def storage_for_kind kind
-    kind == 'orig' ? :upload : :strip_photos
+    kind == :orig ? :upload : :strip_photos
   end
 
   def new_storage kind
