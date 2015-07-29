@@ -9,8 +9,8 @@ class Risebox::Manage::Strip
     device.strips.new(model: model, upload_key: upload_key, tested_at: tested_at)
   end
 
-  def create model, tested_at
-    strip = build_new(model, tested_at)
+  def create model, upload_key, tested_at
+    strip = build_new(model, upload_key, tested_at)
     [strip.save, strip]
   end
 
