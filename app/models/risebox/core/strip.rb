@@ -2,7 +2,7 @@ class Risebox::Core::Strip < ActiveRecord::Base
   belongs_to :device, class_name: 'Risebox::Core::Device'
 
   def metrics
-    [:ph, :no2, :no3, :gh]
+    [:ph, :no2, :no3, :kh]
   end
 
   def photos
@@ -18,7 +18,7 @@ class Risebox::Core::Strip < ActiveRecord::Base
   end
 
   [:local, :remote].each do |location|
-    [:ph, :no2, :no3, :gh, :orig, :raw, :wb].each do |kind|
+    [:ph, :no2, :no3, :kh, :orig, :raw, :wb].each do |kind|
       define_method("#{location}_#{kind}_path") do
         if kind == :orig
           upload_key
