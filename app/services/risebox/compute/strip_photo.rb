@@ -3,7 +3,7 @@ class Risebox::Compute::StripPhoto
   SCALES = { :ph  => [[236, 192, 45, 6.4], [214, 83, 112, 8.4], [248, 105, 70, 7.6], [230, 120, 37, 7.2], [253, 107, 115, 8.0], [236, 155, 38, 6.8]],
            :no2 => [[244, 188, 233, 10.0], [254, 242, 239, 1.0], [244, 201, 229, 5.0], [249, 247, 240, 0.0]],
            :no3 => [[248, 230, 238, 50.0], [249, 247, 240, 0.0], [243, 176, 229, 250.0], [248, 219, 240, 100.0], [253, 246, 244, 10.0], [245, 226, 231, 25.0]],
-           :kh=>[[137, 149, 69, 6.0], [186, 174, 58, 3.0], [207, 185, 65, 0.0], [100, 130, 109, 15.0], [56, 87, 113, 20.0]],
+           :kh =>[[137, 149, 69, 6.0], [186, 174, 58, 3.0], [207, 185, 65, 0.0], [100, 130, 109, 15.0], [56, 87, 113, 20.0]],
            :gh  => [[189, 91, 66, 8.0], [112, 84, 62, 4.0], [82, 92, 64, 0.0], [221, 136, 112, 16.0]] }
 
   COORD =
@@ -53,19 +53,24 @@ private
 
   def crop_and_compute_metrics strip
     strip.metrics.each do |metric|
-      concentration = number_from_color(strip.local_wb_path, metric)
+      concentration = number_from_color(strip.local_wb_path, metric, strip.send("local_#{metric}_path"))
       puts "#{metric}: #{concentration}"
       strip.send("#{metric}=", concentration)
     end
   end
 
-  def crop_cmd image, key
+  def crop_img_cmd image, key, crop_image
+    `convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{COORD[key][:x]}+#{COORD[key][:y]} #{crop_image}`
+  end
+
+  def crop_txt_cmd image, key
     "convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{COORD[key][:x]}+#{COORD[key][:y]} -resize 1x1 txt:"
   end
 
-  def extract_strip_color wb_image, key
+  def extract_strip_color wb_image, key, crop_image
     output = []
-    IO.popen(crop_cmd(wb_image, key)).each do |line|
+    crop_img_cmd(wb_image, key, crop_image)
+    IO.popen(crop_txt_cmd(wb_image, key)).each do |line|
       output << line
     end
     /rgb\((?<red>.[^,]*),(?<green>.[^,]*),(?<blue>.[^\)]*)\)/ =~ output[1]
@@ -77,8 +82,8 @@ private
     #distance = ((color2[0]-color1[0]))**2 + ((color2[1]-color1[1]))**2 + ((color2[2]-color1[2]))**2
   end
 
-  def number_from_color wb_image, key
-    strip_color = extract_strip_color(wb_image, key)
+  def number_from_color wb_image, key, crop_image
+    strip_color = extract_strip_color(wb_image, key, crop_image)
     closest_distance = nil
     closest_number = nil
 
@@ -94,11 +99,10 @@ private
   end
 
   def upload_files_to_storage store, strip
-    upload_keys = strip.photos.reject{|k| k == :orig}
+    upload_keys = strip.files.reject{|k| k == :orig}
     upload_keys.each do |image_key|
       store.write_multipart(strip.send("remote_#{image_key}_path"), File.open(strip.send("local_#{image_key}_path"), 'rb'))
     end
   end
-
 
 end
