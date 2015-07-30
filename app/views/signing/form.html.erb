@@ -30,7 +30,7 @@
         url: '<%= sign_url %>',
         type: 'POST',
         dataType: 'json',
-        data: {upload_type: "strip_photos", file_name: "image.jpeg"},
+        data: {file_name: "image.jpeg"},
         async: false,
         success: function(retdata) {
           $("#myForm").find('input[name=key]').val(retdata.key);

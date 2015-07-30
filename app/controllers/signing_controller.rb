@@ -8,13 +8,13 @@ class SigningController < ApplicationController
   # end
 
   def form
-    @storage          = Storage.new(storage_name_from_upload_type("strip_photos"))
+    @storage          = Storage.new(:upload)
   end
 
   def sign
     # @transport        = params[:transport] || (request.env['HTTP_USER_AGENT'].match(/MSIE/) ? 'iframe' : 'xhr')
     puts "params  #{params}"
-    @storage          = Storage.new(storage_name_from_upload_type(params[:upload_type]))
+    @storage          = Storage.new(:upload)
     @image_name       = params[:file_name]
     extension         = 'jpg'
 
@@ -78,10 +78,6 @@ private
 
   def upload_key name, time, extension
     "#{name}_#{time.strftime('%Y-%m-%d_%I-%M-%S')}.#{extension}"
-  end
-
-  def storage_name_from_upload_type upload_type
-    upload_type.to_sym
   end
 
 end
