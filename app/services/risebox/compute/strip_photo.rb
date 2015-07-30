@@ -29,8 +29,6 @@ class Risebox::Compute::StripPhoto
 
     # Proceed with white balance
     white_balance upload_store, strip
-    puts `pwd`
-    puts `ls -al #{strip.local_path}`
 
     #crop and compute concentrations
     crop_and_compute_metrics strip
@@ -55,27 +53,23 @@ private
   end
 
   def crop_and_compute_metrics strip
-    puts `ls -al #{strip.local_path}`
     strip.metrics.each do |metric|
       concentration = number_from_color(strip.local_wb_path, metric)
       puts "#{metric}: #{concentration}"
+      strip.send("#{metric}=", concentration)
     end
   end
 
   def crop_cmd image, key
-    puts "before convert"
     "convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{COORD[key][:x]}+#{COORD[key][:y]} -resize 1x1 txt:"
   end
 
   def extract_strip_color wb_image, key
     output = []
-    puts "before IO.popen"
     IO.popen(crop_cmd(wb_image, key)).each do |line|
       output << line
     end
-    puts "before regexp"
     /rgb\((?<red>.[^,]*),(?<green>.[^,]*),(?<blue>.[^\)]*)\)/ =~ output[1]
-    puts "after regexp"
     return [red.to_i, green.to_i, blue.to_i]
   end
 
@@ -101,17 +95,10 @@ private
   end
 
   def upload_files_to_storage store, strip
-    puts "before uploade"
-    puts `ls -al #{strip.local_path}`
-    puts `pwd`
     upload_keys = strip.photos.reject{|k| k == :orig}
     upload_keys.each do |image_key|
-      puts "uploading #{image_key}"
       store.write_multipart(strip.send("remote_#{image_key}_path"), File.open(strip.send("local_#{image_key}_path"), 'rb'))
     end
-    puts "done uploading"
-    # strip_store.write_multipart(strip.remote_raw_path, File.open(strip.local_raw_path, 'rb'))
-    # strip_store.write_multipart(strip.remote_wb_path,  File.open(strip.local_wb_path, 'rb'))
   end
 
 
