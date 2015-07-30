@@ -13,9 +13,11 @@ class ComputeStripTest < JobBase
 
     # Compute Photo to determine concentrations
     computer = Risebox::Compute::StripPhoto.new(device)
-    computer.compute strip.id
+    strip_updated, strip = computer.compute strip.id
+    puts "DONE computing result : #{strip_updated}"
 
     # Push notification
-    # service.notify_owner
+    # notifier = Risebox::Notify::StripPhoto.new(device)
+    # computer.notify strip.id
   end
 end

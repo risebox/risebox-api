@@ -41,7 +41,6 @@ class Risebox::Compute::StripPhoto
 
     # Save Strip
     [strip.save, strip]
-
   end
 
 private
