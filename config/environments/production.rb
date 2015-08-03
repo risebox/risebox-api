@@ -27,7 +27,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   WORKER_AUTOSCALE = ENV['WORKER_AUTOSCALE'] == 'true'
   SCALER_CONFIG = {
-                    default:    {min_workers: 0, max_workers: 1, job_threshold: 1, queues: 'send_emails' }
+                    default:    {min_workers: 0, max_workers: 1, job_threshold: 1, queues: 'send_emails,strips' }
                   }
 
   JOBS_RUN         = true
