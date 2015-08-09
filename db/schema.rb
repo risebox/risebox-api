@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150727131006) do
+ActiveRecord::Schema.define(version: 20150809200013) do
 
   create_table "app_settings", force: :cascade do |t|
     t.string   "key",        limit: 50
@@ -75,6 +75,18 @@ ActiveRecord::Schema.define(version: 20150727131006) do
   end
 
   add_index "metrics", ["code"], name: "index_metrics_on_code"
+
+  create_table "registrations", force: :cascade do |t|
+    t.integer  "device_id"
+    t.integer  "user_id"
+    t.string   "token"
+    t.string   "origin"
+    t.datetime "made_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "registrations", ["token"], name: "index_registrations_on_token"
 
   create_table "strips", force: :cascade do |t|
     t.integer  "device_id"
