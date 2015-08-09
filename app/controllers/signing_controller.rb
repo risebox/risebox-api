@@ -12,8 +12,6 @@ class SigningController < ApplicationController
   end
 
   def sign
-    # @transport        = params[:transport] || (request.env['HTTP_USER_AGENT'].match(/MSIE/) ? 'iframe' : 'xhr')
-    puts "params  #{params}"
     @storage          = Storage.new(:upload)
     @image_name       = params[:file_name]
     extension         = 'jpg'
