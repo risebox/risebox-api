@@ -16,9 +16,9 @@ Rails.application.routes.draw do
         end
         resources :parameters
         resources :strips, only: :create, defaults: { format: 'json' }
-        post :registration, to: 'registration#create', defaults: { format: 'json' }
       end
-      post :login, to: 'login#create', defaults: { format: 'json' }
+      post :registration,  to: 'registration#create', defaults: { format: 'json' }
+      get  :login,         to: 'login#info', defaults: { format: 'json' }
     end
   end
 
