@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       end
       post :registration,  to: 'registration#create', defaults: { format: 'json' }
       post :login,         to: 'login#login', defaults: { format: 'json' }
+      post :push_update,   to: 'push#update_info', defaults: { format: 'json' }
     end
   end
 
