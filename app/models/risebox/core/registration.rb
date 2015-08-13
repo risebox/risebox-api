@@ -4,6 +4,8 @@ class Risebox::Core::Registration < ActiveRecord::Base
   belongs_to :user,   class_name: 'Risebox::Core::User'
   belongs_to :device, class_name: 'Risebox::Core::Device'
 
+  has_many   :push_tokens
+
   scope :for_token, -> (token) {where(token: token)}
   scope :with_user_and_device, -> { joins([:user, :device]).includes([:user, :device]) }
 
