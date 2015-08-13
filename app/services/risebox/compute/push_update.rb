@@ -9,5 +9,6 @@ class Risebox::Compute::PushUpdate
   def compute
     puts "OK now I am computing"
     puts update_info
+    [true, nil]
   end
 end

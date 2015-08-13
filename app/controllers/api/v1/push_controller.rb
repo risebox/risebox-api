@@ -1,5 +1,5 @@
 class API::V1::PushController < API::V1::APIController
-  skip_before_filter :verify_authenticity_token, only: :create
+  skip_before_filter :verify_authenticity_token
   before_action :check_app_id, :load_service
 
   def update_info
@@ -13,9 +13,9 @@ private
   end
 
   def check_app_id
-    puts 'request.headers["X-Ionic-Application-Id"] '+request.headers["X-Ionic-Application-Id"]
-    if request.headers["X-Ionic-Application-Id"] != ENV['IONIC_APP_ID']
-      api_response [false, "Ionic Application ID invalid"]
+    # if request.headers["X-Ionic-Application-Id"] != ENV['IONIC_APP_ID']
+    if params['app_id'] != ENV['IONIC_APP_ID']
+      api_response [false, {error: :not_authorized, message: 'Ionic Application ID invalid'}]
     end
   end
 
