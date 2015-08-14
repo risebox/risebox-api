@@ -5,8 +5,8 @@ class Risebox::Manage::PushToken
     @registration = registration
   end
 
-  def build_new token, time
-    registration.push_tokens.new(token: token, registered_at: time)
+  def build_new token, platform, time
+    registration.push_tokens.new(token: token, platform: platform, registered_at: time)
   end
 
   def create token, time
@@ -24,5 +24,9 @@ class Risebox::Manage::PushToken
 
   def delete tokens
     registration.push_tokens.destroy_all(finds)
+  end
+
+  def list
+    registration.push_tokens
   end
 end
