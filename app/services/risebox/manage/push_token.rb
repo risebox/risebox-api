@@ -9,8 +9,8 @@ class Risebox::Manage::PushToken
     registration.push_tokens.new(token: token, platform: platform, registered_at: time)
   end
 
-  def create token, time
-    push_token = build_new(token, time)
+  def create token, platform, time
+    push_token = build_new(token, platform, time)
     [push_token.save, push_token]
   end
 

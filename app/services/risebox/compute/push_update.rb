@@ -8,8 +8,8 @@ class Risebox::Compute::PushUpdate
 
   def compute info
     @info = info
-    puts "Computing PushUpdate Info"
-    puts info
+    puts "Computing PushUpdate Info coming from Ionic Push via web_hook"
+    # puts info
 
     if info['unregister']
       puts 'unregister'
@@ -63,50 +63,26 @@ private
     service.delete push_token
   end
 
-  def do_create_unless_exist list, pt, platform
-    service.create(pt, platform, push_reg_time) unless list.pluck(:platform, :token).include?([platform, pt])
+  def do_create_unless_exist list, token, platform
+    service.create(token, platform, push_reg_time) unless list.pluck(:platform, :token).include?([platform.to_s, token])
   end
 
   def create
     list = service.list
     [:ios, :android].each do |platform|
-      puts "platform tokens for #{platform} :"
-      puts self.send("ios_tokens")
-
-      puts "info['_push']['ios_tokens']"
-      puts info['_push']['ios_tokens']
-
-      puts "info['_push']['android_tokens']"
-      puts info['_push']['android_tokens']
-
       platform_tokens = self.send("#{platform}_tokens")
       if platform_tokens.present?
-        puts "tokens are present for #{platform}"
-
-        puts "list.pluck(:platform, :token)"
-        puts list.pluck(:platform, :token)
-
         if platform_tokens.try(:many?)
-          puts "creating many"
-
+          puts "Creating many"
           platform_tokens.each do |pt|
-            puts "list.pluck(:platform, :token).include?([platform, pt])"
-            puts list.pluck(:platform, :token).include?([platform, pt])
-
             do_create_unless_exist list, pt, platform
           end
         else
-          puts "creating one"
-          do_create_unless_exist list, pt, platform
+          puts "Creating one"
+          do_create_unless_exist list, platform_tokens.first, platform
         end
       end
     end
-    # ios_tokens.each do |it|
-    #   service.create(it, push_reg_time) unless list.pluck([[:platform, :token].include?([:ios, it])
-    # end
-    # android_tokens.each do |at|
-    #   service.create(at, push_reg_time) unless list.pluck([[:platform, :token].include?([:ios, it])
-    # end
   end
 
   def service
