@@ -17,7 +17,7 @@ class ComputeStripTest < JobBase
     puts "DONE computing result : #{strip_updated}"
 
     # Push notification
-    notifier = Risebox::Notify::StripPhoto.new(device.owner)
+    notifier = Risebox::Notify::StripResult.new(device.owner)
     notifier.notify strip
     puts "DONE notifying"
   end
