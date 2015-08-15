@@ -13,7 +13,7 @@ class Risebox::Notify::Message
         ios: {
           badge: 1,
           sound: "ping.aiff",
-          expiry: 1.day.from_now.to_i,
+          expiry: expirity.from_now.to_i,
           priority: 10,
           contentAvailable: true,
           payload: payload(state, state_params)
@@ -21,7 +21,7 @@ class Risebox::Notify::Message
         android: {
           collapseKey: "foo",
           delayWhileIdle: true,
-          timeToLive: 1.day.minutes.to_i,
+          timeToLive: expirity.to_i,
           payload: payload(state, state_params)
         }
       }
@@ -37,6 +37,10 @@ private
   def payload state, state_params
     { '$state' => state,
       '$stateParams' =>  state_params.to_json }
+  end
+
+  def expirity
+    1.hour
   end
 
 end
