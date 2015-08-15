@@ -8,7 +8,7 @@ class Risebox::Notify::StripResult
 
   def notify strip
     tokens  = user.push_tokens
-    message = Risebox::Notify::Message.new.generate(tokens, "Analyse terminée !", 'strip_result', {strip_id: strip.id})
+    message = Risebox::Notify::Message.new.generate(tokens, "Analyse terminée !", 'tabs.chemistry-result', {strip_id: strip.id})
     result  = Risebox::Client::IonicPushSession.new.send_notification message
   end
 
