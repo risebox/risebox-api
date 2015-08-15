@@ -14,6 +14,8 @@ module Risebox
         rescue Faraday::Error::TimeoutError
           return [false, message: 'Timeout']
         end
+        puts "result.status #{result.status}"
+        puts "result.body #{result.body}"
         case result.status
         when 200
           [true, sym_keys(JSON.parse(result.body))]
@@ -32,6 +34,8 @@ module Risebox
         rescue Faraday::Error::TimeoutError
           raise Risebox::Client::TimeoutError, 'Risebox Client Timeout'
         end
+        puts "result.status #{result.status}"
+        puts "result.body #{result.body}"
         case result.status
         when 200
           sym_keys(JSON.parse(result.body))

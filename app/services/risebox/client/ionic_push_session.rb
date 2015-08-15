@@ -7,7 +7,7 @@ module Risebox
       end
 
       def message_status message_id
-        api_post "/api/v1/status/#{message_id}", nil, nil
+        api_get "/api/v1/status/#{message_id}", nil
       end
 
     private
