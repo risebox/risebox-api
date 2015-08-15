@@ -31,6 +31,8 @@ gem 'fog'
 gem 'carrierwave'
 gem 'rmagick'
 
+gem 'faraday'
+
 group :production do
   gem 'pg'
   gem 'newrelic_rpm'
