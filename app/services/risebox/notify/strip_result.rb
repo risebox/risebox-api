@@ -30,6 +30,7 @@ private
       raise :TimeOutError, 'Ionic Timeout'
     end
     puts result.status
+    puts result.body
     case result.status
     when 200
       puts result.body
