@@ -15,7 +15,7 @@ Rails.application.routes.draw do
           resources :alerts
         end
         resources :parameters
-        resources :strips, only: :create, defaults: { format: 'json' }
+        resources :strips, only: [:create, :show], defaults: { format: 'json' }
       end
       post :registration,  to: 'registration#create', defaults: { format: 'json' }
       post :login,         to: 'login#login', defaults: { format: 'json' }

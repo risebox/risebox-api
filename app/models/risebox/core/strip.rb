@@ -45,6 +45,17 @@ class Risebox::Core::Strip < ActiveRecord::Base
     @remote_path ||= "device_#{device.key}/#{path}"
   end
 
+  def test_duration
+    (tested_at && computed_at) ? computed_at.to_i - tested_at.to_i : nil
+  end
+
+  def measures
+    measures = {}
+    puts "metrics #{metrics}"
+    metrics.each{|metric| puts "metric #{metric}" ; puts "metric.to_s.upcase #{metric.to_s}" ; puts "self.attributes[metric.to_s] #{self.attributes[metric.to_s]}" ; measures[metric] = self.attributes[metric.to_s]}
+    measures
+  end
+
 
 private
 
