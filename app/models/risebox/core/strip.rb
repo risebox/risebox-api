@@ -51,8 +51,7 @@ class Risebox::Core::Strip < ActiveRecord::Base
 
   def measures
     measures = {}
-    puts "metrics #{metrics}"
-    metrics.each{|metric| puts "metric #{metric}" ; puts "metric.to_s.upcase #{metric.to_s}" ; puts "self.attributes[metric.to_s] #{self.attributes[metric.to_s]}" ; measures[metric] = self.attributes[metric.to_s]}
+    metrics.each{|metric| measures[metric] = self.attributes[metric.to_s]}
     measures
   end
 

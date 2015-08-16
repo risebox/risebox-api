@@ -73,12 +73,10 @@ private
       platform_tokens = self.send("#{platform}_tokens")
       if platform_tokens.present?
         if platform_tokens.try(:many?)
-          puts "Creating many"
           platform_tokens.each do |pt|
             do_create_unless_exist list, pt, platform
           end
         else
-          puts "Creating one"
           do_create_unless_exist list, platform_tokens.first, platform
         end
       end

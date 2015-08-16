@@ -7,10 +7,9 @@ class API::V1::StripsController < API::V1::DeviceSecuredController
   end
 
   def show
-    puts "params #{params}"
     svc = rescuer Risebox::Query::Strip.new(@device)
     res = svc.show(params[:id])
-    puts "res #{res}"
+    puts "Sending results back : #{res}"
     api_response res
   end
 

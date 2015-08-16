@@ -12,7 +12,6 @@ class Risebox::Query::Strip
   end
 
   def show key
-    puts "in show with key #{key}"
     strip = find key
     [true, { meta:     {model: strip.model, duration: (strip.test_duration.present? ? distance_of_time_in_words(strip.test_duration) : nil)} ,
              measures: strip.measures }]
