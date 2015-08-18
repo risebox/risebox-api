@@ -3,7 +3,8 @@ class API::V1::RegistrationController < API::V1::APIController
   before_filter :retrieve_device, :load_service
 
   def create
-    api_response @service.create nil, params[:origin]
+    created, registration = @service.create nil, params[:origin]
+    api_response [created, registration]
   end
 
 private
