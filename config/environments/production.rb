@@ -1,28 +1,17 @@
 Rails.application.configure do
+
+  if ENV['APP_NAME'].present?
+    require "#{Rails.root}/config/environments/_#{ENV['APP_NAME']}.rb"
+  else
+    require "#{Rails.root}/config/environments/_rbdev-api.rb"
+  end
+
+  IONIC_APP_ID   ='d49a75b8'
+  IONIC_PUSH_URL = 'https://push.ionic.io'
+
   REDIS_PROVIDER_URL = ENV['REDISTOGO_URL']
 
   NEWRELIC_API_URL = "https://api.newrelic.com/api/v1/accounts/#{ENV['NEW_RELIC_ID']}/applications/#{ENV['NEW_RELIC_APP_ID']}"
-
-  STORAGE = {
-    upload: {
-          provider:   'AWS',
-          url:        "//#{ENV['S3_UPLOAD_BUCKET']}.s3-external-3.amazonaws.com",
-          access_key: ENV['S3_KEY'],
-          secret_key: ENV['S3_SECRET'],
-          bucket:     ENV['S3_UPLOAD_BUCKET'],
-          conditions: { size: 5242880 },
-          region:     'eu-west-1'
-                  },
-    strip_photos: {
-          provider:   'AWS',
-          url:        "//#{ENV['S3_STRIP_BUCKET']}.s3-external-3.amazonaws.com",
-          access_key: ENV['S3_KEY'],
-          secret_key: ENV['S3_SECRET'],
-          bucket:     ENV['S3_STRIP_BUCKET'],
-          conditions: { size: 5242880 },
-          region:     'eu-west-1'
-                  }
-  }
 
   # Settings specified here will take precedence over those in config/application.rb.
   WORKER_AUTOSCALE = ENV['WORKER_AUTOSCALE'] == 'true'

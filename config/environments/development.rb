@@ -3,6 +3,9 @@ Rails.application.configure do
   Hash[File.read('.env').scan(/(.+?)=(.+)/)].each {|k,v| ENV[k.to_s] = v} if File.exist?('.env')
   ENV['PORT'] ||= '3000'
 
+  IONIC_APP_ID   ='d49a75b8'
+  IONIC_PUSH_URL = 'https://push.ionic.io'
+
   REDIS_PROVIDER_URL = 'redis://localhost:6379/'
 
   NEWRELIC_API_URL = 'https://api.newrelic.com/api/v1/accounts/123/applications/234'
@@ -20,19 +23,19 @@ Rails.application.configure do
   STORAGE = {
     upload: {
           provider:   'AWS',
-          url:        "//#{ENV['S3_UPLOAD_BUCKET']}.s3-external-3.amazonaws.com",
+          url:        "//risebox-upload-local.s3-external-3.amazonaws.com",
           access_key: ENV['S3_KEY'],
           secret_key: ENV['S3_SECRET'],
-          bucket:     ENV['S3_UPLOAD_BUCKET'],
+          bucket:     'risebox-upload-local',
           conditions: { size: 5242880 },
           region:     'eu-west-1'
                   },
     strip_photos: {
           provider:   'AWS',
-          url:        "//#{ENV['S3_STRIP_BUCKET']}.s3-external-3.amazonaws.com",
+          url:        "//risebox-strip-local.s3-external-3.amazonaws.com",
           access_key: ENV['S3_KEY'],
           secret_key: ENV['S3_SECRET'],
-          bucket:     ENV['S3_STRIP_BUCKET'],
+          bucket:     'risebox-strip-local',
           conditions: { size: 5242880 },
           region:     'eu-west-1'
                   }

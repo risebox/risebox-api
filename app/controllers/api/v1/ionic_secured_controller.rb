@@ -4,8 +4,8 @@ class API::V1::IonicSecuredController < API::V1::APIController
 private
 
   def check_app_id
-    # if request.headers["X-Ionic-Application-Id"] != ENV['IONIC_APP_ID']
-    if params['app_id'] != ENV['IONIC_APP_ID']
+    # if request.headers["X-Ionic-Application-Id"] != IONIC_APP_ID
+    if params['app_id'] != IONIC_APP_ID
       api_response [false, {error: :not_authorized, message: 'Ionic Application ID invalid'}]
     end
   end
