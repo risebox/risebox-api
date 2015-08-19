@@ -5,9 +5,7 @@ class Risebox::Notify::Message
 
   def generate tokens, title, state, state_params
     {
-      tokens: [
-        tokens.pluck(:token).join(',')
-      ],
+      tokens: tokens.pluck(:token),
       notification: {
         alert: title,
         ios: {

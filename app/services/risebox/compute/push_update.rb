@@ -9,7 +9,6 @@ class Risebox::Compute::PushUpdate
   def compute info
     @info = info
     puts "Computing PushUpdate Info coming from Ionic Push via web_hook"
-    # puts info
 
     if info['unregister']
       puts 'unregister'
