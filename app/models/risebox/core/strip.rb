@@ -23,7 +23,7 @@ class Risebox::Core::Strip < ActiveRecord::Base
         if kind == :orig
           upload_key
         else
-          self.send("#{location}_path") + "/#{kind}.jpg"
+          self.send("#{location}_path") + "/#{kind}.png"
         end
       end
       define_method("#{location}_#{kind}_url") do
