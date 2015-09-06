@@ -7,11 +7,11 @@ class Risebox::Compute::StripPhoto
            :gh  => [[189, 91, 66, 8.0], [112, 84, 62, 4.0], [82, 92, 64, 0.0], [221, 136, 112, 16.0]] }
 
   COORD =
-     { no3: {l: 20, h: 20, x: 30, y_ratio: 0.03},
-       no2: {l: 20, h: 20, x: 30, y_ratio: 0.11},
+     { no3: {l: 10, h: 10, x: 30, y_ratio: 0.03},
+       no2: {l: 10, h: 10, x: 30, y_ratio: 0.11},
        # gh:  {l: 50, h: 50, x: 200, y: 2354},
-       kh:  {l: 20, h: 20, x: 30, y_ratio: 0.66},
-       ph:  {l: 20, h: 20, x: 30, y_ratio: 0.724}
+       kh:  {l: 10, h: 10, x: 30, y_ratio: 0.66},
+       ph:  {l: 10, h: 10, x: 30, y_ratio: 0.724}
       }
 
   attr_reader :device
