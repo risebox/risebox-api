@@ -1,4 +1,4 @@
-class Demo::MetricsController < ApplicationController
+class Admin::MetricsController < ApplicationController
   http_basic_authenticate_with name: 'dg', password: 'dg'
 
   def show

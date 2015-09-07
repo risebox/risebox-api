@@ -10,14 +10,14 @@
 
 <h1><%= @report_title %></h1>
 
-<%= link_to demo_device_path(@device.key), class: 'btn btn-default' do %>
+<%= link_to admin_device_path(@device.key), class: 'btn btn-default' do %>
   <i class="glyphicon glyphicon-arrow-left icon-white"></i> Indicateurs
 <% end %>
 
 <div class="row">
     <div id="report" class="col-md-9"></div>
     <div id="reportParams" class="col-md-3">
-        <%= render partial: 'form', locals: { path:       metric_demo_device_path(id: @device.key, metric: @metric.code),
+        <%= render partial: 'form', locals: { path:       metric_admin_device_path(id: @device.key, metric: @metric.code),
                                               criterias:  [:time_frame] } %>
     </div>
 </div>

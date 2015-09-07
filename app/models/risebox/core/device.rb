@@ -35,7 +35,7 @@ class Risebox::Core::Device < ActiveRecord::Base
     return if (set = @@settings_ref[setting_key]).nil?
     set.each do |setting|
       unless self.settings.where(key: setting[:key]).exists?
-        self.settings.create(setting)
+        self.settings.create(setting.merge(changed_at: Time.now))
       end
     end
   end
