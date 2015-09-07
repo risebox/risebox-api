@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     end
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: :true) do
       resources :devices do
+        resources :device_settings, path: 'settings', only: :index, defaults: { format: 'json' }
         resources :metrics do
           resources :measures
           resources :alerts
