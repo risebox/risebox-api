@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150907112331) do
+ActiveRecord::Schema.define(version: 20150907141832) do
 
   create_table "app_settings", force: :cascade do |t|
     t.string   "key",        limit: 50
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20150907112331) do
     t.integer  "device_id"
     t.string   "key"
     t.string   "data_type"
-    t.string   "value"
+    t.float    "value"
     t.datetime "changed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
