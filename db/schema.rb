@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150813222358) do
+ActiveRecord::Schema.define(version: 20150907112331) do
 
   create_table "app_settings", force: :cascade do |t|
     t.string   "key",        limit: 50
@@ -22,6 +22,20 @@ ActiveRecord::Schema.define(version: 20150813222358) do
 
   add_index "app_settings", ["key"], name: "index_app_settings_on_key"
 
+  create_table "device_settings", force: :cascade do |t|
+    t.integer  "device_id"
+    t.string   "key"
+    t.string   "data_type"
+    t.string   "value"
+    t.datetime "changed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "device_settings", ["device_id", "changed_at"], name: "index_device_settings_on_device_id_and_changed_at"
+  add_index "device_settings", ["device_id", "key"], name: "index_device_settings_on_device_id_and_key"
+  add_index "device_settings", ["device_id"], name: "index_device_settings_on_device_id"
+
   create_table "devices", force: :cascade do |t|
     t.string   "name"
     t.string   "key"
@@ -29,8 +43,9 @@ ActiveRecord::Schema.define(version: 20150813222358) do
     t.string   "model"
     t.string   "version"
     t.integer  "owner_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.datetime "settings_queried_at"
   end
 
   add_index "devices", ["key", "token"], name: "index_devices_on_key_and_token", unique: true
@@ -106,11 +121,11 @@ ActiveRecord::Schema.define(version: 20150813222358) do
     t.datetime "computed_at"
     t.string   "model"
     t.string   "upload_key"
-    t.string   "NO2"
-    t.string   "NO3"
-    t.string   "GH"
-    t.string   "PH"
-    t.string   "KH"
+    t.string   "no2"
+    t.string   "no3"
+    t.string   "gh"
+    t.string   "ph"
+    t.string   "kh"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
