@@ -1,9 +1,24 @@
 class Risebox::Core::Device < ActiveRecord::Base
-  before_create :generate_token
 
-  has_many   :measures,        class_name: 'Risebox::Core::Measure',      dependent: :destroy
-  has_many   :metric_statuses, class_name: 'Risebox::Core::MetricStatus', dependent: :destroy
-  has_many   :strips,          class_name: 'Risebox::Core::Strip',        dependent: :destroy
+  @@settings_ref = {hapy_2: [ {key: 'upper_blue',  data_type: 'float', value: 50},
+                            {key: 'upper_red',   data_type: 'float', value: 50},
+                            {key: 'upper_white', data_type: 'float', value: 0},
+                            {key: 'lower_blue',  data_type: 'float', value: 50},
+                            {key: 'lower_red',   data_type: 'float', value: 50},
+                            {key: 'lower_white', data_type: 'float', value: 0},
+                            {key: 'all_white_until', data_type: 'datetime', value: nil},
+                            {key: 'silent_until', data_type: 'datetime', value: nil}
+                          ] 
+                  }
+
+  before_create :generate_token
+  after_create  :generate_settings
+
+  has_many   :measures,        class_name: 'Risebox::Core::Measure',       dependent: :destroy
+  has_many   :metric_statuses, class_name: 'Risebox::Core::MetricStatus',  dependent: :destroy
+  has_many   :strips,          class_name: 'Risebox::Core::Strip',         dependent: :destroy
+  has_many   :settings,        class_name: 'Risebox::Core::DeviceSetting', dependent: :destroy
+
 
   belongs_to :owner, class_name: 'Risebox::Core::User', foreign_key: :owner_id
 
@@ -14,5 +29,18 @@ class Risebox::Core::Device < ActiveRecord::Base
       self.token = SecureRandom.hex
     end while self.class.exists?(token: token)
     self.token
+  end
+
+  def generate_settings
+    return if (set = @@settings_ref[setting_key]).nil?
+    set.each do |setting|
+      unless self.settings.where(key: setting[:key]).exists?
+        self.settings.create(setting.merge(changed_at: Time.now))
+      end
+    end
+  end
+
+  def setting_key
+    :"#{self.model.downcase}_#{self.version}"
   end
 end

@@ -1,6 +1,8 @@
 <div class="container-fluid">
 	<h1>Risebox <%=@device.name%></h1>
-	<h4>Modèle <%= 'Hâpy' %> version <%= @device.version %> utilisé par <%= @device.owner.first_name%> <%= @device.owner.last_name%></h4>
+	<h4>
+		Modèle <%= 'Hâpy' %> version <%= @device.version %> utilisé par <%= @device.owner.first_name%> <%= @device.owner.last_name%>
+	</h4>
 
 	<h3>
 		<% if (@last_connected && @last_connected > 5.minutes.ago) %>
@@ -11,6 +13,7 @@
 		<span class="label label-<%=label_for_color(@global_light)%>">
 			<%=@global_light == 'green' ? 'En bonne santé' : 'A surveiller'%>
 		</span>
+		<%= link_to 'Voir les settings', admin_device_settings_path(@device.key), class: 'btn btn-default', style: 'margin-left: 7px' %>
 	</h3>
     <br>
 	<div class="table-responsive">
@@ -39,7 +42,7 @@
 					</td>
 					<td><%= status.taken_at.present? ? time_ago_in_words(status.taken_at) : 'N/A' %></td>
 					<td>
-						<%= link_to metric_demo_device_path(id: @device.key, metric: status.metric.code), class: 'btn btn-default' do %>
+						<%= link_to metric_admin_device_path(id: @device.key, metric: status.metric.code), class: 'btn btn-default' do %>
 	                        <i class="glyphicon glyphicon-signal icon-white"></i> Voir
 	                    <% end %>
 					</td>

@@ -1,4 +1,4 @@
-class Demo::DevicesController < ApplicationController
+class Admin::DevicesController < ApplicationController
   http_basic_authenticate_with name: 'dg', password: 'dg'
 
   def index
@@ -12,7 +12,7 @@ class Demo::DevicesController < ApplicationController
       @global_light            = device_global_light @statuses
       @last_connected          = device_last_connected @statuses
     else
-      redirect_to demo_root_path
+      redirect_to admin_root_path
     end
   end
 
@@ -21,7 +21,7 @@ class Demo::DevicesController < ApplicationController
     if @device
       @measures = @device.measures.recent.with_metric.limit(50)
     else
-      redirect_to demo_root_path
+      redirect_to admin_root_path
     end
   end
 
