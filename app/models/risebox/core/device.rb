@@ -7,7 +7,12 @@ class Risebox::Core::Device < ActiveRecord::Base
                             {key: 'lower_red',   data_type: 'float', value: 50},
                             {key: 'lower_white', data_type: 'float', value: 0},
                             {key: 'all_white_until', data_type: 'datetime', value: nil},
-                            {key: 'silent_until', data_type: 'datetime', value: nil}
+                            {key: 'silent_until', data_type: 'datetime', value: nil},
+                            {key: 'no_lights_until', data_type: 'datetime', value: nil},
+                            {key: 'day_hours', data_type: 'integer', value: 7},
+                            {key: 'day_minutes', data_type: 'integer', value: 0},
+                            {key: 'night_hours', data_type: 'integer', value: 21},
+                            {key: 'night_minutes', data_type: 'integer', value: 0}
                           ] 
                   }
 
