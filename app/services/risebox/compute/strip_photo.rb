@@ -14,11 +14,11 @@ class Risebox::Compute::StripPhoto
              :kh=>[[201, 193, 66, 0.0], [157, 158, 29, 3.0], [91, 108, 37, 6.0], [76, 108, 49, 10.0], [41, 67, 50, 15.0], [16, 35, 53, 20.0]] }
 
   COORD =
-     { no3: {l: 10, h: 10, x: 30, y_ratio: 0.03},
-       no2: {l: 10, h: 10, x: 30, y_ratio: 0.11},
+     { no3: {l: 20, h: 20, x_ratio: 0.40, y_ratio: 0.03},
+       no2: {l: 20, h: 20, x: 0.40, y_ratio: 0.11},
        # gh:  {l: 50, h: 50, x: 200, y: 2354},
-       kh:  {l: 10, h: 10, x: 30, y_ratio: 0.66},
-       ph:  {l: 10, h: 10, x: 30, y_ratio: 0.724}
+       kh:  {l: 20, h: 20, x: 0.40, y_ratio: 0.66},
+       ph:  {l: 20, h: 20, x: 0.40, y_ratio: 0.724}
       }
 
   attr_reader :device
@@ -96,11 +96,11 @@ private
   end
 
   def crop_img_cmd image, key, crop_image, width, height
-    `convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{COORD[key][:x]}+#{(COORD[key][:y_ratio]*height.to_i).to_i} #{crop_image}`
+    `convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{COORD[key][:x_ratio]*width.to_i}+#{(COORD[key][:y_ratio]*height.to_i).to_i} #{crop_image}`
   end
 
   def crop_txt_cmd image, key, width, height
-    "convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{COORD[key][:x]}+#{(COORD[key][:y_ratio]*height.to_i).to_i} -resize 1x1 txt:"
+    "convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{COORD[key][:x_ratio]*width.to_i}+#{(COORD[key][:y_ratio]*height.to_i).to_i} -resize 1x1 txt:"
   end
 
   def identify_img_cmd image
