@@ -1,10 +1,17 @@
 class Risebox::Compute::StripPhoto
 
-  SCALES = { :ph  => [[236, 192, 45, 6.4], [214, 83, 112, 8.4], [248, 105, 70, 7.6], [230, 120, 37, 7.2], [253, 107, 115, 8.0], [236, 155, 38, 6.8]],
-           :no2 => [[244, 188, 233, 10.0], [254, 242, 239, 1.0], [244, 201, 229, 5.0], [249, 247, 240, 0.0]],
-           :no3 => [[248, 230, 238, 50.0], [249, 247, 240, 0.0], [243, 176, 229, 250.0], [248, 219, 240, 100.0], [253, 246, 244, 10.0], [245, 226, 231, 25.0]],
-           :kh =>[[137, 149, 69, 6.0], [186, 174, 58, 3.0], [207, 185, 65, 0.0], [100, 130, 109, 15.0], [56, 87, 113, 20.0]],
-           :gh  => [[189, 91, 66, 8.0], [112, 84, 62, 4.0], [82, 92, 64, 0.0], [221, 136, 112, 16.0]] }
+  # TETRA Strip from Risebox-pi
+  # SCALES = { :ph  => [[236, 192, 45, 6.4], [214, 83, 112, 8.4], [248, 105, 70, 7.6], [230, 120, 37, 7.2], [253, 107, 115, 8.0], [236, 155, 38, 6.8]],
+  #          :no2 => [[244, 188, 233, 10.0], [254, 242, 239, 1.0], [244, 201, 229, 5.0], [249, 247, 240, 0.0]],
+  #          :no3 => [[248, 230, 238, 50.0], [249, 247, 240, 0.0], [243, 176, 229, 250.0], [248, 219, 240, 100.0], [253, 246, 244, 10.0], [245, 226, 231, 25.0]],
+  #          :kh =>[[137, 149, 69, 6.0], [186, 174, 58, 3.0], [207, 185, 65, 0.0], [100, 130, 109, 15.0], [56, 87, 113, 20.0]],
+  #          :gh  => [[189, 91, 66, 8.0], [112, 84, 62, 4.0], [82, 92, 64, 0.0], [221, 136, 112, 16.0]] }
+
+  # JBL Strip from self.compute_scales (with white-balance)
+  SCALES = { :ph=>[[255, 239, 81, 6.4], [247, 181, 28, 6.8], [238, 104, 6, 7.2], [251, 94, 40, 7.6], [221, 69, 53, 8.0], [205, 57, 69, 8.4], [170, 52, 96, 9.0]],
+             :no2=>[[0, 0, 0, 0.0], [249, 227, 241, 2.0], [255, 214, 250, 5.0], [255, 179, 240, 10.0]],
+             :no3=>[[255, 255, 255, 10.0], [245, 228, 232, 25.0], [254, 234, 248, 50.0], [248, 158, 223, 250.0], [231, 97, 190, 500.0]],
+             :kh=>[[201, 193, 66, 0.0], [157, 158, 29, 3.0], [91, 108, 37, 6.0], [76, 108, 49, 10.0], [41, 67, 50, 15.0], [16, 35, 53, 20.0]] }
 
   COORD =
      { no3: {l: 50, h: 50, x: 200, y: 75},
@@ -43,12 +50,36 @@ class Risebox::Compute::StripPhoto
     [strip.save, strip]
   end
 
+  def compute_scales path
+    scales = { ph: [], no2: [], no3: [], kh:  [] }
+
+    wb_path = path + "/wb"
+
+    FileUtils.rm_rf wb_path if FileTest::directory?(wb_path)
+    FileUtils::mkdir_p(wb_path)
+
+    Dir.glob(path + '/*').each do |f|
+      unless FileTest::directory?(f)
+        splitted = File.basename(f, File.extname(f)).split('_')
+        metric   = splitted.first.to_sym
+        value    = splitted.last.to_f
+
+        wb_file_path = wb_path + '/' + File.basename(f)
+        wb_cmd f, wb_file_path
+
+        scales[metric] << extract_scale_color(wb_file_path).append(value)
+      end
+    end
+
+    puts "computed scales : #{scales}"
+  end
+
 private
 
   def white_balance upload_store, strip
     FileUtils::mkdir_p(strip.local_path) unless FileTest::directory?(strip.local_path)
     upload_store.download strip.remote_orig_path, strip.local_raw_path
-    `#{Rails.root}/lib/modules/whitebalance.sh -c "rgb(185,178,162)" #{strip.local_raw_path} #{strip.local_wb_path}`
+    wb_cmd strip.local_raw_path, strip.local_wb_path
   end
 
   def crop_and_compute_metrics strip
@@ -67,10 +98,27 @@ private
     "convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{COORD[key][:x]}+#{COORD[key][:y]} -resize 1x1 txt:"
   end
 
+  def scale_txt_cmd image
+    "convert #{image} -resize 1x1 txt:"
+  end
+
+  def wb_cmd image, wb_image
+    `#{Rails.root}/lib/modules/whitebalance.sh -c "rgb(185,178,162)" #{image} #{wb_image}`
+  end
+
   def extract_strip_color wb_image, key, crop_image
     output = []
     crop_img_cmd(wb_image, key, crop_image)
     IO.popen(crop_txt_cmd(wb_image, key)).each do |line|
+      output << line
+    end
+    /rgb\((?<red>.[^,]*),(?<green>.[^,]*),(?<blue>.[^\)]*)\)/ =~ output[1]
+    return [red.to_i, green.to_i, blue.to_i]
+  end
+
+  def extract_scale_color path
+    output = []
+    IO.popen(scale_txt_cmd(path)).each do |line|
       output << line
     end
     /rgb\((?<red>.[^,]*),(?<green>.[^,]*),(?<blue>.[^\)]*)\)/ =~ output[1]
