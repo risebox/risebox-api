@@ -96,11 +96,19 @@ private
   end
 
   def crop_img_cmd image, key, crop_image, width, height
+<<<<<<< HEAD
     `convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{(COORD[key][:x_ratio]*width.to_i).to_i}+#{(COORD[key][:y_ratio]*height.to_i).to_i} #{crop_image}`
   end
 
   def crop_txt_cmd image, key, width, height
     "convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{(COORD[key][:x_ratio]*width.to_i).to_i}+#{(COORD[key][:y_ratio]*height.to_i).to_i} -resize 1x1 txt:"
+=======
+    `convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{COORD[key][:x_ratio]*width.to_i}+#{(COORD[key][:y_ratio]*height.to_i).to_i} #{crop_image}`
+  end
+
+  def crop_txt_cmd image, key, width, height
+    "convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{COORD[key][:x_ratio]*width.to_i}+#{(COORD[key][:y_ratio]*height.to_i).to_i} -resize 1x1 txt:"
+>>>>>>> 8c82faea06c531e9616736891993fd5acf38b71c
   end
 
   def identify_img_cmd image
