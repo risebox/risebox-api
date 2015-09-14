@@ -10,7 +10,7 @@ class Admin::DevicesController < ApplicationController
     if @device
       success, @statuses       = Risebox::Query::MetricStatus.new(@device).list
       @global_light            = device_global_light @statuses
-      @last_connected          = device_last_connected @statuses
+      @last_connected          = @device.settings_queried_at
     else
       redirect_to admin_root_path
     end
