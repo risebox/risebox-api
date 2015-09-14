@@ -50,6 +50,7 @@ private
           ["starts-with", "$key", @image_name],
           {"acl" => "public-read"},
           ['starts-with','$Content-Type','image/'],
+          ['starts-with', '$Content-Length', ''],
           ["content-length-range", 0, @storage.max_size]
         ]
       }
@@ -60,6 +61,7 @@ private
           ["starts-with", "$key", @image_name],
           {"acl" => "public-read"},
           ['starts-with','$Content-Type','image/'],
+          ['starts-with', '$Content-Length', ''],
           ["content-length-range", 0, @storage.max_size]
         ]
       }

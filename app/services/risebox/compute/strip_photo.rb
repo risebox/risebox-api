@@ -14,11 +14,11 @@ class Risebox::Compute::StripPhoto
              :kh=>[[201, 193, 66, 0.0], [157, 158, 29, 3.0], [91, 108, 37, 6.0], [76, 108, 49, 10.0], [41, 67, 50, 15.0], [16, 35, 53, 20.0]] }
 
   COORD =
-     { no3: {l: 50, h: 50, x: 200, y: 75},
-       no2: {l: 50, h: 50, x: 200, y: 350},
+     { no3: {l: 10, h: 10, x: 30, y_ratio: 0.03},
+       no2: {l: 10, h: 10, x: 30, y_ratio: 0.11},
        # gh:  {l: 50, h: 50, x: 200, y: 2354},
-       kh:  {l: 50, h: 50, x: 200, y: 2125},
-       ph:  {l: 50, h: 50, x: 200, y: 2410}
+       kh:  {l: 10, h: 10, x: 30, y_ratio: 0.66},
+       ph:  {l: 10, h: 10, x: 30, y_ratio: 0.724}
       }
 
   attr_reader :device
@@ -33,6 +33,7 @@ class Risebox::Compute::StripPhoto
 
     upload_store = Storage.new(:upload)
     strip_store  = Storage.new(:strip_photos)
+
 
     # Proceed with white balance
     white_balance upload_store, strip
@@ -82,6 +83,10 @@ private
     wb_cmd strip.local_raw_path, strip.local_wb_path
   end
 
+  def image_dimensions image_path
+    width, height = identify_img_cmd(image_path).split(',')
+  end
+
   def crop_and_compute_metrics strip
     strip.metrics.each do |metric|
       concentration = number_from_color(strip.local_wb_path, metric, strip.send("local_#{metric}_path"))
@@ -90,12 +95,16 @@ private
     end
   end
 
-  def crop_img_cmd image, key, crop_image
-    `convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{COORD[key][:x]}+#{COORD[key][:y]} #{crop_image}`
+  def crop_img_cmd image, key, crop_image, width, height
+    `convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{COORD[key][:x]}+#{(COORD[key][:y_ratio]*height.to_i).to_i} #{crop_image}`
   end
 
-  def crop_txt_cmd image, key
-    "convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{COORD[key][:x]}+#{COORD[key][:y]} -resize 1x1 txt:"
+  def crop_txt_cmd image, key, width, height
+    "convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{COORD[key][:x]}+#{(COORD[key][:y_ratio]*height.to_i).to_i} -resize 1x1 txt:"
+  end
+
+  def identify_img_cmd image
+    `identify -format \"%w,%h\" #{image}`
   end
 
   def scale_txt_cmd image
@@ -108,8 +117,9 @@ private
 
   def extract_strip_color wb_image, key, crop_image
     output = []
-    crop_img_cmd(wb_image, key, crop_image)
-    IO.popen(crop_txt_cmd(wb_image, key)).each do |line|
+    width, height = image_dimensions(wb_image)
+    crop_img_cmd(wb_image, key, crop_image, width, height)
+    IO.popen(crop_txt_cmd(wb_image, key, width, height)).each do |line|
       output << line
     end
     /rgb\((?<red>.[^,]*),(?<green>.[^,]*),(?<blue>.[^\)]*)\)/ =~ output[1]
