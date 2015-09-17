@@ -7,7 +7,7 @@ class API::V1::MeasuresController < API::V1::DeviceSecuredController
   end
 
   def create
-    created, measure = @service.create(params[:metric_id], params[:value])
+    created, measure = @service.create(params[:metric_id], params[:value], params[:origin], params[:taken_at])
     api_response [created, measure]
   end
 
