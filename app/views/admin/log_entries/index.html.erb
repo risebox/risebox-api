@@ -1,0 +1,26 @@
+<div class="container-fluid">
+    <h1>Risebox <%=@device.name%></h1>
+    <h4>
+        Modèle <%= 'Hâpy' %> version <%= @device.version %> utilisé par <%= @device.owner.first_name%> <%= @device.owner.last_name%>
+    </h4>
+    <%= link_to admin_device_path(id: @device.key), class: 'btn btn-default' do %>
+        <i class="glyphicon glyphicon-chevron-left icon-white"></i>&nbsp;Retour
+    <% end %>
+    <br><br>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <tr class="success">
+                <th>Loggé le</th>
+                <th>Niveau</th>
+                <th>Text</th>
+            </tr>
+            <% @logs.each do |log| %>
+                <tr>
+                    <td><%= l(log.logged_at, format: :default) if log.logged_at.present? %></td>
+                    <td><span class="label label-<%= log.level_text == 'error' ? 'danger' : log.level_text %>"><%= log.level_text.camelize unless log.level_text.nil?%></span></td>
+                    <td><%= log.body %></td>
+                </tr>
+            <% end %>
+        </table>
+    </div>
+</div>

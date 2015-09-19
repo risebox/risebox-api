@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150907141832) do
+ActiveRecord::Schema.define(version: 20150919210554) do
 
   create_table "app_settings", force: :cascade do |t|
     t.string   "key",        limit: 50
@@ -51,6 +51,18 @@ ActiveRecord::Schema.define(version: 20150907141832) do
   add_index "devices", ["key", "token"], name: "index_devices_on_key_and_token", unique: true
   add_index "devices", ["owner_id"], name: "index_devices_on_owner_id"
 
+  create_table "log_entries", force: :cascade do |t|
+    t.integer  "level"
+    t.text     "body"
+    t.integer  "device_id"
+    t.datetime "logged_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "log_entries", ["device_id", "logged_at"], name: "index_log_entries_on_device_id_and_logged_at"
+  add_index "log_entries", ["device_id"], name: "index_log_entries_on_device_id"
+
   create_table "measures", force: :cascade do |t|
     t.float    "value"
     t.datetime "taken_at"
@@ -58,6 +70,7 @@ ActiveRecord::Schema.define(version: 20150907141832) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "metric_id"
+    t.string   "origin"
   end
 
   add_index "measures", ["device_id"], name: "index_measures_on_device_id"
@@ -121,11 +134,11 @@ ActiveRecord::Schema.define(version: 20150907141832) do
     t.datetime "computed_at"
     t.string   "model"
     t.string   "upload_key"
-    t.string   "no2"
-    t.string   "no3"
-    t.string   "gh"
-    t.string   "ph"
-    t.string   "kh"
+    t.string   "NO2"
+    t.string   "NO3"
+    t.string   "GH"
+    t.string   "PH"
+    t.string   "KH"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

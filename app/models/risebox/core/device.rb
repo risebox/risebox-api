@@ -24,7 +24,7 @@ class Risebox::Core::Device < ActiveRecord::Base
   has_many   :metric_statuses, class_name: 'Risebox::Core::MetricStatus',  dependent: :destroy
   has_many   :strips,          class_name: 'Risebox::Core::Strip',         dependent: :destroy
   has_many   :settings,        class_name: 'Risebox::Core::DeviceSetting', dependent: :destroy
-
+  has_many   :logs,            class_name: 'Risebox::Core::LogEntry',      dependent: :destroy
 
   belongs_to :owner, class_name: 'Risebox::Core::User', foreign_key: :owner_id
 

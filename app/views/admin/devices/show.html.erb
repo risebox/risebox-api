@@ -13,7 +13,12 @@
 		<span class="label label-<%=label_for_color(@global_light)%>">
 			<%=@global_light == 'green' ? 'En bonne santé' : 'A surveiller'%>
 		</span>
-		<%= link_to 'Voir les settings', admin_device_settings_path(@device.key), class: 'btn btn-default', style: 'margin-left: 7px' %>
+		<%= link_to admin_device_settings_path(@device.key), class: 'btn btn-default', style: 'margin-left: 7px' do %>
+			<i class="glyphicon glyphicon-wrench icon-white"></i>&nbsp;Voir les settings
+		<% end %>
+		<%= link_to admin_log_entries_path(@device.key), class: 'btn btn-default', style: 'margin-left: 7px' do %>
+			<i class="glyphicon glyphicon-list-alt icon-white"></i>&nbsp;Voir les logs
+		<% end %>
 	</h3>
     <br>
 	<div class="table-responsive">

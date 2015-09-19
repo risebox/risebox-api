@@ -17,6 +17,7 @@ Rails.application.routes.draw do
         end
         resources :parameters
         resources :strips, only: [:create, :show]
+        resources :log_entries, only: [:create, :index]
       end
       post :registration,  to: 'registration#create'
       post :login,         to: 'login#login'
@@ -34,8 +35,8 @@ Rails.application.routes.draw do
             patch :prolong_date, to: 'device_settings#prolong_date'
           end
         end
+        resources :log_entries, path: 'logs', only: :index
       end
-      get :log, on: :member
     end
   end
 
