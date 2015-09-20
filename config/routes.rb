@@ -17,7 +17,7 @@ Rails.application.routes.draw do
         end
         resources :parameters
         resources :strips, only: [:create, :show]
-        resources :log_entries, only: [:create, :index]
+        resources :log_entries, path: 'logs', only: [:create, :index]
       end
       post :registration,  to: 'registration#create'
       post :login,         to: 'login#login'
