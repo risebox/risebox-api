@@ -17,6 +17,12 @@ class Risebox::Query::DeviceSetting
     return update_queried_at_and_return now, result
   end
 
+  def select_list selection
+    now = Time.now
+    result  = device.settings.where(key: selection)
+    return update_queried_at_and_return now, result
+  end
+
 private
 
 	def update_queried_at_and_return now, result
