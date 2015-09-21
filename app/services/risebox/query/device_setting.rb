@@ -23,6 +23,20 @@ class Risebox::Query::DeviceSetting
     return update_queried_at_and_return now, result
   end
 
+  def bulk_update settings
+    puts "settings #{settings}"
+    errors = {}
+    success = []
+    settings.each do |k, v|
+      puts "k #{k} v #{v}"
+      setting = device.settings.where(key: k).first
+      unless setting.update_attributes(value: v)
+        errors[k] = setting.errors
+      end
+    end
+    errors.empty? ? [true, settings] : [false, {error: :bulk_update_failed, message: "#{errors.size()} errors : settings #{errors.keys} were not updated"}]
+  end
+
 private
 
 	def update_queried_at_and_return now, result

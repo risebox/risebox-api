@@ -1,8 +1,14 @@
 class API::V1::DeviceSettingsController < API::V1::DeviceSecuredController
+  skip_before_filter :verify_authenticity_token, only: :bulk_update
   before_action :load_service
 
   def index
     api_response settings_for_mode(params[:mode], params[:select])
+  end
+
+  def bulk_update
+    bulk_updated, bulk_updates = @service.bulk_update(JSON.parse(params[:settings]))
+    api_response [bulk_updated, bulk_updates]
   end
 
 private
