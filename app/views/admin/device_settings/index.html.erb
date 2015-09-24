@@ -23,7 +23,7 @@
 						<%= form_for setting, as: :device_setting, url: (setting.data_type == 'datetime' ? prolong_date_admin_device_setting_path(device_id: @device.key, id: setting.id) : admin_device_setting_path(device_id: @device.key, id: setting.id)) do |f| %>
 							<%= f.text_field :value %>
 							<%= button_tag class: 'btn btn-default' do %>
-	                        	<i class="glyphicon glyphicon-save icon-white"></i>&nbsp;<%= setting.data_type == 'datetime' ? 'Ajouter autant de minutes' : 'Modifier la valeur' %>
+	                        	<i class="glyphicon glyphicon-save icon-white"></i>&nbsp;<%= setting.data_type == 'datetime' ? 'Ajouter autant de secondes' : 'Modifier la valeur' %>
 	                    	<% end %>
 						<% end %>
 					</td>
