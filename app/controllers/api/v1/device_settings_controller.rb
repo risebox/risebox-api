@@ -8,11 +8,7 @@ class API::V1::DeviceSettingsController < API::V1::DeviceSecuredController
 
   def bulk_update
     hash = params[:settings]
-    puts "hash #{hash}"
     hash = JSON.parse(hash) if hash.is_a?(String)
-    puts "hash.is_a?(String)"
-    puts hash.is_a?(String)
-    puts "hash after #{hash}"
     bulk_updated, bulk_updates = @service.bulk_update(hash)
     api_response [bulk_updated, bulk_updates]
   end

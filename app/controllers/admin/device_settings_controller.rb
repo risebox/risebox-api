@@ -17,7 +17,7 @@ class Admin::DeviceSettingsController < ApplicationController
     @device = Risebox::Core::Device.find_by_key(params[:device_id])
     @setting = @device.settings.find(params[:id])
     secs = settings_params[:value].to_i
-    @setting.update_attribute(:value, secs.seconds.from_now.to_f*1000) #*1000 because time in milliseconds to match javascript
+    @setting.update_attribute(:value, secs.seconds.from_now.to_f)
     redirect_to admin_device_settings_path(@device.key)
   end
 
