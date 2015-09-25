@@ -20,7 +20,7 @@ class API::V1::DeviceSettingsController < API::V1::DeviceSecuredController
 private
 
   def load_service
-    @service = rescuer Risebox::Query::DeviceSetting.new(@device)
+    @service = rescuer Risebox::Query::DeviceSetting.new(@device, @brain_calling)
   end
 
   def settings_for_mode mode, selection

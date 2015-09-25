@@ -1,4 +1,5 @@
 class API::V1::APIController < ApplicationController
+  before_action :set_api_caller
   respond_to :json
 
 private
@@ -40,6 +41,10 @@ private
 
   def set_custom_headers headers_hash
     headers_hash.each { |k, v| headers[k.to_s]=v }
+  end
+
+  def set_api_caller
+    @brain_calling = request.headers['RISEBOX-API-CLIENT'] == 'brain'
   end
 
   def supports_pagination? result

@@ -1,26 +1,27 @@
 class Risebox::Query::DeviceSetting
   attr_reader :device
 
-  def initialize device
+  def initialize device, brain_calling=false
     @device = device
+    @brain_calling = brain_calling
   end
 
   def delta_list
-  	now = Time.now
+    now = Time.now
     result  = device.settings.where("changed_at >= ?", device.settings_queried_at)
-    return update_queried_at_and_return now, result
+    @brain_calling ? update_queried_at_and_return(now, result) : [true, result]
   end
 
   def full_list
-  	now = Time.now
+    now = Time.now
     result  = device.settings
-    return update_queried_at_and_return now, result
+    @brain_calling ? update_queried_at_and_return(now, result) : [true, result]
   end
 
   def select_list selection
     now = Time.now
-    result  = device.settings.where(key: selection)
-    return update_queried_at_and_return now, result
+    result = device.settings.where(key: selection)
+    @brain_calling ? update_queried_at_and_return(now, result) : [true, result]
   end
 
   def bulk_update settings
