@@ -3,7 +3,7 @@ class Admin::LogEntriesController < ApplicationController
 
   def index
     @device = Risebox::Core::Device.find_by_key(params[:id])
-    @logs = @device.logs.recent
+    @logs = @device.logs.recent.limit(50)
   end
 
 end

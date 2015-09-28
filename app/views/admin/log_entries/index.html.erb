@@ -17,7 +17,7 @@
             <% @logs.each do |log| %>
                 <tr>
                     <td><%= l(log.logged_at, format: :default) if log.logged_at.present? %></td>
-                    <td><span class="label label-<%= log.level_text == 'error' ? 'danger' : log.level_text %>"><%= log.level_text.camelize unless log.level_text.nil?%></span></td>
+                    <td><span class="label label-<%= log.level_text == 'error' ? 'danger' : log.level_text %>"><%= log.level_text.camelize if log.level_text.present? %></span></td>
                     <td><%= log.body %></td>
                 </tr>
             <% end %>
