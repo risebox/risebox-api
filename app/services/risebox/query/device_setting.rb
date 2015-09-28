@@ -29,7 +29,6 @@ class Risebox::Query::DeviceSetting
     errors = {}
     success = []
     settings.each do |k, v|
-      puts "k #{k} v #{v}"
       setting = device.settings.where(key: k).first
       unless setting.update_attributes(value: v)
         errors[k] = setting.errors
