@@ -7,7 +7,7 @@ class API::V1::LogEntriesController < API::V1::DeviceSecuredController
   end
 
   def create
-    created, log_entry = @service.create(params[:level], params[:text], params[:logged_at])
+    created, log_entry = @service.create(params[:level], params[:body], params[:logged_at])
     api_response [created, log_entry]
   end
 
