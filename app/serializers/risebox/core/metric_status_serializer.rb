@@ -13,7 +13,6 @@ class Risebox::Core::MetricStatusSerializer < ActiveModel::Serializer
     else
       nil
     end
-    "#{object.value} #{object.metric.unit}"
   end
 
 end
