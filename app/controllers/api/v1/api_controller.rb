@@ -36,7 +36,7 @@ private
   end
 
   def serializer_or_model model
-    model.try(:active_model_serializer) ? model.active_model_serializer.new(model) : model
+    ActiveModel::Serializer.serializer_for(model).present? ? ActiveModel::Serializer.serializer_for(model).new(model) : model
   end
 
   def set_custom_headers headers_hash
