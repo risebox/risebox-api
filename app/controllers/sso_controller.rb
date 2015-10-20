@@ -8,7 +8,7 @@ class SsoController < ApplicationController
 
     sso = SingleSignOn.parse(request.query_string, secret)
 
-    puts "sso.to_h #{sso.to_h}"
+    puts "sso.methods #{sso.methods}"
 
     #TODO Lookup User with email, if present login else reject
 
