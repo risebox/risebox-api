@@ -10,6 +10,8 @@ Rails.application.configure do
 
   NEWRELIC_API_URL = 'https://api.newrelic.com/api/v1/accounts/123/applications/234'
 
+  SSO_SECRET = ENV['SSO_SECRET']
+
   # STORAGE = {
   #   strip_photos: {
   #         provider: 'Local',

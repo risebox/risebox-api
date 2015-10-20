@@ -45,7 +45,9 @@ Rails.application.routes.draw do
   end
 
   post :sign, to: "signing#sign"
-  get :form, to: "signing#form"
+  get :form,  to: "signing#form"
+
+  get :sso, to: "sso#sso"
 
   mount Resque::Server, at: '/jobs', as: 'jobs'
 

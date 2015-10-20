@@ -25,6 +25,8 @@ Rails.application.configure do
   TEST_EMAIL        = "test@risebox.co"
   MAILS_INTERCEPTED = ENV['MAILS_INTERCEPTED'] == 'true'
 
+  SSO_SECRET = ENV['SSO_SECRET']
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 
