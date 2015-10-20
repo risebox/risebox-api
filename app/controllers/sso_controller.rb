@@ -8,11 +8,13 @@ class SsoController < ApplicationController
 
     sso = SingleSignOn.parse(request.query_string, secret)
 
-    puts "SSO retrieved: #{sso}"
+    puts "sso.to_h #{sso.to_h}"
+
+    #TODO Lookup User with email, if present login else reject
 
     sso.email = "team@risebox.co"
     sso.name = "Risebox Team"
-    sso.username = "team@risebox.co"
+    sso.username = "risebox_team"
     sso.external_id = "1" # unique id for each user of your application
     sso.sso_secret = secret
 
