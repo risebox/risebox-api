@@ -27,6 +27,10 @@ Rails.application.configure do
 
   SSO_SECRET = ENV['SSO_SECRET']
 
+  config.to_prepare { Devise::SessionsController.force_ssl }
+  config.to_prepare { Devise::RegistrationsController.force_ssl }
+  config.to_prepare { Devise::PasswordsController.force_ssl }
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 
@@ -92,7 +96,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method       = :smtp
   config.action_mailer.default_options       = { from:      'Risebox <contact@risebox.co>',
                                                  reply_to:  'no-reply@risebox.co' }
-  config.action_mailer.default_url_options   = { host: 'www.risebox.co' }
+  config.action_mailer.default_url_options   = { protocol: 'https', host: 'www.risebox.co' }
   config.action_mailer.smtp_settings = {
     address:        "smtp.sendgrid.net",
     port:           "587",

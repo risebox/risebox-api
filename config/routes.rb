@@ -44,10 +44,16 @@ Rails.application.routes.draw do
     end
   end
 
+
+  devise_for :users, path: "account", path_names: { sign_in: 'login', sign_out: 'logout', registration: 'register' }
+
+  namespace :account, path: "account", constraints: https_constraint do
+    get :sso, to: "sso#sso"
+  end
+
   post :sign, to: "signing#sign"
   get :form,  to: "signing#form"
 
-  get :sso, to: "sso#sso"
 
   mount Resque::Server, at: '/jobs', as: 'jobs'
 

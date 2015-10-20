@@ -9,6 +9,8 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'devise'
+
 gem "heroku-api", git: 'https://github.com/heroku/heroku.rb.git', branch: 'master' #no gem with excon dependency >= 0.27 available
 
 gem 'hiredis'
