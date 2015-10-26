@@ -45,7 +45,9 @@ Rails.application.routes.draw do
   end
 
 
-  devise_for :users, path: "account", path_names: { sign_in: 'login', sign_out: 'logout', registration: 'register' }
+  devise_for :users, path: "account",
+    path_names: { sign_in: 'login', sign_out: 'logout', registration: 'register' },
+    controllers: { sessions: "account/sessions" }
 
   namespace :account, path: "account", constraints: https_constraint do
     get :sso, to: "sso#sso"
