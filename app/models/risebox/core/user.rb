@@ -1,7 +1,17 @@
 class Risebox::Core::User < ActiveRecord::Base
-  has_many :devices, class_name: 'Risebox::Core::Device', foreign_key: :owner_id
+  has_many :devices_permissions, class_name: 'Risebox::Core::DevicePermission'
+  has_many :devices, class_name: 'Risebox::Core::Device', through: :devices_permissions
   has_many :registrations, class_name: 'Risebox::Core::Registration'
   has_many :push_tokens, through: :registrations, class_name: 'Risebox::Core::PushToken'
 
   devise :database_authenticatable, :confirmable, :recoverable, :registerable, :rememberable, :trackable, :timeoutable, :validatable
+
+  before_create :generate_api_token
+
+  def generate_api_token
+    begin
+      self.api_token = SecureRandom.hex
+    end while self.class.exists?(api_token: api_token)
+    self.api_token
+  end
 end

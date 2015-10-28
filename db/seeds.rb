@@ -1,5 +1,5 @@
-adrien  = Risebox::Core::User.create first_name: 'Adrien', last_name: 'Thery', email: 'adrien@risebox.co'
-nicolas = Risebox::Core::User.create first_name: 'Nicolas', last_name: 'Nardone', email: 'nicolas@risebox.co'
+adrien  = Risebox::Core::User.create first_name: 'Adrien', last_name: 'Thery', email: 'adrien@risebox.co', password: 'adrien'
+nicolas = Risebox::Core::User.create first_name: 'Nicolas', last_name: 'Nardone', email: 'nicolas@risebox.co', password: 'nicolas'
 
 menucourt = adrien.devices.create(name: 'menucourt', key: 'menucourt', model: 'Hapy', version: '1')
 lab1      = nicolas.devices.create(name: 'Electrolab One', key: 'lab1', model: 'Hapy', version: '2')

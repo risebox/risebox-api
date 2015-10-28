@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151020203754) do
+ActiveRecord::Schema.define(version: 20151025231115) do
 
   create_table "app_settings", force: :cascade do |t|
     t.string   "key",        limit: 50
@@ -21,6 +21,15 @@ ActiveRecord::Schema.define(version: 20151020203754) do
   end
 
   add_index "app_settings", ["key"], name: "index_app_settings_on_key"
+
+  create_table "device_permissions", force: :cascade do |t|
+    t.integer  "device_id",  null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "device_permissions", ["device_id", "user_id"], name: "index_device_permissions_on_device_id_and_user_id", unique: true
 
   create_table "device_settings", force: :cascade do |t|
     t.integer  "device_id"
@@ -134,11 +143,11 @@ ActiveRecord::Schema.define(version: 20151020203754) do
     t.datetime "computed_at"
     t.string   "model"
     t.string   "upload_key"
-    t.string   "NO2"
-    t.string   "NO3"
-    t.string   "GH"
-    t.string   "PH"
-    t.string   "KH"
+    t.string   "no2"
+    t.string   "no3"
+    t.string   "gh"
+    t.string   "ph"
+    t.string   "kh"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -149,13 +158,13 @@ ActiveRecord::Schema.define(version: 20151020203754) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -163,10 +172,14 @@ ActiveRecord::Schema.define(version: 20151020203754) do
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
+    t.string   "api_token"
+    t.boolean  "admin",                  default: false
+    t.boolean  "human",                  default: true
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["human"], name: "index_users_on_human"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end

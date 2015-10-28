@@ -17,25 +17,20 @@ class Risebox::Core::Device < ActiveRecord::Base
                           ]
                   }
 
-  before_create :generate_token
+  
   after_create  :generate_settings
 
-  has_many   :measures,        class_name: 'Risebox::Core::Measure',       dependent: :destroy
-  has_many   :metric_statuses, class_name: 'Risebox::Core::MetricStatus',  dependent: :destroy
-  has_many   :strips,          class_name: 'Risebox::Core::Strip',         dependent: :destroy
-  has_many   :settings,        class_name: 'Risebox::Core::DeviceSetting', dependent: :destroy
-  has_many   :logs,            class_name: 'Risebox::Core::LogEntry',      dependent: :destroy
+  has_many   :measures,         class_name: 'Risebox::Core::Measure',          dependent: :destroy
+  has_many   :metric_statuses,  class_name: 'Risebox::Core::MetricStatus',     dependent: :destroy
+  has_many   :strips,           class_name: 'Risebox::Core::Strip',            dependent: :destroy
+  has_many   :settings,         class_name: 'Risebox::Core::DeviceSetting',    dependent: :destroy
+  has_many   :logs,             class_name: 'Risebox::Core::LogEntry',         dependent: :destroy
+  has_many   :user_permissions, class_name: 'Risebox::Core::DevicePermission', dependent: :destroy
+  has_many   :owners,  -> { where(human: true) } , class_name: 'Risebox::Core::User', through:   :user_permissions, source: :user
 
-  belongs_to :owner, class_name: 'Risebox::Core::User', foreign_key: :owner_id
+  #belongs_to :owner, class_name: 'Risebox::Core::User', foreign_key: :owner_id
 
-  scope :for_credentials,  -> (key,secret) {where(key: key, token: secret)}
-
-  def generate_token
-    begin
-      self.token = SecureRandom.hex
-    end while self.class.exists?(token: token)
-    self.token
-  end
+  #scope :for_credentials,  -> (key,secret) {where(key: key, token: secret)}
 
   def generate_settings
     return if (set = @@settings_ref[setting_key]).nil?
