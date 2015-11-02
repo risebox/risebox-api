@@ -18,7 +18,7 @@ class Risebox::Core::Device < ActiveRecord::Base
                   }
 
   
-  after_create  :generate_settings
+  after_create  :generate_settings, :create_brain_user
 
   has_many   :measures,         class_name: 'Risebox::Core::Measure',          dependent: :destroy
   has_many   :metric_statuses,  class_name: 'Risebox::Core::MetricStatus',     dependent: :destroy
@@ -27,6 +27,7 @@ class Risebox::Core::Device < ActiveRecord::Base
   has_many   :logs,             class_name: 'Risebox::Core::LogEntry',         dependent: :destroy
   has_many   :user_permissions, class_name: 'Risebox::Core::DevicePermission', dependent: :destroy
   has_many   :owners,  -> { where(human: true) } , class_name: 'Risebox::Core::User', through:   :user_permissions, source: :user
+    has_many :users, class_name: 'Risebox::Core::User', through:   :user_permissions, source: :user
 
   #belongs_to :owner, class_name: 'Risebox::Core::User', foreign_key: :owner_id
 
@@ -39,6 +40,11 @@ class Risebox::Core::Device < ActiveRecord::Base
         self.settings.create(setting.merge(changed_at: Time.now))
       end
     end
+  end
+
+  def create_brain_user
+    user = Risebox::Core::User.create! email: "brain.#{self.key}@risebox.co", first_name: "brain", last_name: self.key, human: false
+    Risebox::Core::DevicePermission.create! user: user, device: self
   end
 
   def setting_key

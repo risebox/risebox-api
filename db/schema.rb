@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151025231115) do
+ActiveRecord::Schema.define(version: 20151102200053) do
 
   create_table "app_settings", force: :cascade do |t|
     t.string   "key",        limit: 50
@@ -48,17 +48,14 @@ ActiveRecord::Schema.define(version: 20151025231115) do
   create_table "devices", force: :cascade do |t|
     t.string   "name"
     t.string   "key"
-    t.string   "token"
     t.string   "model"
     t.string   "version"
-    t.integer  "owner_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.datetime "settings_queried_at"
   end
 
-  add_index "devices", ["key", "token"], name: "index_devices_on_key_and_token", unique: true
-  add_index "devices", ["owner_id"], name: "index_devices_on_owner_id"
+  add_index "devices", ["key"], name: "index_devices_on_key"
 
   create_table "log_entries", force: :cascade do |t|
     t.integer  "level"
