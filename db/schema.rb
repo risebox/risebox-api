@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151102200053) do
+ActiveRecord::Schema.define(version: 20151102214906) do
+
+  create_table "app_registrations", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "token"
+    t.string   "origin"
+    t.datetime "made_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "app_registrations", ["token"], name: "index_app_registrations_on_token"
 
   create_table "app_settings", force: :cascade do |t|
     t.string   "key",        limit: 50
@@ -121,18 +132,6 @@ ActiveRecord::Schema.define(version: 20151102200053) do
 
   add_index "push_tokens", ["registration_id"], name: "index_push_tokens_on_registration_id"
   add_index "push_tokens", ["token"], name: "index_push_tokens_on_token"
-
-  create_table "registrations", force: :cascade do |t|
-    t.integer  "device_id"
-    t.integer  "user_id"
-    t.string   "token"
-    t.string   "origin"
-    t.datetime "made_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "registrations", ["token"], name: "index_registrations_on_token"
 
   create_table "strips", force: :cascade do |t|
     t.integer  "device_id"

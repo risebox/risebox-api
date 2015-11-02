@@ -1,7 +1,7 @@
-class Risebox::Access::Registration
+class Risebox::Access::AppRegistration
 
   def self.match_token token
-    registration = Risebox::Core::Registration.for_token(token).first
+    registration = Risebox::Core::AppRegistration.for_token(token).first
     if registration
       [true, registration]
     else

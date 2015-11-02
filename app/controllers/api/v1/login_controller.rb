@@ -9,7 +9,7 @@ class API::V1::LoginController < API::V1::AppSecuredController
 private
 
   def load_service
-    @service = rescuer Risebox::Query::Registration.new(@registration)
+    @service = rescuer Risebox::Query::AppRegistration.new(@registration)
   end
 
 end
