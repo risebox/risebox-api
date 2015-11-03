@@ -23,9 +23,11 @@ Rails.application.routes.draw do
         resources :strips, only: [:create, :show]
         resources :log_entries, path: 'logs', only: [:create, :index]
       end
-      post :registration,  to: 'registration#create'
-      post :login,         to: 'login#login'
-      post :push_update,   to: 'push#update_info'
+      namespace :app, path: 'app' do
+        post :registration,  to: 'registration#create'
+        post :login,         to: 'login#create'
+        post :push_update,   to: 'push#create'
+      end
     end
   end
 

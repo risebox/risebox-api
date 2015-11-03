@@ -1,4 +1,4 @@
-class API::V1::RegistrationController < API::V1::UserSecuredController
+class API::V1::App::RegistrationController < API::V1::UserSecuredController
   skip_before_filter :verify_authenticity_token, only: :create
   before_filter :load_service
 

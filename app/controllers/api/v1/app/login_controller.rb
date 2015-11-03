@@ -1,8 +1,8 @@
-class API::V1::LoginController < API::V1::AppSecuredController
+class API::V1::App::LoginController < API::V1::UserSecuredController
   skip_before_filter :verify_authenticity_token
   before_filter :load_service
 
-  def login
+  def create
     api_response @service.info
   end
 

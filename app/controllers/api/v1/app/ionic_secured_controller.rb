@@ -1,4 +1,4 @@
-class API::V1::IonicSecuredController < API::V1::APIController
+class API::V1::App::IonicSecuredController < API::V1::APIController
   before_action :check_app_id, :retrieve_registration_matching_token
 
 private
