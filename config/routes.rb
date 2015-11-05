@@ -35,7 +35,7 @@ Rails.application.routes.draw do
     root 'devices#index', as: 'root'
     resources :devices, path: '/' do
       member do
-        get ':metric', to: 'metrics#show', metric: /(PH|WTEMP|ATEMP|AHUM|LCYC|UCYC|NO2|NO3|NH4|GH|KH)/, as: 'metric'
+        get ':metric', to: 'metrics#show', metric: /(PH|WTEMP|WVOL|ATEMP|AHUM|LCYC|UCYC|NO2|NO3|NH4|GH|KH)/, as: 'metric'
         resources :device_settings do
           member do
             patch :prolong_date, to: 'device_settings#prolong_date'
