@@ -20,8 +20,10 @@ private
         @user = result
       end
     end
-    
-  	unless user_ok
+
+    if user_ok
+      @brain_calling = !@user.human?
+    else
   		api_response [false, result]
   	end
 
