@@ -1,60 +1,55 @@
-<div class="container-fluid">
-	<h1>Risebox <%=@device.name%></h1>
-	<h4>
-		Modèle <%= 'Hâpy' %> version <%= @device.version %> utilisé par <%= @device.owners_name.join(', ') %>
-	</h4>
+<h3>
+	<% if (@last_connected && @last_connected > 5.minutes.ago) %>
+		<span class="label label-success">Connecté</span>
+	<% else %>
+		<span class="label label-danger">Déconnecté</span>
+	<% end %>
+	<span class="label label-<%=label_for_color(@global_light)%>">
+		<%=@global_light == 'green' ? 'En bonne santé' : 'A surveiller'%>
+	</span>
+	<%= link_to admin_device_settings_path(@device.key), class: 'btn btn-default', style: 'margin-left: 7px' do %>
+		<i class="glyphicon glyphicon-wrench icon-white"></i>&nbsp;Voir les settings
+	<% end %>
+	<%= link_to admin_log_entries_path(@device.key), class: 'btn btn-default', style: 'margin-left: 7px' do %>
+		<i class="glyphicon glyphicon-list-alt icon-white"></i>&nbsp;Voir les logs
+	<% end %>
+</h3>
 
-	<h3>
-		<% if (@last_connected && @last_connected > 5.minutes.ago) %>
-			<span class="label label-success">Connecté</span>
-		<% else %>
-			<span class="label label-danger">Déconnecté</span>
-		<% end %>
-		<span class="label label-<%=label_for_color(@global_light)%>">
-			<%=@global_light == 'green' ? 'En bonne santé' : 'A surveiller'%>
-		</span>
-		<%= link_to admin_device_settings_path(@device.key), class: 'btn btn-default', style: 'margin-left: 7px' do %>
-			<i class="glyphicon glyphicon-wrench icon-white"></i>&nbsp;Voir les settings
-		<% end %>
-		<%= link_to admin_log_entries_path(@device.key), class: 'btn btn-default', style: 'margin-left: 7px' do %>
-			<i class="glyphicon glyphicon-list-alt icon-white"></i>&nbsp;Voir les logs
-		<% end %>
-	</h3>
-    <br>
-	<div class="table-responsive">
-		<table class="table table-hover">
-			<tr class="success">
-				<th>&nbsp;</th>
-				<th>Indicateur</th>
-				<th>Valeur</th>
-				<th>Quand?</th>
-				<th>&nbsp;</th>
+<br>
+
+<div class="table-responsive">
+	<table class="table table-hover">
+		<tr class="success">
+			<th>&nbsp;</th>
+			<th>Indicateur</th>
+			<th>Valeur</th>
+			<th>Quand?</th>
+			<th>&nbsp;</th>
+		</tr>
+		<% @statuses.each do |status| %>
+			<tr>
+				<td>
+					<span class="label label-<%= label_for_color(status.light) %>">
+						<%= level_text status.level %>
+					</span>
+				</td>
+				<td><%= status.metric.name %></td>
+				<td>
+					<% if status.value.present? %>
+						<%= status.value %> <%= status.metric.unit %>
+					<% else %>
+						N/A
+					<% end %>
+				</td>
+				<td><%= status.taken_at.present? ? time_ago_in_words(status.taken_at) : 'N/A' %></td>
+				<td>
+					<%= link_to metric_admin_device_path(id: @device.key, metric: status.metric.code), class: 'btn btn-default' do %>
+                        <i class="glyphicon glyphicon-signal icon-white"></i> Voir
+                    <% end %>
+				</td>
 			</tr>
-			<% @statuses.each do |status| %>
-				<tr>
-					<td>
-						<span class="label label-<%= label_for_color(status.light) %>">
-							<%= level_text status.level %>
-						</span>
-					</td>
-					<td><%= status.metric.name %></td>
-					<td>
-						<% if status.value.present? %>
-							<%= status.value %> <%= status.metric.unit %>
-						<% else %>
-							N/A
-						<% end %>
-					</td>
-					<td><%= status.taken_at.present? ? time_ago_in_words(status.taken_at) : 'N/A' %></td>
-					<td>
-						<%= link_to metric_admin_device_path(id: @device.key, metric: status.metric.code), class: 'btn btn-default' do %>
-	                        <i class="glyphicon glyphicon-signal icon-white"></i> Voir
-	                    <% end %>
-					</td>
-				</tr>
-			<% end %>
-		</table>
-	</div>
+		<% end %>
+	</table>
 </div>
 <!--
 <br><br>

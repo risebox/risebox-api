@@ -7,14 +7,10 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<div class="body">
-    <div class="container-fluid main">
-        <%= render 'admin/header', device: @device %>
-
-        <%= yield %>
+    <div class="body">
+        <div class="container-fluid main">
+            <%= yield %>
+        </div>
     </div>
-</div>
-
 </body>
 </html>

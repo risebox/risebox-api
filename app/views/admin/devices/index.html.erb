@@ -1,32 +1,30 @@
-<div class="container-fluid">
-	<h1>Liste des Risebox</h1>
-	<div class="table-responsive">
-		<table class="table table-hover">
+<h1>Liste des Risebox</h1>
+<div class="table-responsive">
+	<table class="table table-hover">
+		<tr>
+			<th>Nom</th>
+			<th>Propriétaire</th>
+			<th>Conectivité</th>
+			<th>&nbsp;</th>
+		</tr>
+		<% @devices.each do |device| %>
+			<% last_call = device.measures.last.try(:taken_at) %>
 			<tr>
-				<th>Nom</th>
-				<th>Propriétaire</th>
-				<th>Conectivité</th>
-				<th>&nbsp;</th>
+				<td><%= device.name %></td>
+				<td><%= device.owners_name.join(', ') %></td>
+				<td>
+					<% if (last_call.present? && last_call > 5.minutes.ago) %>
+						<span class="label label-success">Connecté</span>
+					<% else %>
+					    <span class="label label-danger">Déconnecté</span>
+					<% end %>
+				</td>
+				<td>
+					<%= link_to admin_device_path(id: device.key), class: 'btn btn-default' do %>
+                        <i class="glyphicon glyphicon-eye-open icon-white"></i> Voir
+                    <% end %>
+                </td>
 			</tr>
-			<% @devices.each do |device| %>
-				<% last_call = device.measures.last.try(:taken_at) %>
-				<tr>
-					<td><%= device.name %></td>
-					<td><%= device.owners_name.join(', ') %></td>
-					<td>
-						<% if (last_call.present? && last_call > 5.minutes.ago) %>
-							<span class="label label-success">Connecté</span>
-						<% else %>
-						    <span class="label label-danger">Déconnecté</span>
-						<% end %>
-					</td>
-					<td>
-						<%= link_to admin_device_path(id: device.key), class: 'btn btn-default' do %>
-	                        <i class="glyphicon glyphicon-eye-open icon-white"></i> Voir
-	                    <% end %>
-                    </td>
-				</tr>
-			<% end %>
-		</table>
-	</div>
+		<% end %>
+	</table>
 </div>

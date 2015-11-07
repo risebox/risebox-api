@@ -1,35 +1,25 @@
-<div class="container-fluid">
-	<h1>Risebox <%=@device.name%></h1>
-	<h4>
-		Modèle <%= 'Hâpy' %> version <%= @device.version %> utilisé par <%= @device.owner.first_name%> <%= @device.owner.last_name%>
-	</h4>
-	<%= link_to admin_device_path(id: @device.key), class: 'btn btn-default' do %>
-		<i class="glyphicon glyphicon-chevron-left icon-white"></i>&nbsp;Retour
-	<% end %>
-	<br><br>
-	<div class="table-responsive">
-		<table class="table table-hover">
-			<tr class="success">
-				<th>Clé</th>
-				<th>Type</th>
-				<th>Valeur</th>
-				<th>Changé le</th>
+<div class="table-responsive">
+	<table class="table table-hover">
+		<tr class="success">
+			<th>Clé</th>
+			<th>Type</th>
+			<th>Valeur</th>
+			<th>Changé le</th>
+		</tr>
+		<% @settings.each do |setting| %>
+			<tr>
+				<td><strong><%= setting.key %></strong></td>
+				<td><%= setting.data_type %></td>
+				<td>
+					<%= form_for setting, as: :device_setting, url: (setting.data_type == 'datetime' ? prolong_date_admin_device_setting_path(device_id: @device.key, id: setting.id) : admin_device_setting_path(device_id: @device.key, id: setting.id)) do |f| %>
+						<%= f.text_field :value %>
+						<%= button_tag class: 'btn btn-default' do %>
+                        	<i class="glyphicon glyphicon-save icon-white"></i>&nbsp;<%= setting.data_type == 'datetime' ? 'Ajouter autant de secondes' : 'Modifier la valeur' %>
+                    	<% end %>
+					<% end %>
+				</td>
+				<td><%= l(setting.changed_at, format: :long) if setting.changed_at.present? %></td>
 			</tr>
-			<% @settings.each do |setting| %>
-				<tr>
-					<td><strong><%= setting.key %></strong></td>
-					<td><%= setting.data_type %></td>
-					<td>
-						<%= form_for setting, as: :device_setting, url: (setting.data_type == 'datetime' ? prolong_date_admin_device_setting_path(device_id: @device.key, id: setting.id) : admin_device_setting_path(device_id: @device.key, id: setting.id)) do |f| %>
-							<%= f.text_field :value %>
-							<%= button_tag class: 'btn btn-default' do %>
-	                        	<i class="glyphicon glyphicon-save icon-white"></i>&nbsp;<%= setting.data_type == 'datetime' ? 'Ajouter autant de secondes' : 'Modifier la valeur' %>
-	                    	<% end %>
-						<% end %>
-					</td>
-					<td><%= l(setting.changed_at, format: :long) if setting.changed_at.present? %></td>
-				</tr>
-			<% end %>
-		</table>
-	</div>
+		<% end %>
+	</table>
 </div>
