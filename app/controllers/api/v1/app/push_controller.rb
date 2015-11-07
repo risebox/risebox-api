@@ -9,7 +9,7 @@ class API::V1::App::PushController < API::V1::App::IonicSecuredController
 private
 
   def load_service
-    @service = rescuer Risebox::Compute::PushUpdate.new(@registration)
+    @service = rescuer Risebox::Compute::PushUpdate.new(@app_registration)
   end
 
 
