@@ -1,7 +1,7 @@
 <%= render 'admin/devices/header', device: @device %>
 
 <% breadcrumb([ {title: 'Devices', path: admin_devices_path},
-				{title: @device.name.capitalize, path: admin_device_path(@device.name)}
+				{title: @device.name.capitalize, path: admin_device_path(@device.key)}
 			  ]) %>
 
 <% admin_title 'Devices', @device.name.capitalize %>
