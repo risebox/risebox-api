@@ -14,7 +14,6 @@ describe Risebox::Core::Device do
     expect(device.key).to      eq 'key'
     expect(device.model).to    eq 'Hapy'
     expect(device.version).to  eq '1'
-    expect(device.owner_id).to eq 3
     expect(device.token).to    eq 'generated_token'
   end
 

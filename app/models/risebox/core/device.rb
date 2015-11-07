@@ -54,4 +54,8 @@ class Risebox::Core::Device < ActiveRecord::Base
   def setting_key
     :"#{self.model.downcase}_#{self.version}"
   end
+
+  def owners_name
+    owners.map(&:pretty_name)
+  end
 end

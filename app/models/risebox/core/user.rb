@@ -23,4 +23,8 @@ class Risebox::Core::User < ActiveRecord::Base
   	self.password = psw
   	self.password_confirmation = psw
   end
+
+  def pretty_name
+    "#{first_name.capitalize} #{last_name.capitalize}"
+  end
 end

@@ -1,7 +1,7 @@
 <div class="container-fluid">
 	<h1>Risebox <%=@device.name%></h1>
 	<h4>
-		Modèle <%= 'Hâpy' %> version <%= @device.version %> utilisé par <%= @device.owner.first_name%> <%= @device.owner.last_name%>
+		Modèle <%= 'Hâpy' %> version <%= @device.version %> utilisé par <%= @device.owners_name.join(', ') %>
 	</h4>
 
 	<h3>

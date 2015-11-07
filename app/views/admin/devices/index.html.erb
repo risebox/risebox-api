@@ -12,7 +12,7 @@
 				<% last_call = device.measures.last.try(:taken_at) %>
 				<tr>
 					<td><%= device.name %></td>
-					<td><%= device.owner.first_name %> <%= device.owner.last_name %></td>
+					<td><%= device.owners_name.join(', ') %></td>
 					<td>
 						<% if (last_call.present? && last_call > 5.minutes.ago) %>
 							<span class="label label-success">Connecté</span>
