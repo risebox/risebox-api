@@ -1,0 +1,4 @@
+<% admin_title 'Users', @user.pretty_name %>
+
+<% breadcrumb([ {title: 'Users', path: admin_users_path()},
+                {title: @user.pretty_name, path: admin_users_path(@user)} ]) %>

@@ -32,8 +32,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin, path: "pastouch", constraints: https_constraint do
-    root 'devices#index', as: 'root'
-    resources :devices, path: '/' do
+    resources :devices do
       member do
         get ':metric', to: 'metrics#show', metric: /(PH|WTEMP|WVOL|ATEMP|AHUM|LCYC|UCYC|NO2|NO3|NH4|GH|KH)/, as: 'metric'
         resources :device_settings do
@@ -45,8 +44,8 @@ Rails.application.routes.draw do
       end
     end
     resources :users
+    root 'devices#index'
   end
-
 
   devise_for :users, class_name: 'Risebox::Core::User', path: "account", path_names: { sign_in: 'login', sign_out: 'logout', registration: 'register' }
 

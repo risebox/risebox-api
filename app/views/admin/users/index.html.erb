@@ -1,0 +1,26 @@
+<% admin_title 'Users', 'List' %>
+
+<% breadcrumb([ {title: 'Users', path: admin_users_path()} ]) %>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <tr>
+            <th>Type</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>&nbsp;</th>
+        </tr>
+        <% @users.each do |user| %>
+            <tr>
+                <td><%= raw user_label(user) %></td>
+                <td><%= user.pretty_name %></td>
+                <td><%= user.email %></td>
+                <td>
+                    <%= link_to admin_user_path(user), class: 'btn btn-default' do %>
+                        <i class="glyphicon glyphicon-eye-open icon-white"></i> Voir
+                    <% end %>
+                </td>
+            </tr>
+        <% end %>
+    </table>
+</div>
