@@ -11,8 +11,8 @@
 <%= render 'admin/devices/header', device: @device %>
 
 <% breadcrumb([ {title: 'Devices', path: admin_devices_path},
-                {title: @device.name.capitalize, path: admin_device_path(@device)},
-                {title: @metric.code, path: metric_admin_device_path(@device, @metric.code)},
+                {title: @device.name.capitalize, path: admin_device_path(@device.name)},
+                {title: @metric.code, path: metric_admin_device_path(@device.name, @metric.code)},
               ]) %>
 
 <% admin_title @report_title %>
