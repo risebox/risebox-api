@@ -44,6 +44,7 @@ Rails.application.routes.draw do
         resources :log_entries, path: 'logs', only: :index
       end
     end
+    resources :users
   end
 
 

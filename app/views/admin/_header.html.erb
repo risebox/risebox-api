@@ -1,10 +1,37 @@
-<h1>Risebox <%= device.name %></h1>
-    <h4>
-        Modèle <%= 'Hâpy' %> version <%= device.version %> utilisé par <%= device.owners_name.join(', ')%>
-    </h4>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <%= link_to image_tag('admin/logo.png', size: '20x20'), admin_root_path, class: "navbar-brand" %>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li><%= link_to 'Users', admin_users_path %></li>
+            <li><%= link_to 'Devices', admin_devices_path %></li>
+        </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
 
-    <%= link_to admin_device_path(id: device.key), class: 'btn btn-default' do %>
-        <i class="glyphicon glyphicon-chevron-left icon-white"></i>&nbsp;Retour
+<div id="flash" class="flash">
+    <% if notice.present? %><div class="notice"><%= notice %></div><% end %>
+    <% if alert.present? %><div class="alert"><%= alert %></div><% end %>
+</div>
+
+<ol class="breadcrumb">
+    <li class="<%= 'active' if breadcrumb_max_level == 1 %>"><a href="<%= breadcrumb_path(1) %>"><%= breadcrumb_title(1) %></a></li>
+    <% if breadcrumb_max_level > 1 %>
+        <li class="<%= 'active' if breadcrumb_max_level == 2 %>"><a href="<%= breadcrumb_path(2) %>"><%= breadcrumb_title(2) %></a></li>
     <% end %>
+    <% if breadcrumb_max_level > 2 %>
+        <li class="<%= 'active' if breadcrumb_max_level == 3 %>"><a href="<%= breadcrumb_path(3) %>"><%= breadcrumb_title(3) %></a></li>
+    <% end %>
+</ol>
 
-<br><br>
+<!-- <h1 class="h2"><%# @title %><%# " > #{@sub_title}" if @sub_title.present? %></h1> -->

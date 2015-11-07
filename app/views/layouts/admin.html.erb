@@ -2,15 +2,27 @@
 <html>
 <head>
   <title>RiseboxApi</title>
-  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= stylesheet_link_tag    'admin/admin', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
     <div class="body">
-        <div class="container-fluid main">
+        <div class="container-fluid admin-page">
+
+            <%= render 'admin/header' %>
+
             <%= yield %>
+
+            <div class="footer text-center">
+                <p class="text-center">
+                    © Risebox 2015
+                </p>
+            </div>
         </div>
+        <script>
+            <%= yield :load_script %>
+        </script>
     </div>
 </body>
 </html>

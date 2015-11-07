@@ -1,5 +1,4 @@
-class Admin::DeviceSettingsController < ApplicationController
-  http_basic_authenticate_with name: 'dg', password: 'dg'
+class Admin::DeviceSettingsController < Admin::BaseController
 
   def index
     @device = Risebox::Core::Device.find_by_key(params[:id])

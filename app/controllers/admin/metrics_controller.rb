@@ -1,5 +1,4 @@
-class Admin::MetricsController < ApplicationController
-  http_basic_authenticate_with name: 'dg', password: 'dg'
+class Admin::MetricsController < Admin::BaseController
 
   def show
     @device = Risebox::Core::Device.find_by_key(params[:id])

@@ -1,3 +1,11 @@
+<%= render 'admin/devices/header', device: @device %>
+
+<% breadcrumb([ {title: 'Devices', path: admin_devices_path},
+				{title: @device.name.capitalize, path: admin_device_path(@device.name)}
+			  ]) %>
+
+<% admin_title 'Devices', @device.name.capitalize %>
+
 <h3>
 	<% if (@last_connected && @last_connected > 5.minutes.ago) %>
 		<span class="label label-success">Connecté</span>
