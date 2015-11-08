@@ -1,19 +1,19 @@
 class Risebox::Query::AppRegistration
-  attr_reader :registration
+  attr_reader :app_registration
 
   def initialize registration
-    @registration = registration
+    @app_registration = registration
   end
 
   def info
-    user    = registration.user
+    user    = app_registration.user
     devices = user.devices
     data = { user: {id: user.id, first_name: user.first_name, last_name: user.last_name, email: user.email, api_token: user.api_token} ,
-                    devices: [] }
+             devices: [] }
     devices.each do |device|
-      data[:user][:devices] << {name: device.name, key: device.key}
+      data[:devices] << {name: device.name, key: device.key}
     end
-    return [true, data]
+    [true, data]
   rescue
     [false, nil]
   end
