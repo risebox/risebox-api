@@ -25,6 +25,6 @@ class Risebox::Core::User < ActiveRecord::Base
   end
 
   def pretty_name
-    "#{first_name.capitalize} #{last_name.capitalize}"
+    "#{first_name.try(:capitalize)} #{last_name.try(:capitalize)}"
   end
 end

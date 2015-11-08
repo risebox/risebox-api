@@ -1,0 +1,8 @@
+<% breadcrumb([ {title: 'Devices', path: admin_devices_path},
+                {title: 'New',     path: new_admin_device_path} ]) %>
+
+<%= form_for(@device, as: :device, url: admin_devices_path, html: {method: "post", class: 'form-horizontal'}) do |f| %>
+
+  <%= render 'form', f: f, btn_text: "Add Device" %>
+
+<% end %>

@@ -24,7 +24,25 @@ class Admin::DevicesController < Admin::BaseController
     end
   end
 
+  def new
+    @device = Risebox::Core::Device.new
+  end
+
+  def create
+    @device = Risebox::Core::Device.new(device_params)
+    if @device.save
+      flash[:notice] = "Device successfully created."
+      redirect_to admin_device_path(@device)
+    else
+      render :new
+    end
+  end
+
 private
+
+  def device_params
+    params.require(:device).permit(:name, :key, :model, :version)
+  end
 
   def device_last_connected statuses
     last_connected = nil

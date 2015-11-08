@@ -33,3 +33,12 @@ div.tooltip {
 }
 
 body { padding-top: 70px; }
+
+@riseboxPurple:     #627aad;
+@riseboxPurpleDark: #3b5998;
+
+//.btn-risebox { .buttonBackground(@riseboxPurple, @riseboxPurpleDark) }
+.btn-risebox {
+  //@include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
+  @include button-variant(white, #9933CC, #660099);
+}
