@@ -21,8 +21,10 @@ class ComputeStripTest < JobBase
     measure_svc.create_multiple_from_strip strip
 
     # Push notification
-    notifier = Risebox::Notify::StripResult.new(device.owner)
-    notifier.notify strip
+    device.owners.each do |user|
+      notifier = Risebox::Notify::StripResult.new(user)
+      notifier.notify strip
+    end
     puts "DONE notifying"
   end
 end
