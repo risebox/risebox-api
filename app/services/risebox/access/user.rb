@@ -12,7 +12,7 @@ class Risebox::Access::User
     if user_logged
       [true, user]
     else
-      [false, {error: :not_authorized, message: 'No device matches your credentials'}]
+      [false, {error: :not_authorized, message: 'No user matches your credentials'}]
     end
 
   end
