@@ -21,9 +21,9 @@ private
 
   def settings_for_mode mode, selection
     list = case mode
-    when 'full' then puts "in full"; @service.full_list
-    when 'delta' then puts "in delta"; @service.delta_list
-    when 'select' then puts "in select"; @service.select_list selection.split(',')
+    when 'full' then @service.full_list
+    when 'delta' then @service.delta_list
+    when 'select' then @service.select_list selection.split(',')
     else
       @service.full_list
     end
