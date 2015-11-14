@@ -79,7 +79,7 @@ displayMetricReport = function(bulkData, dates, reportDiv, maxWidth, reportTitle
       .attr("x", - height / 2)
       .attr("y", - 40)
       .style("text-anchor", "middle")
-      .text("Valeur de PH");
+      .text("Valeur mesurée");
 
   //Draw Graphic
   svg.append("path")
