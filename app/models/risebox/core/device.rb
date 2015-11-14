@@ -13,7 +13,8 @@ class Risebox::Core::Device < ActiveRecord::Base
                               {key: 'day_minutes',     data_type: 'integer',  value: 0   },
                               {key: 'night_hours',     data_type: 'integer',  value: 21  },
                               {key: 'night_minutes',   data_type: 'integer',  value: 0   },
-                              {key: 'fan_duty_ratio',  data_type: 'float',    value: 0.2 }
+                              {key: 'fan_duty_ratio',  data_type: 'float',    value: 0.2 },
+                              {key: 'brain_version',   data_type: 'float',    value: 0.1 }
                           ]
                   }
 
