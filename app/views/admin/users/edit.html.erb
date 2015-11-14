@@ -1,0 +1,9 @@
+<% breadcrumb([ {title: 'Users', path: admin_users_path},
+                {title: @user.pretty_name, path: admin_users_path(@user)},
+                {title: 'Edit',   path: edit_admin_user_path} ]) %>
+
+<%= form_for(@user, as: :user, url: admin_user_path(@user), html: {method: "put", class: 'form-horizontal'}) do |f| %>
+
+  <%= render 'form', f: f, btn_text: "Update User" %>
+
+<% end %>

@@ -1,0 +1,8 @@
+<% breadcrumb([ {title: 'Users', path: admin_users_path},
+                {title: 'New',   path: new_admin_user_path} ]) %>
+
+<%= form_for(@user, as: :user, url: admin_users_path, html: {method: "post", class: 'form-horizontal'}) do |f| %>
+
+  <%= render 'form', f: f, btn_text: "Add User" %>
+
+<% end %>
