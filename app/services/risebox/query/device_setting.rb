@@ -37,6 +37,12 @@ class Risebox::Query::DeviceSetting
     errors.empty? ? [true, settings] : [false, {error: :bulk_update_failed, message: "#{errors.size()} errors : settings #{errors.keys} were not updated"}]
   end
 
+  def update key, value
+    setting = device.settings.where(key: key).first
+    updated = setting.update_attributes(value: value)
+    updated ? [true, setting] : [false, {error: :update_failed, message: "Setting was not updated due to #{setting.errors}"}]
+  end
+
 private
 
 	def update_queried_at_and_return now, result

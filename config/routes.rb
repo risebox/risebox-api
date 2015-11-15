@@ -22,6 +22,7 @@ Rails.application.routes.draw do
         resources :parameters
         resources :strips, only: [:create, :show]
         resources :log_entries, path: 'logs', only: [:create, :index]
+        post :brain_upgrade, to: 'brain_upgrade#upgrade'
       end
       namespace :app, path: 'app' do
         post :registration,  to: 'registration#create'
