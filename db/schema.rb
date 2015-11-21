@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151102214906) do
+ActiveRecord::Schema.define(version: 20151121175940) do
 
   create_table "app_registrations", force: :cascade do |t|
     t.integer  "user_id"
@@ -123,14 +123,14 @@ ActiveRecord::Schema.define(version: 20151102214906) do
 
   create_table "push_tokens", force: :cascade do |t|
     t.string   "token"
-    t.integer  "registration_id"
+    t.integer  "app_registration_id"
     t.datetime "registered_at"
     t.string   "platform"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "push_tokens", ["registration_id"], name: "index_push_tokens_on_registration_id"
+  add_index "push_tokens", ["app_registration_id"], name: "index_push_tokens_on_app_registration_id"
   add_index "push_tokens", ["token"], name: "index_push_tokens_on_token"
 
   create_table "strips", force: :cascade do |t|
