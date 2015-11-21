@@ -1,9 +1,9 @@
 class Risebox::Compute::PushUpdate
 
-  attr_reader :registration, :info
+  attr_reader :app_registration, :info
 
   def initialize registration
-    @registration = registration
+    @app_registration = registration
   end
 
   def compute info
@@ -83,7 +83,7 @@ private
   end
 
   def service
-    Risebox::Manage::PushToken.new(@registration)
+    Risebox::Manage::PushToken.new(@app_registration)
   end
 
 end

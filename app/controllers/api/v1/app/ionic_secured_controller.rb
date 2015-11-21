@@ -11,9 +11,9 @@ private
   end
 
   def retrieve_registration_matching_token
-    success, result = rescuer Risebox::Access::AppRegistration.match_token(params['risebox']['registration_token'])
+    success, result = rescuer(Risebox::Access::AppRegistration.new).match_token(params['risebox']['registration_token'])
     if success
-      @registration = result
+      @app_registration = result
     else
       api_response [false, result]
     end
