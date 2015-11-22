@@ -16,7 +16,7 @@
             <th>&nbsp;</th>
         </tr>
         <% @users.each do |user| %>
-            <tr>
+            <tr class="clickable-row" data-href='<%= admin_users_path(id: user.id) %>'>
                 <td><%= raw user_label(user) %></td>
                 <td><%= user.pretty_name %></td>
                 <td><%= user.email %></td>

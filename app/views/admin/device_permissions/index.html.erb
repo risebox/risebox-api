@@ -1,0 +1,61 @@
+<%= render 'admin/devices/header', device: @device %>
+
+<% breadcrumb([ {title: 'Devices', path: admin_devices_path},
+                {title: @device.name.capitalize, path: admin_device_path(@device.key)},
+                {title: 'Owners', path: admin_device_device_permissions_path(device_id: @device.key)}
+              ]) %>
+
+<% admin_title 'Device Owners' %>
+
+<%= link_to '#', id: 'addOwnerBtn', class: 'btn btn-primary' do %>
+    <i class="glyphicon glyphicon-plus icon-white"></i> Add Owner
+<% end %>
+<div id="addOwnerDiv" style="display: none;">
+    <%= form_for(:device_permission, url: admin_device_device_permissions_path, html: {method: "post", class: 'form-inline'}) do |f| %>
+        <div class="form-group">
+          <%= f.label  :user_id, nil, class: 'control-label sr-only' %>
+          <%= f.select(:user_id, @other_possible_owner_ids, {}, prompt: 'Select another owner', class: 'form-control') %>
+        </div>
+        <%= f.submit 'Add as owner', class: 'btn btn-success' %>
+        <%= link_to 'Cancel', '#', id: 'cancelOwnerBtn' %>
+    <% end %>
+</div>
+<br/><br/>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <tr>
+            <th>Nom Prénom</th>
+            <th>Propriétaire depuis le</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+        </tr>
+        <% @permissions.each do |p| %>
+            <tr class="clickable-row" data-href='<%= admin_device_device_permission_path(@device.key, p) %>'>
+                <td><%= p.user.pretty_name %></td>
+                <td><%= l(p.created_at, format: :long) %></td>
+                <td>
+                    <%= link_to admin_device_device_permissions_path(device_id: @device.key), class: 'btn btn-default' do %>
+                        <i class="glyphicon glyphicon-eye-open icon-white"></i> Voir
+                    <% end %>
+                </td>
+                <td>
+                    <%= link_to admin_device_device_permission_path(device_id: @device.key, id: p.id), data: { confirm: 'Are you sure' }, method: :delete, class: 'btn btn-danger' do %>
+                        <i class="glyphicon glyphicon-trash"></i> Delete
+                    <% end %>
+                </td>
+            </tr>
+        <% end %>
+    </table>
+</div>
+
+<script>
+    $('#addOwnerBtn').on('click', function(){
+        $('#addOwnerBtn').hide();
+        $('#addOwnerDiv').show();
+    });
+    $('#cancelOwnerBtn').on('click', function(){
+        $('#addOwnerDiv').hide();
+        $('#addOwnerBtn').show();
+    });
+</script>

@@ -1,4 +1,7 @@
 <h1>Risebox <%= device.name %></h1>
 <h4>
     Modèle <%= 'Hâpy' %> version <%= device.version %> utilisé par <%= device.owners_name.join(', ')%>
+    <%= link_to admin_device_device_permissions_path(device_id: device.key), class: 'btn btn-default' do %>
+        <i class="glyphicon glyphicon-user"></i> Gérer owners
+    <% end %>
 </h4>

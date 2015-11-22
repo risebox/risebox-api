@@ -36,13 +36,12 @@ Rails.application.routes.draw do
     resources :devices do
       member do
         get ':metric', to: 'metrics#show', metric: /(PH|WTEMP|WVOL|ATEMP|AHUM|LCYC|UCYC|NO2|NO3|NH4|GH|KH)/, as: 'metric'
-        resources :device_settings do
-          member do
-            patch :prolong_date, to: 'device_settings#prolong_date'
-          end
-        end
-        resources :log_entries, path: 'logs', only: :index
       end
+      resources :device_settings do
+        patch :prolong_date, to: 'device_settings#prolong_date', on: :member
+      end
+      resources :log_entries, path: 'logs', only: :index
+      resources :device_permissions, path: 'owners'
     end
     resources :users
     root 'devices#index'

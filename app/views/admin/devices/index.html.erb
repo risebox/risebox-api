@@ -9,7 +9,7 @@
 
 <div class="table-responsive">
 	<table class="table table-hover">
-		<tr>
+		<tr >
 			<th>Nom</th>
 			<th>Propriétaire</th>
 			<th>Conectivité</th>
@@ -17,7 +17,7 @@
 		</tr>
 		<% @devices.each do |device| %>
 			<% last_call = device.measures.last.try(:taken_at) %>
-			<tr>
+			<tr class="clickable-row" data-href='<%= admin_device_path(id: device.key) %>'>
 				<td><%= device.name %></td>
 				<td><%= device.owners_name.join(', ') %></td>
 				<td>

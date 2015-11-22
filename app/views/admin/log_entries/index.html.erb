@@ -2,14 +2,14 @@
 
 <% breadcrumb([ {title: 'Devices', path: admin_devices_path},
                 {title: @device.name.capitalize, path: admin_device_path(@device.key)},
-                {title: 'Logs', path: admin_log_entries_path(@device.key)}
+                {title: 'Logs', path: admin_device_log_entries_path(@device.key)}
               ]) %>
 
 <% admin_title 'Log Entries' %>
 
 <div class="table-responsive">
     <table class="table table-hover">
-        <tr class="success">
+        <tr>
             <th>Loggé le</th>
             <th>Niveau</th>
             <th>Text</th>
