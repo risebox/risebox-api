@@ -10,7 +10,7 @@ class Risebox::Query::Measure
   end
 
   def list_for_stats metric, since
-    [true, device.measures.for_metric(metric.code).only_data.chronologic.since(since)]
+    [true, device.measures.for_metric(metric).only_data.chronologic.since(since)]
   end
 
   def build_new metric_code, value, origin, taken_at
