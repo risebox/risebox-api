@@ -18,7 +18,6 @@ Rails.application.routes.draw do
         resources :metrics do
           resources :measures
           resources :alerts
-          get :stats, to: 'metric_stats#show'
         end
         resources :parameters
         resources :strips, only: [:create, :show]
