@@ -5,11 +5,7 @@ class Risebox::Query::Measure
     @device = device
   end
 
-  def list metric
-    [true, device.measures.for_metric(metric).recent]
-  end
-
-  def list_for_stats metric, since
+  def list metric, since
     [true, device.measures.for_metric(metric).only_data.chronologic.since(since)]
   end
 
