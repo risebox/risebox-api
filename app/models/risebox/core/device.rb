@@ -16,7 +16,7 @@ class Risebox::Core::Device < ActiveRecord::Base
                               {key: 'fan_duty_ratio',  data_type: 'float',    value: 0.2 },
                               {key: 'brain_version',   data_type: 'float',    value: 0.1 },
                               {key: 'brain_update',    data_type: 'boolean',  value: 0   },
-                              {key: 'all_white_duration'}, data_type: 'integer', value: 600}
+                              {key: 'all_white_duration', data_type: 'integer', value: 600}
                           ]
                   }
 
