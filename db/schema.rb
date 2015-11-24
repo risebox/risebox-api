@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151121175940) do
+ActiveRecord::Schema.define(version: 20151123232135) do
 
   create_table "app_registrations", force: :cascade do |t|
     t.integer  "user_id"
@@ -98,13 +98,17 @@ ActiveRecord::Schema.define(version: 20151121175940) do
     t.integer  "metric_id"
     t.float    "value"
     t.datetime "taken_at"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.float    "limit_min"
     t.float    "limit_max"
     t.string   "level"
     t.string   "light"
     t.string   "description"
+    t.float    "hourly_average"
+    t.float    "daily_average"
+    t.float    "weekly_average"
+    t.float    "monthly_average"
   end
 
   add_index "metric_statuses", ["device_id", "metric_id"], name: "index_metric_statuses_on_device_id_and_metric_id", unique: true
