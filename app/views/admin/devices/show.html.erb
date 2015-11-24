@@ -48,6 +48,11 @@
 					<% else %>
 						N/A
 					<% end %>
+					<br />
+					H : <%= status.hourly_average %>, 
+					D : <%= status.daily_average %>, 
+					W : <%= status.weekly_average %>, 
+					M : <%= status.monthly_average %>, 
 				</td>
 				<td><%= status.taken_at.present? ? time_ago_in_words(status.taken_at) : 'N/A' %></td>
 				<td>
