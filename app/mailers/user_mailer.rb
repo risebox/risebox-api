@@ -14,6 +14,11 @@ class UserMailer < ActionMailer::Base
     end
   end
 
+  def recovery_alert device_key, version
+    headers['X-SMTPAPI'] = single_recipient_header 'recovery_alert'
+    mail(to: "team@risebox.co", body: "Risebox #{device_key} is rolling back to version #{version}. Check if everything is ok", content_type: "text/html", subject: "Risebox #{device_key} in recovery mode !")
+  end
+
 private
 
   def single_recipient_header category, bypass_list_management=false

@@ -55,6 +55,7 @@ Rails.application.routes.draw do
 
   post :sign, to: "signing#sign"
   get :form,  to: "signing#form"
+  get :rollback,  to: "recovery#rollback"
 
 
   mount Resque::Server, at: '/jobs', as: 'jobs'
