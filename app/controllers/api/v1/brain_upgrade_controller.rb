@@ -20,6 +20,7 @@ private
     upgrade_time = params[:brain_upgraded_at].present? ? Time.at(params[:brain_upgraded_at].to_i).to_datetime : Time.now
     puts "Brain acknowledging change to version #{params[:version]}"
     upgraded, setting = @service.compute(params[:version].to_f, upgrade_time)
+    return [upgraded, setting]
   end
 
   def load_service
