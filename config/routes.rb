@@ -23,6 +23,7 @@ Rails.application.routes.draw do
         resources :strips, only: [:create, :show]
         resources :log_entries, path: 'logs', only: [:create, :index]
         post :brain_upgrade, to: 'brain_upgrade#upgrade'
+        post :brain_rollback,  to: "brain_upgrade#rollback"
       end
       namespace :app, path: 'app' do
         post :registration,  to: 'registration#create'
@@ -55,7 +56,6 @@ Rails.application.routes.draw do
 
   post :sign, to: "signing#sign"
   get :form,  to: "signing#form"
-  get :rollback,  to: "recovery#rollback"
 
 
   mount Resque::Server, at: '/jobs', as: 'jobs'

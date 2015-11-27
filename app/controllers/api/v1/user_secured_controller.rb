@@ -17,6 +17,7 @@ private
       end
     elsif user_email.present? && (user_api_token.present? || user_secret.present?)
       user_ok, result = rescuer(Risebox::Access::User.new).user_for_credentials(user_email, user_api_token || user_secret)
+      
       if user_ok
         @user = result
       end
