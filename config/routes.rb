@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       resources :device_permissions, path: 'owners'
     end
     resources :users
+    mount Resque::Server, at: '/jobs', as: 'jobs'
     root 'devices#index'
   end
 
@@ -56,9 +57,6 @@ Rails.application.routes.draw do
 
   post :sign, to: "signing#sign"
   get :form,  to: "signing#form"
-
-
-  mount Resque::Server, at: '/jobs', as: 'jobs'
 
   root 'home#index'
 
