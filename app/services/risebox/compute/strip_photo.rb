@@ -124,7 +124,7 @@ private
       output << line
     end
     puts "output #{output}"
-    /rgb\((?<red>.[^,]*),(?<green>.[^,]*),(?<blue>.[^\)]*)\)/ =~ output[1]
+    /rgba\((?<red>.[^,]*),(?<green>.[^,]*),(?<blue>.[^,]*),/ =~ output[1]
     puts "red #{red} green #{green} blue #{blue}"
     return [red.to_i, green.to_i, blue.to_i]
   end
@@ -134,7 +134,7 @@ private
     IO.popen(scale_txt_cmd(path)).each do |line|
       output << line
     end
-    /rgb\((?<red>.[^,]*),(?<green>.[^,]*),(?<blue>.[^\)]*)\)/ =~ output[1]
+    /rgba\((?<red>.[^,]*),(?<green>.[^,]*),(?<blue>.[^,]*),/ =~ output[1]
     return [red.to_i, green.to_i, blue.to_i]
   end
 
