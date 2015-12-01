@@ -1,5 +1,5 @@
 class Risebox::Core::Measure < ActiveRecord::Base
-  before_save :set_meaningful
+  before_save :set_meaningful_if_value_changed
 
   belongs_to :device, class_name: 'Risebox::Core::Device'
   belongs_to :metric, class_name: 'Risebox::Core::Metric'
@@ -16,12 +16,17 @@ class Risebox::Core::Measure < ActiveRecord::Base
   end
 
   def set_meaningful
+    m = true
+    m = false if self.metric_status.meaning_min.present? && self.value < self.metric_status.meaning_min
+    m = false if self.metric_status.meaning_max.present? && self.value > self.metric_status.meaning_max
+    self.meaningful = m
+  end
+
+  def set_meaningful_if_value_changed
     if self.value_changed?
-      m = true
-      m = false if self.metric_status.meaning_min.present? && self.value < self.metric_status.meaning_min
-      m = false if self.metric_status.meaning_max.present? && self.value > self.metric_status.meaning_max
-      self.meaningful = m
+      set_meaningful
     end
     return true
   end
+  
 end

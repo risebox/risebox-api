@@ -19,6 +19,7 @@ class Risebox::Query::Measure
   end
 
   def create metric_code, value, origin='probe', taken_at=Time.now
+    return [false, {error: :params, message: 'A value of nil is impossible for a measure'}] if value.nil?
     measure              = build_new(metric_code, value, origin, taken_at)
     measure_saved        = measure.save
     if measure_saved && measure.meaningful
