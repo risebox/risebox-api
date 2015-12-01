@@ -142,16 +142,22 @@ private
 
   def number_from_color wb_image, key, crop_image
     strip_color = extract_strip_color(wb_image, key, crop_image)
+    puts "Extracted RGB color for #{key}: #{strip_color}"
+
     closest_distance = nil
     closest_number = nil
 
+    puts "Comparing metric #{key} with references"
     SCALES[key].each do |ref|
       distance = color_distance(strip_color, ref.first(3))
+      puts "Distance for #{key}: #{distance} for #{ref[3]}"
       if closest_distance.nil? || closest_distance > distance
         closest_distance = distance
         closest_number = ref[3]
       end
     end
+
+    puts "Closest is #{closest_number}"
 
     closest_number
   end
