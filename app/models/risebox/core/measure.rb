@@ -20,5 +20,6 @@ private
     if self.value_changed?
       self.meaningful = self.value.between? self.metric_status.meaning_min, self.metric_status.meaning_max
     end
+    return true
   end
 end

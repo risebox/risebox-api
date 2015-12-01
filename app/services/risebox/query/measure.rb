@@ -21,7 +21,9 @@ class Risebox::Query::Measure
   def create metric_code, value, origin='probe', taken_at=Time.now
     measure              = build_new(metric_code, value, origin, taken_at)
     measure_saved        = measure.save
-    status_saved, status = Risebox::Query::MetricStatus.new(device).update(metric_code, value)
+    if measure_saved && measure.meaningful
+      status_saved, status = Risebox::Query::MetricStatus.new(device).update(metric_code, value)
+    end
     [measure_saved && status_saved, measure]
   end
 
