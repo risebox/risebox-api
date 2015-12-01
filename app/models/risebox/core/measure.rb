@@ -15,10 +15,12 @@ class Risebox::Core::Measure < ActiveRecord::Base
   	@metric_status ||= Risebox::Core::MetricStatus.for_device(self.device_id).for_metric(self.metric_id).first
   end
 
-private
   def set_meaningful
     if self.value_changed?
-      self.meaningful = self.value.between? self.metric_status.meaning_min, self.metric_status.meaning_max
+      m = true
+      m = false if self.metric_status.meaning_min.present? && self.value < self.metric_status.meaning_min
+      m = false if self.metric_status.meaning_max.present? && self.value > self.metric_status.meaning_max
+      self.meaningful = m
     end
     return true
   end
