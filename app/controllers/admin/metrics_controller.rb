@@ -5,7 +5,7 @@ class Admin::MetricsController < Admin::BaseController
     @metric = Risebox::Core::Metric.find_by_code params[:metric]
     @report_title = "Evolution de #{@metric.name}"
     @begin_at = params[:begin_at].present? ? params[:begin_at] : 1.hour.ago.beginning_of_hour
-    @result = format_result @device.measures.for_metric(@metric.code).only_data.chronologic.since(@begin_at)
+    @result = format_result @device.raw_measures.for_metric(@metric.code).only_data.chronologic.since(@begin_at)
     @time_frames = time_frames
   end
 

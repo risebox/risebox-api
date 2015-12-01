@@ -15,15 +15,6 @@ class Admin::DevicesController < Admin::BaseController
     end
   end
 
-  def log
-    @device = Risebox::Core::Device.find_by_key(params[:device_key])
-    if @device
-      @measures = @device.measures.recent.with_metric.limit(50)
-    else
-      redirect_to admin_root_path
-    end
-  end
-
   def new
     @device = Risebox::Core::Device.new
   end

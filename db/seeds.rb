@@ -31,13 +31,13 @@ gh        = Risebox::Core::Metric.create name: "Dureté totale (GH)",           
 kh        = Risebox::Core::Metric.create name: "Dureté carbonnée (KH)",         code: 'KH',    unit: '°d',      display_order: 12
 
 [lab1, menucourt].each do |box|
-  box.metric_statuses.create(metric: ph,      limit_min: 6.5, limit_max: 7.8)
-  box.metric_statuses.create(metric: w_temp,  limit_min: 18,  limit_max: 25)
-  box.metric_statuses.create(metric: w_vol,   limit_min: 100, limit_max: 200)
-  box.metric_statuses.create(metric: a_temp,  limit_min: 18,  limit_max: 26)
-  box.metric_statuses.create(metric: a_hum,   limit_min: 35,  limit_max: 70)
-  box.metric_statuses.create(metric: u_cycle, limit_min: 300, limit_max: 3000)
-  box.metric_statuses.create(metric: l_cycle, limit_min: 200, limit_max: 2000)
+  box.metric_statuses.create(metric: ph,      limit_min: 6.5, limit_max: 7.8, meaning_min: 3,  meaning_max: 10)
+  box.metric_statuses.create(metric: w_temp,  limit_min: 18,  limit_max: 25,  meaning_min: 5,  meaning_max: 50)
+  box.metric_statuses.create(metric: w_vol,   limit_min: 100, limit_max: 200, meaning_min: 20, meaning_max: 250)
+  box.metric_statuses.create(metric: a_temp,  limit_min: 18,  limit_max: 26,  meaning_min: 5,  meaning_max: 50)
+  box.metric_statuses.create(metric: a_hum,   limit_min: 35,  limit_max: 70,  meaning_min: 10, meaning_max: 100)
+  box.metric_statuses.create(metric: u_cycle, limit_min: 300, limit_max: 3000, meaning_min: 100, meaning_max: nil)
+  box.metric_statuses.create(metric: l_cycle, limit_min: 200, limit_max: 2000, meaning_min: 100, meaning_max: nil)
   box.metric_statuses.create(metric: no2,     limit_min: 0,   limit_max: 1)
   box.metric_statuses.create(metric: nh4,     limit_min: 0,   limit_max: 0.5)
   box.metric_statuses.create(metric: no3,     limit_min: 60,  limit_max: 130)

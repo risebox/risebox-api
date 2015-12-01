@@ -6,16 +6,16 @@ class Risebox::Query::Measure
   end
 
   def list metric, since
-    [true, device.measures.for_metric(metric).only_data.chronologic.since(since)]
+    [true, device.meaningful_measures.for_metric(metric).only_data.chronologic.since(since)]
   end
 
   def average_since metric, since
-    device.measures.for_metric(metric).since(since).average(:value)
+    device.meaningful_measures.for_metric(metric).since(since).average(:value)
   end
 
   def build_new metric_code, value, origin, taken_at
     metric = Risebox::Core::Metric.find_by_code metric_code
-    device.measures.new(metric: metric, value: value, origin: origin, taken_at: taken_at)
+    device.raw_measures.new(metric: metric, value: value, origin: origin, taken_at: taken_at)
   end
 
   def create metric_code, value, origin='probe', taken_at=Time.now

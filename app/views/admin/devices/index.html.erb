@@ -16,7 +16,7 @@
 			<th>&nbsp;</th>
 		</tr>
 		<% @devices.each do |device| %>
-			<% last_call = device.measures.last.try(:taken_at) %>
+			<% last_call = device.settings_queried_at %>
 			<tr class="clickable-row" data-href='<%= admin_device_path(id: device.key) %>'>
 				<td><%= device.name %></td>
 				<td><%= device.owners_name.join(', ') %></td>

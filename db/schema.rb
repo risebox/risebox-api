@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151123232135) do
+ActiveRecord::Schema.define(version: 20151201104118) do
 
   create_table "app_registrations", force: :cascade do |t|
     t.integer  "user_id"
@@ -84,14 +84,15 @@ ActiveRecord::Schema.define(version: 20151123232135) do
     t.float    "value"
     t.datetime "taken_at"
     t.integer  "device_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.integer  "metric_id"
     t.string   "origin"
+    t.boolean  "meaningful", default: true
   end
 
-  add_index "measures", ["device_id"], name: "index_measures_on_device_id"
-  add_index "measures", ["metric_id"], name: "index_measures_on_metric_id"
+  add_index "measures", ["device_id", "metric_id", "taken_at", "meaningful"], name: "meaningful_measures_index"
+  add_index "measures", ["device_id", "metric_id", "taken_at"], name: "raw_measures_index"
 
   create_table "metric_statuses", force: :cascade do |t|
     t.integer  "device_id"
@@ -109,6 +110,8 @@ ActiveRecord::Schema.define(version: 20151123232135) do
     t.float    "daily_average"
     t.float    "weekly_average"
     t.float    "monthly_average"
+    t.float    "meaning_min"
+    t.float    "meaning_max"
   end
 
   add_index "metric_statuses", ["device_id", "metric_id"], name: "index_metric_statuses_on_device_id_and_metric_id", unique: true

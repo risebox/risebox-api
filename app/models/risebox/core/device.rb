@@ -21,10 +21,25 @@ class Risebox::Core::Device < ActiveRecord::Base
                           ]
                   }
 
+  @@metrics_ref = {hapy_2: [ { code: 'PH',    data: {limit_min: 6.2,    limit_max: 7.8,  meaning_min: 3,  meaning_max: 10}},
+                              {code: 'WTEMP', data: {limit_min: 18,     limit_max: 25,   meaning_min: 5,  meaning_max: 50}},
+                              {code: 'WVOL',  data: {limit_min: 100,    limit_max: 200,  meaning_min: 20, meaning_max: 250}},
+                              {code: 'ATEMP', data: {limit_min: 18,     limit_max: 28,   meaning_min: 5,  meaning_max: 50}},
+                              {code: 'AHUM',  data: {limit_min: 25,     limit_max: 60,   meaning_min: 10,  meaning_max: 100}},
+                              {code: 'UCYC',  data: {limit_min: 300,    limit_max: 3000, meaning_min: 100,  meaning_max: nil}},
+                              {code: 'LCYC',  data: {limit_min: 200,    limit_max: 2000, meaning_min: 100,  meaning_max: nil}},
+                              {code: 'NO2',   data: {limit_min: 0,      limit_max: 1,    meaning_min: nil,  meaning_max: nil}},
+                              {code: 'NH4',   data: {limit_min: 0,      limit_max: 0.5,  meaning_min: nil,  meaning_max: nil}},
+                              {code: 'NO3',   data: {limit_min: 60,     limit_max: 500,  meaning_min: nil,  meaning_max: nil}},
+                              {code: 'GH',    data: {limit_min: 4,      limit_max: 16,   meaning_min: nil,  meaning_max: nil}},
+                              {code: 'KH',    data: {limit_min: 3,      limit_max: 10,   meaning_min: nil,  meaning_max: nil}}
+                          ]
+                  }
 
-  after_create  :generate_settings, :create_brain_user
+  after_create  :generate_settings, :generate_metric_statuses, :create_brain_user
 
-  has_many   :measures,         class_name: 'Risebox::Core::Measure',          dependent: :destroy
+  has_many   :raw_measures, class_name: 'Risebox::Core::Measure',          dependent: :destroy
+  has_many   :meaningful_measures,  -> { where(meaningful: true) }, class_name: 'Risebox::Core::Measure'
   has_many   :metric_statuses,  class_name: 'Risebox::Core::MetricStatus',     dependent: :destroy
   has_many   :strips,           class_name: 'Risebox::Core::Strip',            dependent: :destroy
   has_many   :settings,         class_name: 'Risebox::Core::DeviceSetting',    dependent: :destroy
@@ -38,11 +53,20 @@ class Risebox::Core::Device < ActiveRecord::Base
   #scope :for_credentials,  -> (key,secret) {where(key: key, token: secret)}
 
   def generate_settings
-    return if (set = @@settings_ref[setting_key]).nil?
+    return if (set = @@settings_ref[model_key]).nil?
     set.each do |setting|
       unless self.settings.where(key: setting[:key]).exists?
         self.settings.create(setting.merge(changed_at: Time.now))
       end
+    end
+  end
+
+  def generate_metric_statuses
+    return if (set = @@metrics_ref[model_key]).nil?
+    set.each do |metric_ref|
+      metric        = Risebox::Core::Metric.find_by_code metric_ref[:code]
+      metric_status = Risebox::Core::MetricStatus.where(metric_id: metric.id, device_id: self.id).first_or_create
+      metric_status.update_attributes(metric_ref[:data])
     end
   end
 
@@ -55,7 +79,7 @@ class Risebox::Core::Device < ActiveRecord::Base
     @brain ||= self.users.where(human: false).first
   end
 
-  def setting_key
+  def model_key
     :"#{self.model.downcase}_#{self.version}"
   end
 

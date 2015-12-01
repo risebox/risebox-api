@@ -6,8 +6,9 @@ class Risebox::Core::MetricStatus < ActiveRecord::Base
   belongs_to :metric, class_name: 'Risebox::Core::Metric'
 
 
-  scope :for_device,  -> (device) { where(device_id: device) }
+  scope :for_device,  -> (device_id) { where(device_id: device_id) }
   scope :with_metric, -> { joins(:metric).includes(:metric).order('metrics.display_order') }
+  scope :for_metric,  -> (metric_id) { where(metric_id: metric_id) }
 
 private
 
