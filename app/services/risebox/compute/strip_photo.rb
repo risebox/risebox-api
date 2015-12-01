@@ -118,11 +118,14 @@ private
   def extract_strip_color wb_image, key, crop_image
     output = []
     width, height = image_dimensions(wb_image)
+    puts "width #{width} height #{height}"
     crop_img_cmd(wb_image, key, crop_image, width, height)
     IO.popen(crop_txt_cmd(wb_image, key, width, height)).each do |line|
       output << line
     end
+    puts "output #{output}"
     /rgb\((?<red>.[^,]*),(?<green>.[^,]*),(?<blue>.[^\)]*)\)/ =~ output[1]
+    puts "red #{red} green #{green} blue #{blue}"
     return [red.to_i, green.to_i, blue.to_i]
   end
 
