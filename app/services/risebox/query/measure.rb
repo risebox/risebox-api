@@ -24,7 +24,7 @@ class Risebox::Query::Measure
     if measure_saved && measure.meaningful
       status_saved, status = Risebox::Query::MetricStatus.new(device).update(metric_code, value)
     end
-    [measure_saved && status_saved, measure]
+    [measure_saved, measure]
   end
 
   def create_multiple_from_strip strip
