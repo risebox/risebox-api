@@ -9,7 +9,7 @@ class Risebox::Compute::StripPhoto
 
   # JBL Strip from self.compute_scales (with white-balance)
   SCALES = { :ph=>[[255, 239, 81, 6.4], [247, 181, 28, 6.8], [238, 104, 6, 7.2], [251, 94, 40, 7.6], [221, 69, 53, 8.0], [205, 57, 69, 8.4], [170, 52, 96, 9.0]],
-             :no2=>[[0, 0, 0, 0.0], [249, 227, 241, 2.0], [255, 214, 250, 5.0], [255, 179, 240, 10.0]],
+             :no2=>[[255, 255, 255, 10.0], [249, 227, 241, 2.0], [255, 214, 250, 5.0], [255, 179, 240, 10.0]],
              :no3=>[[255, 255, 255, 10.0], [245, 228, 232, 25.0], [254, 234, 248, 50.0], [248, 158, 223, 250.0], [231, 97, 190, 500.0]],
              :kh=>[[201, 193, 66, 0.0], [157, 158, 29, 3.0], [91, 108, 37, 6.0], [76, 108, 49, 10.0], [41, 67, 50, 15.0], [16, 35, 53, 20.0]] }
 
@@ -118,14 +118,11 @@ private
   def extract_strip_color wb_image, key, crop_image
     output = []
     width, height = image_dimensions(wb_image)
-    puts "width #{width} height #{height}"
     crop_img_cmd(wb_image, key, crop_image, width, height)
     IO.popen(crop_txt_cmd(wb_image, key, width, height)).each do |line|
       output << line
     end
-    puts "output #{output}"
     /rgba\((?<red>.[^,]*),(?<green>.[^,]*),(?<blue>.[^,]*),/ =~ output[1]
-    puts "red #{red} green #{green} blue #{blue}"
     return [red.to_i, green.to_i, blue.to_i]
   end
 
