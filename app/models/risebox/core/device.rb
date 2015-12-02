@@ -65,6 +65,16 @@ class Risebox::Core::Device < ActiveRecord::Base
     return if (set = @@metrics_ref[model_key]).nil?
     set.each do |metric_ref|
       metric        = Risebox::Core::Metric.find_by_code metric_ref[:code]
+      unless Risebox::Core::MetricStatus.where(metric_id: metric.id, device_id: self.id).exists?
+        Risebox::Core::MetricStatus.create(metric_ref[:data].merge({metric_id: metric.id, device_id: self.id}))
+      end
+    end
+  end
+
+  def reset_metric_statuses
+    return if (set = @@metrics_ref[model_key]).nil?
+    set.each do |metric_ref|
+      metric        = Risebox::Core::Metric.find_by_code metric_ref[:code]
       metric_status = Risebox::Core::MetricStatus.where(metric_id: metric.id, device_id: self.id).first_or_create
       metric_status.update_attributes(metric_ref[:data])
     end
