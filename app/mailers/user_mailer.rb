@@ -10,6 +10,7 @@ class UserMailer < ActionMailer::Base
     @metric_status = metric_status
     @metric        = metric_status.metric
     metric_status.device.owners.each do |user|
+      puts "sending alert mail to #{user.email}"
       mail(to: user.email, subject: "Votre Risebox demande votre attention").deliver
     end
   end
