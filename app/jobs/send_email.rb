@@ -28,7 +28,7 @@ class SendEmail < JobBase
         puts "mail_type #{mail_type}"
         puts "subject #{subject}"
         #UserMailer.send(mail_type, subject)
-        UserMailer.send(mail_type)
+        UserMailer.device_alert(subject)
       end
     end
   end

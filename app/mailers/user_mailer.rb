@@ -19,7 +19,7 @@ class UserMailer < ActionMailer::Base
       puts "sending alert mail to #{user.email}"
       the_mail = mail(to: user.email, subject: "Votre Risebox demande votre attention")
       puts "the_mail #{the_mail}"
-      the_mail.deliver
+      the_mail.deliver_now!
     end
   end
 
