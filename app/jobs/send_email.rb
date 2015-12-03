@@ -22,10 +22,10 @@ class SendEmail < JobBase
       raise "Can not find #{subject_class} with id #{subject_id.to_s}"
     else
       if args
-        UserMailer.send(mail_type, subject, args.symbolize_keys!).deliver
+        UserMailer.send(mail_type, subject, args.symbolize_keys!)
       else
         puts 'will run UserMailer.send now'
-        UserMailer.send(mail_type, subject).deliver
+        UserMailer.send(mail_type, subject)
       end
     end
   end

@@ -6,18 +6,25 @@ class UserMailer < ActionMailer::Base
   layout 'mailer'
 
   def device_alert metric_status
+    puts 'inside device_alert'
     headers['X-SMTPAPI'] = single_recipient_header 'device_alert'
+    puts 'after headers'
     @metric_status = metric_status
+    puts "@metric_status #{@metric_status}"
     @metric        = metric_status.metric
+    puts "@metric #{@metric}"
+    puts "metric_status.device.owners.count #{metric_status.device.owners.count}"
     puts 'send email, just before the loop'
     metric_status.device.owners.each do |user|
       puts "sending alert mail to #{user.email}"
-      mail(to: user.email, subject: "Votre Risebox demande votre attention")
+      the_mail = mail(to: user.email, subject: "Votre Risebox demande votre attention")
+      puts "the_mail #{the_mail}"
+      the_mail.deliver
     end
   end
 
   def recovery_alert device_key, version
-    mail(to: "team@risebox.co", body: "Risebox #{device_key} is rolling back to version #{version}. Check if everything is ok", content_type: "text/html", subject: "Risebox #{device_key} in recovery mode !").deliver
+    mail(to: "team@risebox.co", body: "Risebox #{device_key} is rolling back to version #{version}. Check if everything is ok", content_type: "text/html", subject: "Risebox #{device_key} in recovery mode !")
   end
 
 private
