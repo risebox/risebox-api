@@ -25,6 +25,8 @@ class SendEmail < JobBase
         UserMailer.send(mail_type, subject, args.symbolize_keys!)
       else
         puts 'will run UserMailer.send now'
+        puts "mail_type #{mail_type}"
+        puts "subject #{subject}"
         UserMailer.send(mail_type, subject)
       end
     end
