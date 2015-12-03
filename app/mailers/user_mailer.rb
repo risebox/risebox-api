@@ -5,7 +5,7 @@ class UserMailer < ActionMailer::Base
   # default "notification@risebox.co"
   layout 'mailer'
 
-  def device_alert metric_status
+  def device_alert metric_status, args
     puts 'inside device_alert'
     headers['X-SMTPAPI'] = single_recipient_header 'device_alert'
     puts 'after headers'
@@ -15,12 +15,8 @@ class UserMailer < ActionMailer::Base
     puts "@metric #{@metric}"
     puts "metric_status.device.owners.count #{metric_status.device.owners.count}"
     puts 'send email, just before the loop'
-    metric_status.device.owners.each do |user|
-      puts "sending alert mail to #{user.email}"
-      the_mail = mail(to: user.email, subject: "Votre Risebox demande votre attention")
-      puts "the_mail #{the_mail}"
-      the_mail.deliver_now!
-    end
+    puts "sending alert mail to #{user.email}"
+    mail(to: args[:recipient_email], subject: "Votre Risebox demande votre attention")
   end
 
   def recovery_alert device_key, version
