@@ -12,7 +12,7 @@ class UserMailer < ActionMailer::Base
     puts 'send email, just before the loop'
     metric_status.device.owners.each do |user|
       puts "sending alert mail to #{user.email}"
-      mail(to: user.email, subject: "Votre Risebox demande votre attention").deliver
+      mail(to: user.email, subject: "Votre Risebox demande votre attention")
     end
   end
 
