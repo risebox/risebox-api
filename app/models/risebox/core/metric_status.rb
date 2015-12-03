@@ -47,7 +47,7 @@ private
   def manage_alerts
     if @begin_alert
       self.device.owners.each do |owner|
-        JobRunner.run(SendEmail, 'device_alert', 'Risebox::Core::MetricStatus', self.id, {'recipient_email': owner.email })
+        JobRunner.run(SendEmail, 'device_alert', 'Risebox::Core::MetricStatus', self.id, {'recipient_email' => owner.email })
       end
     end
     # TODO: Mémoriser la durée de l'alerte
