@@ -15,7 +15,6 @@ class UserMailer < ActionMailer::Base
     puts "@metric #{@metric}"
     puts "metric_status.device.owners.count #{metric_status.device.owners.count}"
     puts 'send email, just before the loop'
-    puts "sending alert mail to #{user.email}"
     mail(to: args[:recipient_email], subject: "Votre Risebox demande votre attention")
   end
 
