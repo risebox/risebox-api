@@ -27,7 +27,8 @@ class SendEmail < JobBase
         puts 'will run UserMailer.send now'
         puts "mail_type #{mail_type}"
         puts "subject #{subject}"
-        UserMailer.send(mail_type, subject)
+        #UserMailer.send(mail_type, subject)
+        UserMailer.send(mail_type)
       end
     end
   end
