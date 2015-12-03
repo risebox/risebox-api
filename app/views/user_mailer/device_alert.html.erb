@@ -1,3 +1,5 @@
+<p>Une alerte est levée sur <%= @device.name%></p>
+
 <p>Le paramètre <%= @metric.name%> est <strong><%= level_text @metric_status.level%></strong> valeur relevée: <%= @metric_status.value%></p>
 <p>Normalement sa valeur doit être comprise entre <%= @metric_status.limit_min %> et <%= @metric_status.limit_max%></p>
 
