@@ -10,12 +10,12 @@ class UserMailer < ActionMailer::Base
     @metric_status = metric_status
     @metric        = metric_status.metric
     metric_status.device.owners.each do |user|
-      mail(to: user.email, subject: "Votre Risebox demande votre attention")
+      mail(to: user.email, subject: "Votre Risebox demande votre attention").deliver
     end
   end
 
   def recovery_alert device_key, version
-    mail(to: "team@risebox.co", body: "Risebox #{device_key} is rolling back to version #{version}. Check if everything is ok", content_type: "text/html", subject: "Risebox #{device_key} in recovery mode !")
+    mail(to: "team@risebox.co", body: "Risebox #{device_key} is rolling back to version #{version}. Check if everything is ok", content_type: "text/html", subject: "Risebox #{device_key} in recovery mode !").deliver
   end
 
 private
