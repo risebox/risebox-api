@@ -9,6 +9,7 @@ class UserMailer < ActionMailer::Base
     headers['X-SMTPAPI'] = single_recipient_header 'device_alert'
     @metric_status = metric_status
     @metric        = metric_status.metric
+    puts 'send email, just before the loop'
     metric_status.device.owners.each do |user|
       puts "sending alert mail to #{user.email}"
       mail(to: user.email, subject: "Votre Risebox demande votre attention").deliver
