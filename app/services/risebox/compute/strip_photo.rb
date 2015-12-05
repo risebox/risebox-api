@@ -17,7 +17,7 @@ class Risebox::Compute::StripPhoto
      { no3: {l: 20, h: 20, x_ratio: 0.40, y_ratio: 0.03},
        no2: {l: 20, h: 20, x_ratio: 0.40, y_ratio: 0.11},
        # gh:  {l: 50, h: 50, x: 200, y: 2354},
-       kh:  {l: 20, h: 20, x_ratio: 0.40, y_ratio: 0.66},
+       kh:  {l: 20, h: 20, x_ratio: 0.40, y_ratio: 0.63},
        ph:  {l: 20, h: 20, x_ratio: 0.40, y_ratio: 0.724}
       }
 
