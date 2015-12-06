@@ -13,7 +13,7 @@ class Risebox::Notify::Message
           sound: "ping.aiff",
           expiry: expirity.from_now.to_i,
           priority: 10,
-          contentAvailable: true,
+          contentAvailable: 1,
           payload: payload(state, state_params)
         },
         android: {
