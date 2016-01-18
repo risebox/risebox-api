@@ -34,7 +34,6 @@ class Risebox::Compute::StripPhoto
     upload_store = Storage.new(:upload)
     strip_store  = Storage.new(:strip_photos)
 
-
     # Proceed with white balance
     white_balance upload_store, strip
 
@@ -100,7 +99,7 @@ private
   end
 
   def crop_txt_cmd image, key, width, height
-    "convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{(COORD[key][:x_ratio]*width.to_i).to_i}+#{(COORD[key][:y_ratio]*height.to_i).to_i} -resize 1x1 txt:"
+    "convert #{image} -crop #{COORD[key][:l]}x#{COORD[key][:h]}+#{(COORD[key][:x_ratio]*width.to_i).to_i}+#{(COORD[key][:y_ratio]*height.to_i).to_i} -colorspace RGB -resize 1x1 txt:"
   end
 
   def identify_img_cmd image
@@ -108,7 +107,7 @@ private
   end
 
   def scale_txt_cmd image
-    "convert #{image} -resize 1x1 txt:"
+    "convert #{image} -colorspace RGB -resize 1x1 txt:"
   end
 
   def wb_cmd image, wb_image
