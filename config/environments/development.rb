@@ -34,7 +34,7 @@ Rails.application.configure do
                   },
     strip_photos: {
           provider:   'AWS',
-          url:        "//risebox-strip-local.s3-external-3.amazonaws.com",
+          url:        "//risebox-strips-local.s3-external-3.amazonaws.com",
           access_key: ENV['S3_KEY'],
           secret_key: ENV['S3_SECRET'],
           bucket:     'risebox-strip-local',
