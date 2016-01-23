@@ -1,5 +1,5 @@
-adrien  = Risebox::Core::User.first_or_create first_name: 'Adrien', last_name: 'Thery', email: 'adrien@risebox.co', password: 'adrien42', admin: true
-nicolas = Risebox::Core::User.first_or_create first_name: 'Nicolas', last_name: 'Nardone', email: 'nicolas@risebox.co', password: 'nicolas42', admin: true
+adrien  = Risebox::Core::User.create_with(first_name: 'Adrien', last_name: 'Thery', password: 'adrien42', admin: true).find_or_create_by(email: 'adrien@risebox.co')
+nicolas = Risebox::Core::User.create_with(first_name: 'Nicolas', last_name: 'Nardone', password: 'nicolas42', admin: true).find_or_create_by(email: 'nicolas@risebox.co')
 
 ph        = Risebox::Core::Metric.create name: "PH de l'eau",                   code: 'PH',    unit: nil,       display_order: 1
 w_temp    = Risebox::Core::Metric.create name: "Température de l'eau",          code: 'WTEMP', unit: '°C',      display_order: 2
