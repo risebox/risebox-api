@@ -11,7 +11,7 @@ class Account::SsoController < ApplicationController
     @sso.email = current_user.email
     # @sso.name = "Risebox Team"
     @sso.username = current_user.pretty_name
-    @sso.admin    = current_user.admin? ? 1 : 0
+    @sso.admin    = current_user.admin?
     @sso.external_id = current_user.id # unique id for each user of your application
     @sso.sso_secret = SSO_SECRET
 
