@@ -7,9 +7,11 @@ class API::V1::LogEntriesController < API::V1::DeviceSecuredController
   end
 
   def create
-    log_time = params[:logged_at].present? ? Time.at(params[:logged_at].to_i).to_datetime : Time.now
-    created, log_entry = @service.create(params[:level], params[:body], log_time)
-    api_response [created, log_entry]
+    # 22/06/2016: Disable loggin to reduce database size
+    # log_time = params[:logged_at].present? ? Time.at(params[:logged_at].to_i).to_datetime : Time.now
+    # created, log_entry = @service.create(params[:level], params[:body], log_time)
+    # api_response [created, log_entry]
+    api_response [true, nil]
   end
 
 private

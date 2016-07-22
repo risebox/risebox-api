@@ -20,7 +20,7 @@ Rails.application.configure do
                   }
 
   JOBS_RUN         = true
-  JOBS_SYNCHRONOUS = false
+  JOBS_SYNCHRONOUS = true #22/07/2016 to reduce cost
 
   TEST_EMAIL        = "test@risebox.co"
   MAILS_INTERCEPTED = ENV['MAILS_INTERCEPTED'] == 'true'
